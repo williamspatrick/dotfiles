@@ -1,0 +1,58 @@
+#!/usr/bin/env zsh
+
+desired_brews=(\
+    clang-format \
+    coreutils \
+    findutils \
+    gawk \
+    gnu-getopt \
+    gnu-sed \
+    grep \
+    llvm \
+    macvim \
+    wget \
+)
+
+desired_casks=(\
+    font-menlo-for-powerline \
+    hammerspoon \
+)
+
+installed_brews=$(brew list)
+installed_casks=$(brew cask list)
+
+needed_brews=""
+for b in $desired_brews
+do
+    case "$installed_brews" in
+        *"$b"*)
+            ;;
+        *)
+            needed_brews="$needed_brews $b"
+            echo "Missing brew $b."
+            ;;  
+    esac
+done
+
+needed_casks=""
+for c in $desired_casks
+do
+    case "$installed_casks" in
+        *"$c"*)
+            ;;
+        *)
+            needed_casks="$needed_casks $c"
+            echo "Missing cask $c."
+            ;;
+    esac
+done
+
+if [ ! -z "$needed_brews" ]; then
+    echo "Installing brews: $needed_brews"
+    brew install ${=needed_brews}
+fi
+
+if [ ! -z "$needed_casks" ]; then
+    echo "Installing casks: $needed_casks"
+    brew cask install ${=needed_casks}
+fi

@@ -50,6 +50,8 @@ bindkey "\e[4~" end-of-line
 # Load zplugin
 source "$HOME/.zplugin/bin/zplugin.zsh"
 
+zplugin load williamspatrick/dotfiles
+
 # oh-my-zsh plugins
 zplugin ice svn pick"completion.zsh" multisrc"{history,git}.zsh"
 zplugin snippet OMZ::lib
