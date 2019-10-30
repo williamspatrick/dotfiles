@@ -85,8 +85,9 @@ DEFAULT_USER=patrickw3
 zplugin light romkatv/powerlevel10k
 
 # wd
-zplugin ice as"program" cp"wd.sh -> wd" mv"_wd.sh -> _wd" \
-    atpull'!git reset --hard' pick"wd" wait lucid
+zplugin ice as"program" atload"wd() { source wd.sh }" \
+    cp"_wd.sh -> _wd" \
+    atpull'!git reset --hard' pick"wd.sh" wait lucid
 zplugin light mfaerevaag/wd
 
 # Common completions
