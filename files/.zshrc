@@ -40,7 +40,9 @@ elif [[ $SYSTEM_TYPE == 'Darwin' ]] then
 fi
 
 export PATH=$HOME/private/bin:$PATH
+export EDITOR="/usr/bin/vim"
 
+bindkey -e
 bindkey "\e[3~" delete-char
 bindkey "\e[1~" beginning-of-line
 bindkey "\e[4~" end-of-line
