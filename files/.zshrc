@@ -1,51 +1,8 @@
-SYSTEM_TYPE=`uname`
-
 # Download zplugin if it doesn't exist.
 if [[ ! -d ~/.zplugin ]] then
     mkdir ~/.zplugin
     git clone https://github.com/zdharma/zplugin.git ~/.zplugin/bin
 fi
-
-## System-specific settings (Linux vs Darwin/MacOS)
-if [[ $SYSTEM_TYPE == 'Linux' ]] then
-
-    export PATH=/usr/local/bin:$PATH
-
-    if [[ -f /.dockerenv ]] then
-        SYSTEM_TYPE='Docker'
-    fi
-
-elif [[ $SYSTEM_TYPE == 'Darwin' ]] then
-
-    export CLICOLOR=1
-
-    export PATH="$HOME/.brew/bin:$HOME/.brew/sbin:$PATH"
-    export PATH="$HOME/.brew/opt/findutils/libexec/gnubin:$PATH"
-    export PATH="$HOME/.brew/opt/coreutils/libexec/gnubin:$PATH"
-    export PATH="$HOME/.brew/opt/gnu-getopt/bin:$PATH"
-    export PATH="$HOME/.brew/opt/grep/libexec/gnubin:$PATH"
-    export PATH="$HOME/.brew/opt/gnu-sed/libexec/gnubin:$PATH"
-    export PATH="$HOME/.brew/opt/gawk/libexec/gnubin:$PATH"
-
-    clang-env()
-    {
-        export PATH="$HOME/.brew/opt/llvm/bin:$PATH"
-        export CC="$HOME/.brew/opt/llvm/bin/clang"
-        export CXX=${CC}++
-    }
-
-    fpath=($HOME/.brew/completions/zsh $fpath)
-    #   /Users/patrickw3/.brew/opt/gnu-getopt/etc/bash_completion.d
-
-fi
-
-export PATH=$HOME/private/bin:$PATH
-export EDITOR="/usr/bin/vim"
-
-bindkey -e
-bindkey "\e[3~" delete-char
-bindkey "\e[1~" beginning-of-line
-bindkey "\e[4~" end-of-line
 
 # Load zplugin
 source "$HOME/.zplugin/bin/zplugin.zsh"
@@ -67,21 +24,6 @@ zplugin ice atclone"mkdir -p ~/.vim/colors && ln -sf ~/.zplugin/plugins/altercat
 zplugin light altercation/vim-colors-solarized
 
 # Powerlevel9k/10K
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs virtualenv vcs)
-POWERLEVEL9K_STATUS_OK=false
-POWERLEVEL9K_PROMPT_ON_NEWLINE=true
-POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=""
-POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="$ "
-POWERLEVEL9K_SHORTEN_STRATEGY=default
-POWERLEVEL9K_SHORTEN_DIR_LENGTH=3
-POWERLEVEL9K_SHORTEN_DELIMITER=".."
-if [[ $SYSTEM_TYPE != 'Docker' ]] then
-    POWERLEVEL9K_VCS_BACKENDS=(git hg)
-else
-    POWERLEVEL9K_VCS_BACKENDS=()
-fi
-DEFAULT_USER=patrickw3
 zplugin light romkatv/powerlevel10k
 
 # wd
