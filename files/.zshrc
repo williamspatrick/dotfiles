@@ -50,7 +50,7 @@ bindkey "\e[4~" end-of-line
 # Load zplugin
 source "$HOME/.zplugin/bin/zplugin.zsh"
 
-zplugin load williamspatrick/dotfiles
+zplugin light williamspatrick/dotfiles
 
 # oh-my-zsh plugins
 zplugin ice svn pick"completion.zsh" multisrc"{history,git}.zsh"
@@ -59,12 +59,12 @@ zplugin snippet OMZ::plugins/sudo/sudo.plugin.zsh
 
 # Enable solarized dircolors.
 zplugin ice atclone"dircolors dircolors.ansi-dark > dircolors-solarized.zsh" atpull"%atclone" pick"dircolors-solarized.zsh" nocompile:!
-zplugin load seebi/dircolors-solarized
+zplugin light seebi/dircolors-solarized
 alias ls='ls --color=auto'
 
 # Enable solarized vim.
 zplugin ice atclone"mkdir -p ~/.vim/colors && ln -sf ~/.zplugin/plugins/altercation---vim-colors-solarized/colors/solarized.vim ~/.vim/colors/" pick"/dev/null" nocompile:!
-zplugin load altercation/vim-colors-solarized
+zplugin light altercation/vim-colors-solarized
 
 # Powerlevel9k/10K
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir)
