@@ -85,6 +85,7 @@ DEFAULT_USER=patrickw3
 zplugin light romkatv/powerlevel10k
 
 # wd
+WD_SKIP_EXPORT=1
 zplugin ice as"program" atload"wd() { source wd.sh }" \
     cp"_wd.sh -> _wd" \
     atpull'!git reset --hard' pick"wd.sh" wait lucid
