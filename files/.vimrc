@@ -29,3 +29,9 @@ set ruler
 autocmd FileType mail set spell
 autocmd FileType gitcommit set spell
 
+" Emacs-style Home / End bindings
+map <C-A> <Home>
+map! <C-A> <Home>
+map <C-E> <End>
+map! <C-E> <End>
+

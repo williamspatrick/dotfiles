@@ -72,3 +72,9 @@ set lines=60
 " Set 'CF' command to code-format options.
 autocmd FileType c,cpp command! CF %!clang-format
 autocmd FileType python command! CF %!autopep8 -
+
+" Emacs-style Home / End bindings
+map <C-A> <Home>
+map! <C-A> <Home>
+map <C-E> <End>
+map! <C-E> <End>
