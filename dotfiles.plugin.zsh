@@ -4,7 +4,7 @@
 DOTFILES_CONFIG=( "all" )
 
 # Identify machine type(s).
-for d in ${0:h}/detect/*
+for d in ${0:h}/detect/*.zsh
 do
     source $d
 done
@@ -13,7 +13,7 @@ done
 for d in ${DOTFILES_CONFIG}
 do
     if [[ -d ${0:h}/$d.env ]]; then
-        for f in ${0:h}/$d.env/*
+        for f in ${0:h}/$d.env/*.zsh
         do
             source $f
         done

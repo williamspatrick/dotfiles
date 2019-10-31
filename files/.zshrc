@@ -7,6 +7,7 @@ fi
 # Load zplugin
 source "$HOME/.zplugin/bin/zplugin.zsh"
 
+zplugin ice compile'{detect/*.zsh,*.env/*.zsh}'
 zplugin light williamspatrick/dotfiles
 
 # oh-my-zsh plugins
