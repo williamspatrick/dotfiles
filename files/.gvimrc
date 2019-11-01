@@ -14,12 +14,15 @@ set hlsearch
 " Ignore white-space for diff.
 set diffopt=iwhite
 
+" Switch leader to ,
+let mapleader=","
+
 " Set indentation options
 set expandtab
 set shiftwidth=4
 set tabstop=4
 set softtabstop=4
-command! KM set tabstop=8 softtabstop=8 shiftwidth=8 noexpandtab
+nnoremap <Leader>km :set tabstop=8 softtabstop=8 shiftwidth=8 noexpandtab<CR>
 autocmd BufWritePre *.[CHchS] :%s/\s\+$//e
 autocmd BufWritePre *.p[lmy] :%s/\s\+$//e
 autocmd BufWritePre *.[ch]pp :%s/\s\+$//e
@@ -69,9 +72,9 @@ else
 endif
 set lines=60
 
-" Set 'CF' command to code-format options.
-autocmd FileType c,cpp command! CF %!clang-format
-autocmd FileType python command! CF %!autopep8 -
+" Set ,cf to code-format options.
+autocmd FileType c,cpp nnoremap <Leader>cf :%!clang-format<CR>
+autocmd FileType python nnoremap <Leader>cf :%!autopep8 -<CR>
 
 " Emacs-style Home / End bindings
 map <C-A> <Home>
