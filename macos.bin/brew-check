@@ -1,6 +1,7 @@
 #!/usr/bin/env zsh
 
 desired_brews=(\
+    abook \
     clang-format \
     coreutils \
     findutils \
@@ -10,6 +11,9 @@ desired_brews=(\
     grep \
     llvm \
     macvim \
+    msmtp \
+    mutt \
+    offlineimap \
     wget \
 )
 

@@ -24,6 +24,10 @@ alias ls='ls --color=auto'
 zplugin ice atclone"mkdir -p ~/.vim/colors && ln -sf ~/.zplugin/plugins/altercation---vim-colors-solarized/colors/solarized.vim ~/.vim/colors/" pick"/dev/null" nocompile:!
 zplugin light altercation/vim-colors-solarized
 
+# Enable solarized mutt.
+zplugin ice pick"/dev/null" nocompile:!
+zplugin light altercation/mutt-colors-solarized
+
 # Powerlevel9k/10K
 zplugin light romkatv/powerlevel10k
 

@@ -1,0 +1,16 @@
+[general]
+accounts = patrick@stwcx
+
+[Account patrick@stwcx]
+localrepository = local-patrick@stwcx
+remoterepository = remote-patrick@stwcx
+
+[Repository local-patrick@stwcx]
+type = Maildir
+localfolders = ~/Mail/patrick@stwcx
+
+[Repository remote-patrick@stwcx]
+type = IMAP
+remotehost = imap.zoho.com
+ssl = yes
+sslcacertfile = ~/.brew/etc/openssl/cert.pem

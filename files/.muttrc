@@ -1,0 +1,62 @@
+set from = 'patrick@stwcx.xyz'
+set realname = 'Patrick Williams'
+
+set mbox_type=Maildir
+set folder = ~/Mail/patrick@stwcx/
+set spoolfile = "+INBOX"
+set record = "~/Mail/Sent"
+set postponed = "+Drafts"
+set trash = "+Done"
+
+mailboxes +INBOX +openbmc.Github +openbmc.List +openbmc.Gerrit
+
+set sendmail="msmtp"
+set envelope_from=yes
+
+macro generic "<esc>1" ":set from=patrick@stwcx.xyz"
+macro generic "<esc>2" ":set from=williamspatrick@gmail.com"
+macro generic "<esc>3" ":set from=patrickw3@fb.com"
+macro generic S "<shell-escape>offlineimap\r"
+
+set sort="threads"
+set sort_browser="reverse-date"
+set sort_aux="reverse-last-date-received"
+set strict_threads="yes"
+
+unset beep
+unset beep_new
+
+bind index - collapse-thread
+bind index _ collapse-all
+
+ignore *
+unignore from date subject to cc bcc
+
+set folder_format="%2C %N %f"
+
+set signature="~/.signature"
+
+macro index,pager G "<pipe-message>gvim -<return>" "Open message in gvim."
+
+auto_view text/html
+alternative_order text/plain
+
+source ~/.zplugin/plugins/altercation---mutt-colors-solarized/mutt-colors-solarized-dark-16.muttrc
+
+set query_command= "abook --mutt-query '%s'"
+macro index,pager A "<pipe-message>abook --add-email-quiet<return>" "add the sender address to abook"
+
+### GPG commands came from /usr/share/doc/mutt-*/samples/gpg.rc.bz2 ###
+set pgp_decode_command="gpg --status-fd=2 %?p?--passphrase-fd 0? --no-verbose --quiet --batch --output - %f"
+set pgp_verify_command="gpg --status-fd=2 --no-verbose --quiet --batch --output - --verify %s %f"
+set pgp_decrypt_command="gpg --status-fd=2 %?p?--passphrase-fd 0? --no-verbose --quiet --batch --output - %f"
+set pgp_sign_command="gpg --no-verbose --batch --quiet --output - %?p?--passphrase-fd 0? --armor --detach-sign --textmode %?a?-u %a? %f"
+set pgp_encrypt_only_command="pgpewrap gpg --batch --quiet --no-verbose --output - --encrypt --textmode --armor --always-trust -- -r %r -- %f"
+set pgp_encrypt_sign_command="pgpewrap gpg %?p?--passphrase-fd 0? --batch --quiet --no-verbose --textmode --output - --encrypt --sign %?a?-u %a? --armor --always-trust -- -r %r -- %f"
+set pgp_import_command="gpg --no-verbose --import %f"
+set pgp_export_command="gpg --no-verbose --export --armor %r"
+set pgp_verify_key_command="gpg --verbose --batch --fingerprint --check-sigs %r"
+set pgp_list_pubring_command="gpg --no-verbose --batch --quiet --with-colons --with-fingerprint --with-fingerprint --list-keys %r"
+set pgp_list_secring_command="gpg --no-verbose --batch --quiet --with-colons --with-fingerprint --with-fingerprint --list-secret-keys %r"
+set pgp_good_sign="^\\[GNUPG:\\] GOODSIG"
+
