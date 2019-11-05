@@ -3,6 +3,7 @@
 desired_brews=(\
     abook \
     autopep8 \
+    bat \
     clang-format \
     coreutils \
     findutils \
