@@ -74,7 +74,7 @@ set lines=60
 
 " Set ,cf to code-format options.
 autocmd FileType c,cpp nnoremap <Leader>cf :%!clang-format<CR>
-autocmd FileType python nnoremap <Leader>cf :%!autopep8 -<CR>
+autocmd FileType python nnoremap <Leader>cf :%!black -q -<CR>
 
 " Emacs-style Home / End bindings
 map <C-A> <Home>
