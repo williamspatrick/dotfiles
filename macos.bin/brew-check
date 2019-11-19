@@ -17,6 +17,7 @@ desired_brews=(\
     msmtp \
     mutt \
     offlineimap \
+    w3m \
     watch \
     wget \
 )
