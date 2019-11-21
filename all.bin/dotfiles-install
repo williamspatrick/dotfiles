@@ -1,0 +1,90 @@
+#!/usr/bin/env zsh
+
+set -e
+
+dotfiles_path=$(realpath ${0:h}/../files)
+DOTFILES_CONFIG=(${(s/:/)DOTFILES_SYSTEM})
+
+setopt NULL_GLOB
+setopt EXTENDED_GLOB
+setopt DOTGLOB
+
+typeset -A files_found
+
+for d in $dotfiles_path/<0-9>##_*
+do
+    if [ ! -d $d ]; then
+        continue
+    fi
+
+    dir_name=$(basename $d)
+    path_parts=(${(s/_/)dir_name})
+
+    wrong_machine=0
+    for p in $path_parts[2,-1]
+    do
+        if ! (($DOTFILES_CONFIG[(Ie)$p])); then
+            echo "Skipping $dir_name ; DOTFILES_CONFIG missing $p."
+            wrong_machine=1
+            break
+        fi
+    done
+
+    if (($wrong_machine)); then
+        continue
+    fi
+
+    for f in $d/**/*
+    do
+        if [ -d $f ]; then
+            continue
+        fi
+
+        file_name=${f##$d/}
+        prev_files="${files_found[$file_name]:+$files_found[$file_name]:}"
+        files_found[$file_name]="$prev_files$f"
+    done
+
+done
+
+cleanup() {
+    if [ "x" = "x$TEMP_FILE" ]; then
+        return
+    fi
+    if [ -e $TEMP_FILE ]; then
+        rm $TEMP_FILE
+    fi
+}
+trap cleanup EXIT
+
+for dest sources in ${(kv)files_found}
+do
+    TEMP_FILE=$(mktemp)
+
+    source_files=(${(s/:/)sources})
+    for f in $source_files
+    do
+        cat $f >> $TEMP_FILE
+    done
+
+    if [ ! -e $dest ]; then
+        dir_path=$(dirname $dest)
+        if [ ! "x." = "x$dir_path" ]; then
+            echo "Creating path $dir_path"
+            mkdir -p ~/$dir_path
+        fi
+
+        echo "Creating $dest"
+        cp $TEMP_FILE ~/$dest
+
+    else
+        if cmp -s $TEMP_FILE ~/$dest ; then
+            echo "$dest unchanged."
+        else
+            vimdiff ~/$dest $TEMP_FILE
+        fi
+    fi
+
+    rm $TEMP_FILE
+done
+
