@@ -22,3 +22,5 @@ do
         path=("${0:h}/$d.bin" "${path[@]}")
     fi
 done
+
+export DOTFILES_SYSTEM=${(j/:/)DOTFILES_CONFIG}
