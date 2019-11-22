@@ -11,7 +11,17 @@ set modeline
 " Set indentation options
 set expandtab
 set shiftwidth=4
+set tabstop=4
 set softtabstop=4
+nnoremap <Leader>km :set tabstop=8 softtabstop=8 shiftwidth=8 noexpandtab<CR>
+autocmd BufWritePre *.[CHchS] :%s/\s\+$//e
+autocmd BufWritePre *.p[lmy] :%s/\s\+$//e
+autocmd BufWritePre *.[ch]pp :%s/\s\+$//e
+autocmd BufWritePre *.[ch]pp.in :%s/\s\+$//e
+autocmd BufWritePre *.md :%s/\s\+$//e
+autocmd BufWritePre *.mako :%s/\s\+$//e
+autocmd BufWritePre *.yaml :%s/\s\+$//e
+autocmd FileType c,cpp,python,perl,markdown,dot,groovy,yaml,sh,conf,dts,cmake,make autocmd BufWritePre <buffer> :%s/\s\+$//e
 
 " Set backspace level, so it can delete new-lines
 set backspace=2
@@ -28,6 +38,9 @@ set ruler
 
 autocmd FileType mail set spell
 autocmd FileType gitcommit set spell
+autocmd FileType markdown set spell
+autocmd FileType python set foldmethod=indent
+autocmd BufNewFile,BufRead Jenkinsfile setf groovy
 
 " Emacs-style Home / End bindings
 map <C-A> <Home>
