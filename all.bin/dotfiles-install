@@ -67,7 +67,7 @@ do
         cat $f >> $TEMP_FILE
     done
 
-    if [ ! -e $dest ]; then
+    if [ ! -e ~/$dest ]; then
         dir_path=$(dirname $dest)
         if [ ! "x." = "x$dir_path" ]; then
             echo "Creating path $dir_path"
