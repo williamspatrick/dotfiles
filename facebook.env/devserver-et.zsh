@@ -2,9 +2,11 @@
 
 if (($DOTFILES_CONFIG[(Ie)macos])); then
     function devserver() {
-        et -c "tmux -CC attach" -x patrickw3.sb.facebook.com:8080
+        et -f -t 9999:9999 -x -c "tmux -CC attach" \
+            patrickw3.sb.facebook.com:8080
     }
     function devserver-launch() {
-        et -c "tmux -CC" -x patrickw3.sb.facebook.com:8080
+        et -f -t 9999:9999 -x -c "tmux -CC" \
+            patrickw3.sb.facebook.com:8080
     }
 fi

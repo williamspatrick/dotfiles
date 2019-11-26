@@ -3,6 +3,7 @@
 desired_brews=(\
     abook \
     autopep8 \
+    autozimu/homebrew-formulas/unison-fsmonitor \
     bat \
     black \
     clang-format \
@@ -17,6 +18,7 @@ desired_brews=(\
     msmtp \
     mutt \
     offlineimap \
+    unison \
     w3m \
     watch \
     wget \
@@ -36,7 +38,7 @@ needed_brews=""
 for b in $desired_brews
 do
     case "$installed_brews" in
-        *"$b"*)
+        *"$(basename $b)"*)
             ;;
         *)
             needed_brews="$needed_brews $b"
