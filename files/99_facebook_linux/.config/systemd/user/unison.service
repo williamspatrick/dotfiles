@@ -1,0 +1,10 @@
+[Unit]
+Description=Unison synchronization daemon
+
+[Service]
+ExecStart=unison -socket 9999
+
+[Install]
+WantedBy=default.target
+
+# vi: ft=dosini
