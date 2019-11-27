@@ -21,9 +21,9 @@ do
     fi
 done
 
-for d in ${0:h}/*.bin
+for d in ${0:h}/bin/*
 do
-    if __dotfiles_check_machine $d .bin ; then
+    if __dotfiles_check_machine $d ; then
         path=("$d" "${path[@]}")
     fi
 done
