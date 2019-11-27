@@ -1,6 +1,8 @@
 0="${${ZERO:-${0:#$ZSH_ARGZERO}}:-${(%):-%N}}"
 0="${${(M)0:#/*}:-$PWD/$0}"
 
+source ${0:h}/dotfiles.lib.zsh
+
 DOTFILES_CONFIG=( "all" )
 
 # Identify machine type(s).
@@ -9,17 +11,20 @@ do
     source $d
 done
 
-# For each machine type, source environment and set up path.
-for d in ${DOTFILES_CONFIG}
+for d in ${0:h}/*.env
 do
-    if [[ -d ${0:h}/$d.env ]]; then
-        for f in ${0:h}/$d.env/*.zsh
+    if __dotfiles_check_machine $d .env ; then
+        for f in $d/*.zsh
         do
             source $f
         done
     fi
-    if [[ -d ${0:h}/$d.bin ]]; then
-        path=("${0:h}/$d.bin" "${path[@]}")
+done
+
+for d in ${0:h}/*.bin
+do
+    if __dotfiles_check_machine $d .bin ; then
+        path=("$d" "${path[@]}")
     fi
 done
 

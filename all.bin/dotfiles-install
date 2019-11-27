@@ -2,6 +2,8 @@
 
 set -e
 
+source ${0:h}/../dotfiles.lib.zsh
+
 dotfiles_path=$(realpath ${0:h}/../files)
 DOTFILES_CONFIG=(${(s/:/)DOTFILES_SYSTEM})
 
@@ -17,20 +19,7 @@ do
         continue
     fi
 
-    dir_name=$(basename $d)
-    path_parts=(${(s/_/)dir_name})
-
-    wrong_machine=0
-    for p in $path_parts[2,-1]
-    do
-        if ! (($DOTFILES_CONFIG[(Ie)$p])); then
-            echo "Skipping $dir_name ; DOTFILES_CONFIG missing $p."
-            wrong_machine=1
-            break
-        fi
-    done
-
-    if (($wrong_machine)); then
+    if ! __dotfiles_check_machine $d ; then
         continue
     fi
 
