@@ -5,7 +5,6 @@ desired_brews=(\
     autopep8 \
     autozimu/homebrew-formulas/unison-fsmonitor \
     bat \
-    black \
     clang-format \
     coreutils \
     findutils \
