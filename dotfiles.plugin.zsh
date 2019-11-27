@@ -11,9 +11,9 @@ do
     source $d
 done
 
-for d in ${0:h}/*.env
+for d in ${0:h}/env/*
 do
-    if __dotfiles_check_machine $d .env ; then
+    if __dotfiles_check_machine $d ; then
         for f in $d/*.zsh
         do
             source $f
