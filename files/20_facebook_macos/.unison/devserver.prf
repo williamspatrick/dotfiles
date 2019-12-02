@@ -2,3 +2,4 @@ auto=true
 repeat=watch
 root=/Volumes/Repos/sync
 root=socket://localhost:9999/local/sync
+ignorecase=false
