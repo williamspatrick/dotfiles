@@ -61,12 +61,20 @@ zplugin light laggardkernel/git-ignore
 zplugin ice wait lucid
 zplugin light mollifier/cd-gitroot
 
-autoload -Uz compinit
-compinit
-zplugin cdreplay -q
-
 # Enable vim pathogen
 zplugin ice \
     atclone"mkdir -p ~/.vim/autoload ~/.vim/bundle && ln -sf ~/.zplugin/plugins/tpope---vim-pathogen/autoload/pathogen.vim ~/.vim/autoload" \
     pick"/dev/null" nocompile:!
 zplugin light tpope/vim-pathogen
+
+## Enable pathogen modules
+# vim-bitbake
+zplugin ice \
+    atclone"mkdir -p ~/.vim/bundle && ln -sf ~/.zplugin/plugins/kergoth---vim-bitbake ~/.vim/bundle/vim-bitbake" \
+    pick"/dev/null" nocompile:!
+zplugin light kergoth/vim-bitbake
+
+# Finish zplugin / auto-complete
+autoload -Uz compinit
+compinit
+zplugin cdreplay -q
