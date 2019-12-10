@@ -64,3 +64,9 @@ zplugin light mollifier/cd-gitroot
 autoload -Uz compinit
 compinit
 zplugin cdreplay -q
+
+# Enable vim pathogen
+zplugin ice \
+    atclone"mkdir -p ~/.vim/autoload ~/.vim/bundle && ln -sf ~/.zplugin/plugins/tpope---vim-pathogen/autoload/pathogen.vim ~/.vim/autoload" \
+    pick"/dev/null" nocompile:!
+zplugin light tpope/vim-pathogen
