@@ -1,0 +1,11 @@
+--theme="TwoDark"
+--style="changes"
+--paging="never"
+
+--map-syntax h:cpp
+
+# Bitbake remaps.
+--map-syntax conf:ini
+--map-syntax bb:sh
+--map-syntax bbappend:sh
+--map-syntax inc:sh
