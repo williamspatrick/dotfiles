@@ -1,20 +1,26 @@
 #!/usr/bin/env zsh
 set -e
 
-OPTIONS=$(getopt -o d:m:p:u:y \
-            --long date:,message:,path:,user:,yesterday \
+OPTIONS=$(getopt -o d:em:p:u:y \
+            --long date:,edit,message:,path:,user:,yesterday \
             -n 'fbfb' -- "$@")
 eval set -- "$OPTIONS"
 
 WHO=
 DATE="now"
 MESSAGE=
+EDIT_DESIRED=
 
 while true; do
     case "$1" in
         -d|--date)
             DATE="$2"
             shift 2
+            ;;
+
+        -e|--edit)
+            EDIT_DESIRED=1
+            shift
             ;;
 
         -m|--message)
@@ -55,11 +61,14 @@ fi
 
 mkdir -p $FBFB_PATH/$WHO
 
-if [ -z $MESSAGE ]; then
-    TEMPFILE=$(mktemp)
-    vim $TEMPFILE
-    MESSAGE=$(cat $TEMPFILE)
-    rm $TEMPFILE
+if [ ! -z $EDIT_DESIRED ]; then
+    $EDITOR $FBFB_PATH/$WHO/$DATE.md
+else
+    if [ -z $MESSAGE ]; then
+        TEMPFILE=$(mktemp)
+        $EDITOR $TEMPFILE
+        MESSAGE=$(cat $TEMPFILE)
+        rm $TEMPFILE
+    fi
+    echo $MESSAGE >> $FBFB_PATH/$WHO/$DATE.md
 fi
-
-echo $MESSAGE >> $FBFB_PATH/$WHO/$DATE.md
