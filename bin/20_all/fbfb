@@ -1,15 +1,15 @@
 #!/usr/bin/env zsh
 set -e
 
-OPTIONS=$(getopt -o d:em:p:u:y \
-            --long date:,edit,message:,path:,user:,yesterday \
+OPTIONS=$(getopt -o d:em:p:u:vy \
+            --long date:,edit,message:,path:,user:,view,yesterday \
             -n 'fbfb' -- "$@")
 eval set -- "$OPTIONS"
 
 WHO=
 DATE="now"
 MESSAGE=
-EDIT_DESIRED=
+ACTION="append"
 
 while true; do
     case "$1" in
@@ -19,7 +19,7 @@ while true; do
             ;;
 
         -e|--edit)
-            EDIT_DESIRED=1
+            ACTION="edit"
             shift
             ;;
 
@@ -36,6 +36,11 @@ while true; do
         -u|--user)
             WHO="$2"
             shift 2
+            ;;
+
+        -v|--view)
+            ACTION="view"
+            shift
             ;;
 
         -y|--yesterday)
@@ -60,15 +65,29 @@ if [ -z $WHO ]; then
 fi
 
 mkdir -p $FBFB_PATH/$WHO
+FILE_PATH=$FBFB_PATH/$WHO/$DATE.md
 
-if [ ! -z $EDIT_DESIRED ]; then
-    $EDITOR $FBFB_PATH/$WHO/$DATE.md
-else
-    if [ -z $MESSAGE ]; then
-        TEMPFILE=$(mktemp)
-        $EDITOR $TEMPFILE
-        MESSAGE=$(cat $TEMPFILE)
-        rm $TEMPFILE
-    fi
-    echo $MESSAGE >> $FBFB_PATH/$WHO/$DATE.md
-fi
+case $ACTION in
+    append)
+        if [ -z $MESSAGE ]; then
+            TEMPFILE=$(mktemp)
+            ${EDITOR:-vim} $TEMPFILE
+            MESSAGE=$(cat $TEMPFILE)
+            rm $TEMPFILE
+        fi
+        echo $MESSAGE >> $FILE_PATH
+        ;;
+
+    edit)
+        ${EDITOR:-vim} $FILE_PATH
+        ;;
+
+    view)
+        if env which -s bat ; then
+            bat $FILE_PATH
+        else
+            ${PAGER:-cat} $FILE_PATH
+        fi
+        ;;
+
+esac
