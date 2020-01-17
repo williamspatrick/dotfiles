@@ -9,7 +9,7 @@ function lf-obmc() {
     wd lfopenbmc &&
     source ./setup $LF_MACHINE \
         ~/local/builds/lf-build-$LF_MACHINE &&
-    if ! grep -q SSTATE_DIR conf/local.conf ; then
+    if ! grep -q "^SSTATE_DIR" conf/local.conf ; then
         echo "SSTATE_DIR ?= \"\$HOME/local/builds/sstate-cache\"" >> \
             conf/local.conf
     fi &&
