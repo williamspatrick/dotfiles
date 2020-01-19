@@ -12,6 +12,7 @@ function lf-obmc() {
     if ! grep -q "^SSTATE_DIR" conf/local.conf ; then
         echo "SSTATE_DIR ?= \"$HOME/local/builds/sstate-cache\"" >> \
             conf/local.conf
+        echo "INHERIT += \"uninative\"" >> conf/local.conf
     fi &&
     if [ ! -e workspace/sources ]; then
         devtool create-workspace
