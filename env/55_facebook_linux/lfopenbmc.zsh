@@ -10,7 +10,7 @@ function lf-obmc() {
     source ./setup $LF_MACHINE \
         ~/local/builds/lf-build-$LF_MACHINE &&
     if ! grep -q "^SSTATE_DIR" conf/local.conf ; then
-        echo "SSTATE_DIR ?= \"\$HOME/local/builds/sstate-cache\"" >> \
+        echo "SSTATE_DIR ?= \"$HOME/local/builds/sstate-cache\"" >> \
             conf/local.conf
     fi &&
     if [ ! -e workspace/sources ]; then
