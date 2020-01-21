@@ -11,6 +11,6 @@ localfolders = ~/Mail/patrick@stwcx
 
 [Repository remote-patrick@stwcx]
 type = IMAP
-remotehost = imap.zoho.com
+remotehost = imap.fastmail.com
 ssl = yes
 sslcacertfile = ~/.brew/etc/openssl/cert.pem
