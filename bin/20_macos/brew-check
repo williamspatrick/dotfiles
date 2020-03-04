@@ -18,6 +18,7 @@ desired_brews=(\
     msmtp \
     mutt \
     offlineimap \
+    tree \
     unison \
     w3m \
     watch \
