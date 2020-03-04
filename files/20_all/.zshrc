@@ -61,6 +61,11 @@ zplugin light laggardkernel/git-ignore
 zplugin ice wait lucid
 zplugin light mollifier/cd-gitroot
 
+# Load iterm2 imgcat (useful on remote Linux servers too)
+zplugin ice svn pick="imgcat"
+zplugin snippet --command \
+    https://github.com/gnachman/iterm2-website/trunk/source/utilities/
+
 # Enable vim pathogen
 zplugin ice \
     atclone"mkdir -p ~/.vim/autoload ~/.vim/bundle && ln -sf ~/.zplugin/plugins/tpope---vim-pathogen/autoload/pathogen.vim ~/.vim/autoload" \
