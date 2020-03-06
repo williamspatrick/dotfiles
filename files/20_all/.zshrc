@@ -1,11 +1,11 @@
-# Download zplugin if it doesn't exist.
-if [[ ! -d ~/.zplugin ]] then
-    mkdir ~/.zplugin
-    git clone https://github.com/zdharma/zplugin.git ~/.zplugin/bin
+# Download zinit if it doesn't exist.
+if [[ ! -d ~/.zinit ]] then
+    mkdir ~/.zinit
+    git clone https://github.com/zdharma/zinit.git ~/.zinit/bin
 fi
 
-# Load zplugin
-source "$HOME/.zplugin/bin/zplugin.zsh"
+# Load zinit
+source "$HOME/.zinit/bin/zinit.zsh"
 
 zplugin ice compile'{detect/*.zsh,*.env/*.zsh}'
 zplugin light williamspatrick/dotfiles
@@ -21,7 +21,7 @@ zplugin light seebi/dircolors-solarized
 alias ls='ls --color=auto'
 
 # Enable solarized vim.
-zplugin ice atclone"mkdir -p ~/.vim/colors && ln -sf ~/.zplugin/plugins/altercation---vim-colors-solarized/colors/solarized.vim ~/.vim/colors/" pick"/dev/null" nocompile:!
+zplugin ice atclone"mkdir -p ~/.vim/colors && ln -sf ~/.zinit/plugins/altercation---vim-colors-solarized/colors/solarized.vim ~/.vim/colors/" atpull"%atclone" pick"/dev/null" nocompile:!
 zplugin light altercation/vim-colors-solarized
 
 # Enable solarized mutt.
@@ -68,14 +68,14 @@ zplugin snippet --command \
 
 # Enable vim pathogen
 zplugin ice \
-    atclone"mkdir -p ~/.vim/autoload ~/.vim/bundle && ln -sf ~/.zplugin/plugins/tpope---vim-pathogen/autoload/pathogen.vim ~/.vim/autoload" \
+    atclone"mkdir -p ~/.vim/autoload ~/.vim/bundle && ln -sf ~/.zinit/plugins/tpope---vim-pathogen/autoload/pathogen.vim ~/.vim/autoload" atpull"%atclone" \
     pick"/dev/null" nocompile:!
 zplugin light tpope/vim-pathogen
 
 ## Enable pathogen modules
 # vim-bitbake
 zplugin ice \
-    atclone"mkdir -p ~/.vim/bundle && ln -sf ~/.zplugin/plugins/kergoth---vim-bitbake ~/.vim/bundle/vim-bitbake" \
+    atclone"mkdir -p ~/.vim/bundle && ln -sf ~/.zinit/plugins/kergoth---vim-bitbake ~/.vim/bundle/vim-bitbake" atpull"%atclone"\
     pick"/dev/null" nocompile:!
 zplugin light kergoth/vim-bitbake
 
