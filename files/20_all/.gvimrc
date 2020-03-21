@@ -49,9 +49,6 @@ unmenu! ToolBar
 " Put line/column into the footer.
 set ruler
 
-" Set font.
-set gfn=Menlo\ Regular:h12
-
 " folding options
 set foldlevel=1000 " start with folds open.
 set foldmethod=syntax
