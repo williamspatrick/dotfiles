@@ -1,0 +1,15 @@
+[user]
+    name = Patrick Williams
+    email = patrick@stwcx.xyz
+[color]
+    ui = auto
+[diff]
+    tool = gvimdiff
+[merge]
+    tool = gvimdiff
+[rebase]
+    autoSquash = true
+[pull]
+    rebase = true
+[push]
+    default = current
