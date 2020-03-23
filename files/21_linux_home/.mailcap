@@ -1,0 +1,1 @@
+image/*; xdg-open %s && read
