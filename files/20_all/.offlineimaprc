@@ -13,4 +13,3 @@ localfolders = ~/Mail/patrick@stwcx
 type = IMAP
 remotehost = imap.fastmail.com
 ssl = yes
-sslcacertfile = ~/.brew/etc/openssl/cert.pem
