@@ -16,6 +16,12 @@ function fb-obmc() {
             conf/local.conf
     fi
 
+    # Set up DL_DIR
+    if ! grep -q "^DL_DIR" conf/local.conf ; then
+        echo "DL_DIR ?= \"$HOME/local/builds/downloads\"" >> \
+            conf/local.conf
+    fi
+
     # Remove 'fb-only-network' on non-Facebook systems.
     if [[ $DOTFILES_SYSTEM != *facebook* ]]; then
         if ! grep -q "^INHERIT_remove" conf/local.conf ; then
