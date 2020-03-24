@@ -29,4 +29,6 @@ function lf-obmc() {
         devtool create-workspace
         ln -s $HOME/local/sync/openbmc-sources workspace/sources
     fi
+
+    alias bitbake-build="bitbake obmc-phosphor-image"
 }

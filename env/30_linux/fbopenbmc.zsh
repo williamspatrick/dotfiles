@@ -29,4 +29,6 @@ function fb-obmc() {
                 conf/local.conf
         fi
     fi
+
+    alias bitbake-build="bitbake $FB_MACHINE-image"
 }
