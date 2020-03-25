@@ -15,20 +15,20 @@ function lf-obmc() {
         echo "SSTATE_DIR ?= \"$HOME/local/builds/sstate-cache\"" >> \
             conf/local.conf
         echo "INHERIT += \"uninative\"" >> conf/local.conf
-    fi
+    fi &&
 
     # Set up DL_DIR
     if ! grep -q "^DL_DIR" conf/local.conf ; then
         echo "DL_DIR ?= \"$HOME/local/builds/downloads\"" >> \
             conf/local.conf
-    fi
+    fi &&
 
     # Enable devtool link to sources directory, so existing checkouts are
     # reused.
     if [ ! -e workspace/sources ]; then
         devtool create-workspace
         ln -s $(wd path obmcsrc) workspace/sources
-    fi
+    fi &&
 
     alias bitbake-build="bitbake obmc-phosphor-image"
 }
