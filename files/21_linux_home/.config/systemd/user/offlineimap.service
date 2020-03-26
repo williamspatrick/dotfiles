@@ -1,0 +1,10 @@
+[Unit]
+Description=offlineimap sync
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/offlineimap
+TimeoutStopSec=5m
+
+[Install]
+WantedBy=default.target

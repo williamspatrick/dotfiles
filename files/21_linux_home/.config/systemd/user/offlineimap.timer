@@ -1,0 +1,9 @@
+[Unit]
+Description=offlineimap Timer
+
+[Timer]
+OnBootSec=2m
+OnUnitInactiveSec=5m
+
+[Install]
+WantedBy=default.target
