@@ -27,7 +27,7 @@ function lf-obmc() {
     # reused.
     if [ ! -e workspace/sources ]; then
         devtool create-workspace
-        ln -s $(wd path obmcsrc) workspace/sources
+        ln -sf $(wd path obmcsrc) workspace/sources
     fi &&
 
     alias bitbake-build="bitbake obmc-phosphor-image"
