@@ -11,6 +11,9 @@ syntax on
 " Enable file modeline parsing.
 set modeline
 
+" Switch leader to ,
+let mapleader=","
+
 " Set indentation options
 set expandtab
 set shiftwidth=4
