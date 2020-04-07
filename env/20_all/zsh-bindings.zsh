@@ -8,3 +8,4 @@ bindkey "\e[H" beginning-of-line
 bindkey "\e[F" end-of-line
 bindkey "^F" forward-word
 bindkey "^B" backward-word
+bindkey "^D" kill-word
