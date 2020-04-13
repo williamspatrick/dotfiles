@@ -25,6 +25,7 @@ set expandtab
 set shiftwidth=4
 set tabstop=4
 set softtabstop=4
+nnoremap <Leader>nm :set tabstop=4 softtabstop=4 shiftwidth=4 expandtab<CR>
 nnoremap <Leader>km :set tabstop=8 softtabstop=8 shiftwidth=8 noexpandtab<CR>
 autocmd BufWritePre *.[CHchS] :%s/\s\+$//e
 autocmd BufWritePre *.p[lmy] :%s/\s\+$//e
