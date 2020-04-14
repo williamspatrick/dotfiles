@@ -32,3 +32,12 @@ function fb-obmc() {
 
     alias bitbake-build="bitbake $FB_MACHINE-image"
 }
+
+function fb-obmc-docker() {
+    if [ -z $1 ]; then
+        echo "Missing machine." && return
+    fi
+
+    docker run --rm -it -v $HOME:/workdir crops/poky --workdir=/workdir \
+        /workdir/.zinit/plugins/williamspatrick---dotfiles/files/poky_docker/launch.bash $1
+}
