@@ -1,0 +1,6 @@
+split-window -h
+resize-pane -x 80
+select-pane -L
+
+split-window -v
+resize-pane -y 20
