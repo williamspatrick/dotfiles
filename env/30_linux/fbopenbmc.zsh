@@ -41,3 +41,25 @@ function fb-obmc-docker() {
     docker run --rm -it -v $HOME:/workdir crops/poky --workdir=/workdir \
         /workdir/.zinit/plugins/williamspatrick---dotfiles/files/poky_docker/launch.bash $1
 }
+
+function fb-obmc-qemu() {
+    QEMU_EXE=$(eval echo \
+        "$(wd path obmcsrc)/qemu/build/arm-softmmu/qemu-system-arm")
+
+    MTD_OPTION="-drive if=mtd,format=raw,file="
+    NIC_OPTION="-net nic -net user,hostfwd=:127.0.0.1:2222-:22,hostname=qemu"
+    MISC_OPTION="-nographic"
+
+    IMGPATH="$HOME/local/builds/build-$FB_MACHINE/tmp/deploy/images/$FB_MACHINE"
+
+    IMGFILE=$(mktemp --dry-run)
+
+    cp $IMGPATH/flash-$FB_MACHINE $IMGFILE
+    truncate -s 128M $IMGFILE
+
+    ARGS="-M $FB_MACHINE-bmc $MTD_OPTION$IMGFILE $NIC_OPTION $MISC_OPTION"
+
+    $QEMU_EXE ${=ARGS}
+
+    rm $IMGFILE
+}
