@@ -1,0 +1,47 @@
+#!/usr/bin/env zsh
+
+set -e
+
+wd()
+{
+    source wd.sh
+}
+
+wd obmcsrc
+
+for d in *;
+do
+    if [ ! -e $d/.git ];
+    then
+        continue
+    fi
+
+    echo -e "\e[34m$d\e[0m"
+    cd $d
+
+    git fetch -q
+
+    repo_status=$(git status -s)
+    if [ "x$repo_status" = "x" ];
+    then
+        status_dirty=""
+    else
+        status_dirty="yes"
+    fi
+
+    repo_branch=$(git branch --show-current)
+    if [ "x$repo_branch" = "x" ];
+    then
+        echo -e "    Branch: \e[31mNONE"
+    elif [ "x$repo_branch" = "xmaster" -a "x$status_dirty" = "x" ]; 
+    then
+        git rebase -q origin/master
+    elif [ "x$status_dirty" = "x" ]
+    then
+        echo "    Branch: $repo_branch"
+    else
+        echo "    Branch: $repo_branch \e[31m(dirty)\e[0m"
+    fi
+
+    cd ..
+done
