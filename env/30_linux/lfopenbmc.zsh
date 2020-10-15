@@ -32,3 +32,32 @@ function lf-obmc() {
 
     alias bitbake-build="bitbake obmc-phosphor-image"
 }
+
+function lf-obmc-qemu() {
+    QEMU_EXE=$(eval echo \
+        "$(wd path obmcsrc)/qemu/build/arm-softmmu/qemu-system-arm")
+    QEMU_MACHINE=${QEMU_MACHINE:-${LF_MACHINE}}
+
+    MTD_OPTION="-drive if=mtd,format=raw,file="
+    NIC_OPTION="-net nic -net user,hostfwd=:127.0.0.1:2222-:22,hostname=qemu"
+    MISC_OPTION="-nographic"
+    SD_OPTION="-drive if=sd,format=raw,file="
+
+    IMGPATH="$HOME/local/builds/lf-build-$LF_MACHINE/tmp/deploy/images/$LF_MACHINE"
+
+    IMGFILE=$(mktemp --dry-run)
+    IMGFILE_EMMC=$(mktemp)
+
+    cp $IMGPATH/flash-$LF_MACHINE $IMGFILE
+    truncate -s 128M $IMGFILE
+
+    truncate -s 1G $IMGFILE_EMMC
+
+    ARGS="-M $QEMU_MACHINE-bmc $MTD_OPTION$IMGFILE"
+    ARGS="$ARGS $SD_OPTION$IMGFILE_EMMC"
+    ARGS="$ARGS $NIC_OPTION $MISC_OPTION"
+
+    $QEMU_EXE ${=ARGS}
+
+    rm $IMGFILE $IMGFILE_EMMC
+}
