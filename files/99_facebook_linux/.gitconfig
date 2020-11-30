@@ -1,0 +1,10 @@
+[http]
+    proxy = https://fwdproxy:8082
+    proxySSLCert = /var/facebook/credentials/patrickw3/x509/patrickw3.pem
+    proxySSLKey = /var/facebook/credentials/patrickw3/x509/patrickw3.pem
+[https]
+    proxy = https://fwdproxy:8082
+    proxySSLCert = /var/facebook/credentials/patrickw3/x509/patrickw3.pem
+    proxySSLKey = /var/facebook/credentials/patrickw3/x509/patrickw3.pem
+[url "https://git.yoctoproject.org/git"]
+	insteadOf = git://git.yoctoproject.org
