@@ -39,7 +39,7 @@ function lf-obmc-qemu() {
     QEMU_MACHINE=${QEMU_MACHINE:-${LF_MACHINE}}
 
     MTD_OPTION="-drive if=mtd,format=raw,file="
-    NIC_OPTION="-net nic -net user,hostfwd=:127.0.0.1:2222-:22,hostname=qemu"
+    NIC_OPTION="-net nic -net user,hostfwd=:127.0.0.1:2222-:22,hostfwd=:127.0.0.1:2080-:80,hostfwd=:127.0.0.1:2443-:443,hostname=qemu"
     MISC_OPTION="-nographic"
     SD_OPTION="-drive if=sd,format=raw,file="
 
