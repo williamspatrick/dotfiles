@@ -1,0 +1,4 @@
+#!/bin/sh
+
+docker run --rm -v /home/apwillia:/workdir --user $(id -u):$(id -g) \
+    offlineimap offlineimap

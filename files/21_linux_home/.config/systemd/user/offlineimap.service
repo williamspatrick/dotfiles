@@ -3,7 +3,7 @@ Description=offlineimap sync
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/offlineimap
+ExecStart=/home/apwillia/.zinit/plugins/williamspatrick---dotfiles/bin/21_linux_home/offlineimap
 TimeoutStopSec=5m
 
 [Install]
