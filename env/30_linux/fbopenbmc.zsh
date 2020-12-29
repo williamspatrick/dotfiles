@@ -25,7 +25,7 @@ function fb-obmc() {
     # Remove 'fb-only-network' on non-Facebook systems.
     if [[ $DOTFILES_SYSTEM != *facebook* ]]; then
         if ! grep -q "^INHERIT_remove" conf/local.conf ; then
-            echo "INHERIT_remove = \"fb-only-network\"" >> \
+            echo "INHERIT_remove = \"fb-source-mirror fb-only-network\"" >> \
                 conf/local.conf
         fi
     fi &&
