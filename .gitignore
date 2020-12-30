@@ -1,6 +1,7 @@
 ### Vim ###
 # Swap
 [._]*.s[a-v][a-z]
+!*.svg  # comment out if you don't need vector files
 [._]*.sw[a-p]
 [._]s[a-rt-v][a-z]
 [._]ss[a-gi-z]
@@ -30,8 +31,8 @@ tags
 .zcalc_history
 
 # A popular plugin manager's files
-._zplugin
-.zplugin_lstupd
+._zinit
+.zinit_lstupd
 
 # zdharma/zshelldoc tool's files
 zsdoc/data
