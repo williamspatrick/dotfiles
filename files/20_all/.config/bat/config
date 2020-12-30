@@ -1,6 +1,5 @@
---theme="TwoDark"
+--theme="Solarized (dark)"
 --style="changes"
---paging="never"
 
 --map-syntax h:cpp
 
