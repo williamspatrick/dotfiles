@@ -61,3 +61,11 @@ function lf-obmc-qemu() {
 
     rm $IMGFILE $IMGFILE_EMMC
 }
+
+function lf-ut() {
+    REPO="$(git rev-parse --show-toplevel)"
+    UT_PATH="$(wd path obmcsrc)/openbmc-build-scripts"
+
+    UNIT_TEST_PKG="$(basename $REPO)" WORKSPACE="$(dirname $REPO)" \
+        "$UT_PATH/run-unit-test-docker.sh"
+}
