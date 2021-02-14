@@ -62,9 +62,9 @@ zinit ice wait lucid
 zinit light mollifier/cd-gitroot
 
 # Load iterm2 imgcat (useful on remote Linux servers too)
-zinit ice svn pick="imgcat"
-zinit snippet --command \
-    https://github.com/gnachman/iterm2-website/trunk/source/utilities/
+#zinit ice svn pick="imgcat"
+#zinit snippet --command \
+#    https://github.com/gnachman/iterm2-website/trunk/source/utilities/
 
 # Enable vim pathogen
 zinit ice \
