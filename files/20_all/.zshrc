@@ -79,6 +79,9 @@ zinit ice \
     pick"/dev/null" nocompile:!
 zinit light kergoth/vim-bitbake
 
+# Enable terraform autocomplete
+zinit light jsporna/terraform-zsh-plugin
+
 # Finish zinit / auto-complete
 autoload -Uz compinit
 compinit
