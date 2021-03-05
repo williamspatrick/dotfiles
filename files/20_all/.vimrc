@@ -33,6 +33,9 @@ autocmd FileType c,cpp,python,perl,markdown,dot,groovy,yaml,sh,conf,dts,cmake,ma
 " Set backspace level, so it can delete new-lines
 set backspace=2
 
+" Set fold level to all open.
+set foldlevel=100
+
 " Use Solarized color scheme
 set background=dark
 colorscheme solarized
