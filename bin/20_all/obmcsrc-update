@@ -21,7 +21,7 @@ do
 
     git fetch -q
 
-    repo_status=$(git status -s)
+    repo_status=$(git status -s -uno)
     if [ "x$repo_status" = "x" ];
     then
         status_dirty=""
