@@ -48,7 +48,14 @@ function lf-obmc-qemu() {
     IMGFILE=$(mktemp --dry-run)
     IMGFILE_EMMC=$(mktemp)
 
-    cp $IMGPATH/flash-$LF_MACHINE $IMGFILE
+    if [ -e "$IMGPATH/flash-$LF_MACHINE" ]; then
+        cp $IMGPATH/flash-$LF_MACHINE $IMGFILE
+    elif [ -e "$IMGPATH/obmc-phosphor-image-$LF_MACHINE.ubi.mtd" ]; then
+        cp $IMGPATH/obmc-phosphor-image-$LF_MACHINE.ubi.mtd $IMGFILE
+    else
+        echo "Unable to find a supported flash image for $LF_MACHINE."
+        return
+    fi
     truncate -s 128M $IMGFILE
 
     truncate -s 1G $IMGFILE_EMMC
