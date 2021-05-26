@@ -60,7 +60,11 @@ function lf-obmc-qemu() {
 
     truncate -s 1G $IMGFILE_EMMC
 
-    ARGS="-M $QEMU_MACHINE-bmc $MTD_OPTION$IMGFILE"
+    if [[  $QEMU_MACHINE != *-evb ]]; then
+        QEMU_MACHINE="${QEMU_MACHINE}-bmc"
+    fi
+
+    ARGS="-M $QEMU_MACHINE $MTD_OPTION$IMGFILE"
     ARGS="$ARGS $SD_OPTION$IMGFILE_EMMC"
     ARGS="$ARGS $NIC_OPTION $MISC_OPTION"
 
