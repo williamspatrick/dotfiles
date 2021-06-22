@@ -9,9 +9,5 @@ function gerrit-origin() {
     git config remote.origin.url ssh://openbmc.gerrit/openbmc/$REPONAME
 }
 function gerrit-maint() {
-    local REVIEWERS=( $(grep '^[MR]:' \
-        $(git rev-parse --show-toplevel)/MAINTAINERS |
-        sed 's/.*<\([^>]*@[^>]*\)>.*/r=\1/') )
-
-    echo ${(j:,:)REVIEWERS}
+    $(wd path obmcsrc)/openbmc-tools/maintainers/obmc-gerrit reviewers $*
 }
