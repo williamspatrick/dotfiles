@@ -31,6 +31,10 @@ zinit light altercation/mutt-colors-solarized
 # Powerlevel9k/10K
 zinit light romkatv/powerlevel10k
 
+# Window titles
+zstyle ':prezto:module:terminal' auto-title 'yes'
+zinit snippet PZT::modules/terminal
+
 # wd
 WD_SKIP_EXPORT=1
 zinit ice as"program" atload"wd() { source wd.sh }" \
