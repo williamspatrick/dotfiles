@@ -44,6 +44,8 @@ alternative_order text/plain
 # Deal with flaky character set from some people with poorly configured Outlook
 charset-hook ks_c_5601-1987 euc-kr
 
+unset markers
+
 source ~/.zinit/plugins/altercation---mutt-colors-solarized/mutt-colors-solarized-dark-16.muttrc
 
 set query_command= "abook --mutt-query '%s'"
