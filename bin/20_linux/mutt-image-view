@@ -1,0 +1,12 @@
+#!/usr/bin/env zsh
+
+case $TERM in
+    *-kitty)
+        kitty +kitten icat $*
+        ;;
+
+    *)
+        xdg-open $*
+        ;;
+esac
+read

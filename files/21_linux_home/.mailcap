@@ -1,1 +1,1 @@
-image/*; xdg-open %s && read
+image/*; mutt-image-view %s
