@@ -19,7 +19,16 @@ do
     echo -e "\e[34m$d\e[0m"
     cd $d
 
-    git fetch -q
+    git fetch -q --all
+
+    repo_remotes=$(git remote)
+    if [[ "$repo_remotes" == *upstream* ]];
+    then
+        repo_remote="upstream"
+    elif [[ "$repo_remotes" == *origin* ]];
+    then
+        repo_remote="origin"
+    fi
 
     repo_status=$(git status -s -uno)
     if [ "x$repo_status" = "x" ];
@@ -35,7 +44,10 @@ do
         echo -e "    Branch: \e[31mNONE"
     elif [ "x$repo_branch" = "xmaster" -a "x$status_dirty" = "x" ]; 
     then
-        git rebase -q origin/master
+        git rebase -q $repo_remote/master
+    elif [ "x$repo_branch" = "xmain" -a "x$status_dirty" = "x" ];
+    then
+        git rebase -q $repo_remote/main
     elif [ "x$status_dirty" = "x" ]
     then
         echo "    Branch: $repo_branch"
