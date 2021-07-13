@@ -36,7 +36,7 @@ function lf-obmc() {
 function lf-obmc-qemu() {
     QEMU_EXE=$(eval echo \
         "$(wd path obmcsrc)/qemu/build/arm-softmmu/qemu-system-arm")
-    QEMU_MACHINE=${QEMU_MACHINE:-${LF_MACHINE}}
+    QEMU_MACH=${QEMU_MACHINE:-${LF_MACHINE}}
 
     MTD_OPTION="-drive if=mtd,format=raw,file="
     NIC_OPTION="-net nic -net user,hostfwd=:127.0.0.1:2222-:22,hostfwd=:127.0.0.1:2080-:80,hostfwd=:127.0.0.1:2443-:443,hostname=qemu"
@@ -60,11 +60,11 @@ function lf-obmc-qemu() {
 
     truncate -s 1G $IMGFILE_EMMC
 
-    if [[  $QEMU_MACHINE != *-evb ]]; then
-        QEMU_MACHINE="${QEMU_MACHINE}-bmc"
+    if [[ $QEMU_MACH != *-evb ]]; then
+        QEMU_MACH="${QEMU_MACH}-bmc"
     fi
 
-    ARGS="-M $QEMU_MACHINE $MTD_OPTION$IMGFILE"
+    ARGS="-M $QEMU_MACH $MTD_OPTION$IMGFILE"
     ARGS="$ARGS $SD_OPTION$IMGFILE_EMMC"
     ARGS="$ARGS $NIC_OPTION $MISC_OPTION"
 
