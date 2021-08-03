@@ -45,7 +45,7 @@ function fb-obmc-docker() {
 function fb-obmc-qemu() {
     QEMU_EXE=$(eval echo \
         "$(wd path obmcsrc)/qemu/build/arm-softmmu/qemu-system-arm")
-    QEMU_MACHINE=${QEMU_MACHINE:-${FB_MACHINE}}
+    QEMU_MACH=${QEMU_MACHINE:-${FB_MACHINE}}
 
     MTD_OPTION="-drive if=mtd,format=raw,file="
     NIC_OPTION="-net nic -net user,hostfwd=:127.0.0.1:2222-:22,hostname=qemu"
@@ -62,7 +62,11 @@ function fb-obmc-qemu() {
 
     truncate -s 1G $IMGFILE_EMMC
 
-    ARGS="-M $QEMU_MACHINE-bmc $MTD_OPTION$IMGFILE"
+    if [[ $QEMU_MACH != *-evb ]]; then
+        QEMU_MACH="${QEMU_MACH}-bmc"
+    fi
+
+    ARGS="-M $QEMU_MACH $MTD_OPTION$IMGFILE"
     ARGS="$ARGS $SD_OPTION$IMGFILE_EMMC"
     ARGS="$ARGS $NIC_OPTION $MISC_OPTION"
 
