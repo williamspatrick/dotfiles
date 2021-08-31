@@ -48,7 +48,7 @@ function fb-obmc-qemu() {
     QEMU_MACH=${QEMU_MACHINE:-${FB_MACHINE}}
 
     MTD_OPTION="-drive if=mtd,format=raw,file="
-    NIC_OPTION="-net nic -net user,hostfwd=:127.0.0.1:2222-:22,hostname=qemu"
+    NIC_OPTION="-net nic -net user,hostfwd=::2222-:22,hostfwd=::8080-:8080,hostname=qemu"
     MISC_OPTION="-nographic"
     SD_OPTION="-drive if=sd,format=raw,file="
 
