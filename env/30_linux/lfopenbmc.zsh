@@ -23,13 +23,6 @@ function lf-obmc() {
             conf/local.conf
     fi &&
 
-    # Set up CCACHE
-    if ! grep -q "^CCACHE_TOP_DIR" conf/local.conf ; then
-        echo "CCACHE_TOP_DIR ?= \"$HOME/local/builds/ccache\"" >> \
-            conf/local.conf
-        echo "INHERIT += \"ccache\"" >> conf/local.conf
-    fi &&
-
     # Enable devtool link to sources directory, so existing checkouts are
     # reused.
     if [ ! -e workspace/sources ]; then
