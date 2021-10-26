@@ -22,15 +22,6 @@ function fb-obmc() {
             conf/local.conf
     fi &&
 
-    # Set up CCACHE
-    if ! grep -q "^CCACHE_TOP_DIR" conf/local.conf ; then
-        if [[ "$PATH" != *rocko* ]]; then
-            echo "CCACHE_TOP_DIR ?= \"$HOME/local/builds/ccache\"" >> \
-                conf/local.conf
-            echo "INHERIT += \"ccache\"" >> conf/local.conf
-        fi
-    fi &&
-
     # Remove 'fb-only-network' on non-Facebook systems.
     if [[ $DOTFILES_SYSTEM != *facebook* ]]; then
         if ! grep -q "^INHERIT:remove" conf/local.conf ; then
