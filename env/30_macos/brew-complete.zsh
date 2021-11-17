@@ -1,3 +1,3 @@
 #!/usr/bin/env zsh
 
-fpath=($HOME/.brew/completions/zsh $fpath)
+fpath=($HOME/homebrew/completions/zsh $fpath)
