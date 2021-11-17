@@ -1,7 +1,7 @@
 # Download zinit if it doesn't exist.
 if [[ ! -d ~/.zinit ]] then
     mkdir ~/.zinit
-    git clone https://github.com/zdharma/zinit.git ~/.zinit/bin
+    git clone https://github.com/zdharma-continuum/zinit.git ~/.zinit/bin
 fi
 
 # Load zinit
