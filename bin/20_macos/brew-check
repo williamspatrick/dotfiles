@@ -20,8 +20,8 @@ desired_brews=(\
     gnu-sed \
     grep \
     hammerspoon \
+    homebrew/cask/macvim \
     llvm \
-    macvim \
     msmtp \
     mutt \
     offlineimap \
