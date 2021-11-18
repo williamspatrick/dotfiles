@@ -5,6 +5,7 @@ desired_taps=(
 )
 
 desired_brews=(\
+    MisterTea/et/et \
     abook \
     autopep8 \
     autozimu/homebrew-formulas/unison-fsmonitor \
