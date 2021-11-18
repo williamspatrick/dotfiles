@@ -1,18 +1,25 @@
 #!/usr/bin/env zsh
 
+desired_taps=(
+    homebrew/cask-fonts
+)
+
 desired_brews=(\
     abook \
     autopep8 \
     autozimu/homebrew-formulas/unison-fsmonitor \
     bat \
+    beardedspice \
     clang-format \
     coreutils \
     dos2unix \
     findutils \
+    font-menlo-for-powerline \
     gawk \
     gnu-getopt \
     gnu-sed \
     grep \
+    hammerspoon \
     llvm \
     macvim \
     msmtp \
@@ -25,47 +32,44 @@ desired_brews=(\
     wget \
 )
 
-desired_casks=(\
-    beardedspice \
-    font-menlo-for-powerline \
-    hammerspoon \
-)
+installed_taps="$(brew tap)"
+installed_brews="$(brew list)"
 
-installed_brews=$(brew list)
-installed_casks=$(brew cask list)
+needed_taps=()
+for t in $desired_taps
+do
+    case "$installed_taps" in
+        *"$t"*)
+            ;;
+        *)
+            needed_taps+=("$t")
+            echo "Missing tap $t."
+            ;;
+    esac
+done
 
-needed_brews=""
+needed_brews=()
 for b in $desired_brews
 do
     case "$installed_brews" in
         *"$(basename $b)"*)
             ;;
         *)
-            needed_brews="$needed_brews $b"
+            needed_brews+=("$b")
             echo "Missing brew $b."
             ;;  
     esac
 done
 
-needed_casks=""
-for c in $desired_casks
-do
-    case "$installed_casks" in
-        *"$c"*)
-            ;;
-        *)
-            needed_casks="$needed_casks $c"
-            echo "Missing cask $c."
-            ;;
-    esac
-done
+if [ ! -z "$needed_taps" ]; then
+    echo "Installing taps: $needed_taps"
+    for t in $needed_taps
+    do
+        brew tap $t
+    done
+fi
 
 if [ ! -z "$needed_brews" ]; then
     echo "Installing brews: $needed_brews"
     brew install ${=needed_brews}
-fi
-
-if [ ! -z "$needed_casks" ]; then
-    echo "Installing casks: $needed_casks"
-    brew cask install ${=needed_casks}
 fi
