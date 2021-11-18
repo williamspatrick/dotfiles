@@ -29,8 +29,6 @@ desired_casks=(\
     beardedspice \
     font-menlo-for-powerline \
     hammerspoon \
-    keybase \
-    riot \
 )
 
 installed_brews=$(brew list)
