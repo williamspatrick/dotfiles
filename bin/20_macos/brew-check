@@ -25,6 +25,7 @@ desired_brews=(\
     msmtp \
     mutt \
     offlineimap \
+    svn \
     tree \
     unison \
     w3m \
