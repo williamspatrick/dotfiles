@@ -4,7 +4,7 @@ Description=offlineimap sync
 [Service]
 Type=oneshot
 ExecStart=/home/apwillia/.zinit/plugins/williamspatrick---dotfiles/bin/21_linux_home/offlineimap
-TimeoutStopSec=5m
+TimeoutSec=15m
 
 [Install]
 WantedBy=default.target
