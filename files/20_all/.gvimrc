@@ -86,3 +86,12 @@ map <C-F> <C-Right>
 map! <C-F> <C-Right>
 map <C-B> <C-Left>
 map! <C-B> <C-Left>
+
+" vim-gh-line config
+let g:gh_github_domain = "openbmc.gerrit"
+if has('mac') || has('macunix') || has('gui_macvim')
+    let g:gh_open_command = 'fn() { echo "$@" | sed "s#ssh://openbmc.gerrit#https://github.com#" | xargs open }; fn '
+else
+    let g:gh_open_command = 'fn() { echo "$@" | sed "s#ssh://openbmc.gerrit#https://github.com#" | xargs xdg-open }; fn '
+endif
+
