@@ -8,7 +8,7 @@ set record = "~/Mail/Sent"
 set postponed = "+Drafts"
 set trash = "+Done"
 
-mailboxes +INBOX +openbmc.Github +openbmc.List +openbmc.Gerrit +openbmc.GH-FB
+mailboxes +INBOX +openbmc.Github +openbmc.List +openbmc.Gerrit +openbmc.GH-FB +openbmc.GH-HCL
 
 set sendmail="msmtp"
 set envelope_from=yes
