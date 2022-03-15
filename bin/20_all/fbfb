@@ -2,8 +2,8 @@
 set -e
 
 OPTIONS=$(getopt -o d:em:p:u:vy \
-            --long date:,edit,message:,path:,user:,view,yesterday \
-            -n 'fbfb' -- "$@")
+    --long date:,edit,message:,path:,user:,view,yesterday \
+    -n 'fbfb' -- "$@")
 eval set -- "$OPTIONS"
 
 WHO=
@@ -13,37 +13,37 @@ ACTION="append"
 
 while true; do
     case "$1" in
-        -d|--date)
+        -d | --date)
             DATE="$2"
             shift 2
             ;;
 
-        -e|--edit)
+        -e | --edit)
             ACTION="edit"
             shift
             ;;
 
-        -m|--message)
+        -m | --message)
             MESSAGE="$2"
             shift 2
             ;;
 
-        -p|--path)
+        -p | --path)
             FBFB_PATH="$2"
             shift 2
             ;;
 
-        -u|--user)
+        -u | --user)
             WHO="$2"
             shift 2
             ;;
 
-        -v|--view)
+        -v | --view)
             ACTION="view"
             shift
             ;;
 
-        -y|--yesterday)
+        -y | --yesterday)
             DATE="yesterday"
             shift
             ;;
@@ -83,7 +83,7 @@ case $ACTION in
         ;;
 
     view)
-        if env which -s bat ; then
+        if env which -s bat; then
             bat $FILE_PATH
         else
             ${PAGER:-cat} $FILE_PATH
