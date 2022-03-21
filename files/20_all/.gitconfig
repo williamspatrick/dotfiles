@@ -13,3 +13,5 @@
     rebase = true
 [push]
     default = current
+[advice]
+    skippedCherryPicks = false
