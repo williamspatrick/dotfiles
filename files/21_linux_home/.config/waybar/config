@@ -1,0 +1,53 @@
+{
+    "layer": "top",
+    "modules-left": [
+        "sway/workspaces",
+        "sway/mode"
+    ],
+    "modules-center": [
+        "clock"
+    ],
+    "modules-right": [
+        "pulseaudio",
+        "cpu",
+        "memory",
+        "disk",
+        "network",
+        "cpu#2",
+        "idle_inhibitor"
+    ],
+    "clock": {
+        "interval": "5",
+        "format": "{:%a %b %d, %Y 🕑 %I:%M %p}"
+    },
+    "pulseaudio": {
+        "format": "{volume}% {icon}",
+        "format-muted": "",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": [
+                "",
+                ""
+            ]
+        }
+    },
+    "cpu": {
+        "interval": "5",
+        "format": " {usage}%"
+    },
+    "cpu#2": {
+        "interval": "10",
+        "format": " {avg_frequency:0.1f}/{max_frequency:0.1f}"
+    },
+    "memory": {
+        "format": " {avail:0.1f}/{total:0.1f}GiB"
+    },
+    "disk": {
+        "format": "🖴 {used}/{total}"
+    }
+}
