@@ -1,3 +1,3 @@
 
 " Set font.
-set gfn=Liberation\ Mono\ Regular\ 11
+set gfn=Liberation\ Mono\ Regular\ 12
