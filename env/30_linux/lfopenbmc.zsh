@@ -30,7 +30,7 @@ function lf-obmc() {
         ln -sf $(wd path obmcsrc) workspace/sources
     fi &&
 
-    alias bitbake-build="bitbake obmc-phosphor-image"
+    alias bitbake-build="nice bitbake obmc-phosphor-image"
 }
 
 function lf-obmc-qemu() {

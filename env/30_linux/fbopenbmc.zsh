@@ -30,7 +30,7 @@ function fb-obmc() {
         fi
     fi &&
 
-    alias bitbake-build="bitbake $FB_MACHINE-image"
+    alias bitbake-build="nice bitbake $FB_MACHINE-image"
 }
 
 function fb-obmc-docker() {
