@@ -39,6 +39,8 @@ for d in *; do
         git rebase -q $repo_remote/master
     elif [ "x$repo_branch" = "xmain" -a "x$status_dirty" = "x" ]; then
         git rebase -q $repo_remote/main
+    elif [ "x$repo_branch" = "xdevelop" -a "x$status_dirty" = "x" ]; then
+        git rebase -q $repo_remote/develop
     elif [ "x$status_dirty" = "x" ]; then
         echo "    Branch: $repo_branch"
     else
