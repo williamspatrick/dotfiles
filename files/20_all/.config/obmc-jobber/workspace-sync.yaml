@@ -1,0 +1,6 @@
+name: OpenBMC Workspace Sync
+where: obmcsrc
+run:
+  - fetch: all
+  - rebase
+on-fail: email
