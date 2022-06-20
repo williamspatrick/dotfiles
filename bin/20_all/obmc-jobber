@@ -1,0 +1,162 @@
+#!/usr/bin/env -S python3 -B
+
+import argparse
+import os
+import sys
+import yaml
+from pathlib import Path
+from sh import bash, git, msmtp  # type: ignore
+from typing import Dict, List, Optional, Union
+
+
+def replace_tilde(path: str) -> str:
+    if path.startswith("~"):
+        return str(Path.home()) + path[1:]
+    return path
+
+
+def warp_path(path: str) -> Optional[str]:
+    warprc_path = os.path.join(Path.home(), ".warprc")
+    if not os.path.exists(warprc_path):
+        print("Cannot find .warprc")
+        return None
+
+    with open(warprc_path, "r") as warprc:
+        for line in warprc:
+            key, value = line.rstrip().split(":")
+            if key != path:
+                continue
+
+            return replace_tilde(value)
+
+    return None
+
+
+def has_git(path: str) -> bool:
+    return os.path.exists(os.path.join(path, ".git"))
+
+
+def subdirs(path: str) -> List[str]:
+    result = []
+    for subdir in os.listdir(path):
+        fullpath = os.path.join(path, subdir)
+        if has_git(fullpath):
+            result.append(subdir)
+    return result
+
+
+red = "\u001b[31m"
+yellow = "\u001b[33m"
+blue = "\u001b[34m"
+normal = "\u001b[0m"
+
+
+def cmd_fetch(path: str, arg: Optional[str]) -> None:
+    if not arg:
+        arg = "origin"
+    if arg == "all":
+        arg = "--all"
+    git.bake("-C", path).fetch(arg)
+
+
+def cmd_rebase(path: str, arg: Optional[str]) -> None:
+    gitc = git.bake("-C", path)
+
+    dirty = False
+    if gitc.status("-suno"):
+        dirty = True
+
+    remotes = [x.rstrip() for x in gitc.remote()]
+    remote = None
+    if "upstream" in remotes:
+        remote = "upstream"
+    elif "origin" in remotes:
+        remote = "origin"
+
+    branch = gitc.branch("--show-current").rstrip()
+
+    if not branch:
+        print(f"    Branch: {red}NONE{normal}")
+    elif remote and not dirty and branch in ["main", "master", "develop"]:
+        gitc.rebase("-q", f"{remote}/{branch}")
+    elif not dirty:
+        print(f"    Branch: {branch}")
+    else:
+        print(f"    Branch: {branch} {red}(dirty){normal}")
+
+
+def cmd_shell(path: str, arg: Optional[str]) -> None:
+    if not arg:
+        raise Exception("Missing shell argument")
+
+    print(bash("-c", arg).rstrip())
+    pass
+
+
+def runner(path: str, cmds: List[Union[str, Dict[str, str]]]) -> None:
+    for c in cmds:
+        if isinstance(c, str):
+            fn = c
+            arg = None
+        else:
+            fn, arg = list(c.items())[0]
+
+        fn = "cmd_" + fn
+
+        if fn not in globals():
+            raise Exception(f"Cannot find command handler for {fn}.")
+
+        new_path = globals()[fn](path, arg)
+        if new_path:
+            path = new_path
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "-s", "--jobspec", required=True, help="Job Spec to execute"
+    )
+
+    args = parser.parse_args()
+
+    with open(args.jobspec, "r") as jobspec:
+        job = yaml.safe_load(jobspec)
+    if "name" not in job:
+        job["name"] = os.path.splitext(os.path.basename(args.jobspec))[0]
+
+    where = job["where"]
+    if not os.path.exists(where):
+        where = warp_path(where)
+    if not os.path.exists(where):
+        print("Cannot find job location:", where)
+        return 1
+
+    directories = [where]
+    if not has_git(where):
+        directories = [os.path.join(where, x) for x in subdirs(where)]
+
+    if "run" not in job:
+        print("No job 'run' directive.")
+        return 1
+
+    failed = False
+    for d in directories:
+        d_short = os.path.basename(d)
+        try:
+            print(d_short)
+            runner(d, job["run"])
+        except Exception as e:
+            onfail = job.get("on-fail", "print")
+
+            if onfail == "print":
+                print(f"Exception: {e}")
+            elif onfail == "email":
+                email = f'Subject: Job failed: {job["name"]}\n{d_short}\n{e}'
+                msmtp("--", "patrick@stwcx.xyz", _in=email)
+
+            failed = True
+    return 1 if failed else 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
