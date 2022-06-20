@@ -4,10 +4,11 @@ import argparse
 import io
 import os
 import sys
+import threading
 import yaml
 from pathlib import Path
 from sh import zsh, git, msmtp  # type: ignore
-from typing import Dict, List, Optional, Union
+from typing import Any, Dict, List, Optional, Union
 
 
 def replace_tilde(path: str) -> str:
@@ -52,66 +53,99 @@ blue = "\u001b[34m"
 normal = "\u001b[0m"
 
 
-def cmd_fetch(buf: io.StringIO, path: str, arg: Optional[str]) -> None:
-    if not arg:
-        arg = "origin"
-    if arg == "all":
-        arg = "--all"
-    git.bake("-C", path).fetch(arg)
+class Job(threading.Thread):
+    def __init__(
+        self, sem: threading.Semaphore, jobspec: Dict[str, Any], path: str
+    ):
+        super(Job, self).__init__()
+        self.sem = sem
+        self.path = path
+        self.jobspec = jobspec
+        self.buf = io.StringIO()
 
+    def run(self) -> None:
+        self.sem.acquire()
 
-def cmd_rebase(buf: io.StringIO, path: str, arg: Optional[str]) -> None:
-    gitc = git.bake("-C", path)
+        path_short = os.path.basename(self.path)
+        print(path_short, file=self.buf)
+        try:
+            self.steps()
+        except Exception as e:
+            onfail = self.jobspec.get("on-fail", "print")
 
-    dirty = False
-    if gitc.status("-suno"):
-        dirty = True
+            if onfail == "print":
+                print(f"Exception: {e}", file=self.buf)
+            elif onfail == "email":
+                email = f"""\
+Subject: Job failed: {self.jobspec["name"]}
 
-    remotes = [x.rstrip() for x in gitc.remote()]
-    remote = None
-    if "upstream" in remotes:
-        remote = "upstream"
-    elif "origin" in remotes:
-        remote = "origin"
+Log:
+{self.buf.getvalue().rstrip()}
 
-    branch = gitc.branch("--show-current").rstrip()
+Exception:
+{e}
+"""
+                msmtp("--", "patrick@stwcx.xyz", _in=email)
 
-    if not branch:
-        print(f"    Branch: {red}NONE{normal}", file=buf)
-    elif remote and not dirty and branch in ["main", "master", "develop"]:
-        gitc.rebase("-q", f"{remote}/{branch}")
-    elif not dirty:
-        print(f"    Branch: {branch}", file=buf)
-    else:
-        print(f"    Branch: {branch} {red}(dirty){normal}", file=buf)
+            failed = True
 
+        self.sem.release()
 
-def cmd_shell(buf: io.StringIO, path: str, arg: Optional[str]) -> None:
-    if not arg:
-        raise Exception("Missing shell argument")
+    def steps(self) -> None:
+        for c in self.jobspec["run"]:
+            if isinstance(c, str):
+                fn = c
+                arg = None
+            else:
+                fn, arg = list(c.items())[0]
 
-    print(zsh("-c", arg).rstrip(), file=buf)
-    pass
+            fn = "cmd_" + fn
 
+            if fn not in Job.__dict__:
+                raise Exception(f"Cannot find command handler for {fn}.")
 
-def runner(
-    buf: io.StringIO, path: str, cmds: List[Union[str, Dict[str, str]]]
-) -> None:
-    for c in cmds:
-        if isinstance(c, str):
-            fn = c
-            arg = None
+            new_path = Job.__dict__[fn](self, arg)
+            if new_path:
+                self.path = new_path
+
+    def cmd_fetch(self, arg: Optional[str]) -> None:
+        if not arg:
+            arg = "origin"
+        if arg == "all":
+            arg = "--all"
+        git.bake("-C", self.path).fetch(arg)
+
+    def cmd_rebase(self, arg: Optional[str]) -> None:
+        gitc = git.bake("-C", self.path)
+
+        dirty = False
+        if gitc.status("-suno"):
+            dirty = True
+
+        remotes = [x.rstrip() for x in gitc.remote()]
+        remote = None
+        if "upstream" in remotes:
+            remote = "upstream"
+        elif "origin" in remotes:
+            remote = "origin"
+
+        branch = gitc.branch("--show-current").rstrip()
+
+        if not branch:
+            print(f"    Branch: {red}NONE{normal}", file=self.buf)
+        elif remote and not dirty and branch in ["main", "master", "develop"]:
+            gitc.rebase("-q", f"{remote}/{branch}")
+        elif not dirty:
+            print(f"    Branch: {branch}", file=self.buf)
         else:
-            fn, arg = list(c.items())[0]
+            print(f"    Branch: {branch} {red}(dirty){normal}", file=self.buf)
 
-        fn = "cmd_" + fn
+    def cmd_shell(self, arg: Optional[str]) -> None:
+        if not arg:
+            raise Exception("Missing shell argument")
 
-        if fn not in globals():
-            raise Exception(f"Cannot find command handler for {fn}.")
-
-        new_path = globals()[fn](buf, path, arg)
-        if new_path:
-            path = new_path
+        print(zsh("-c", arg).rstrip(), file=self.buf)
+        pass
 
 
 def main() -> int:
@@ -142,38 +176,20 @@ def main() -> int:
         print("No job 'run' directive.")
         return 1
 
+    sem = threading.Semaphore(job.get("limit", 10))
+
     failed = False
+    jobs: List[Job] = []
     for d in directories:
-        d_short = os.path.basename(d)
-        buf = io.StringIO()
-        try:
-            print(d_short, file=buf)
-            runner(buf, d, job["run"])
-        except Exception as e:
-            onfail = job.get("on-fail", "print")
+        jobs.append(Job(sem, job, d))
 
-            if onfail == "print":
-                if buf.getvalue():
-                    print(buf.getvalue().rstrip())
-                print(f"Exception: {e}")
-            elif onfail == "email":
-                email = f"""
-Subject: Job failed: {job["name"]}
+    for j in jobs:
+        j.start()
 
-{d_short}
+    for j in jobs:
+        j.join()
+        print(j.buf.getvalue().rstrip())
 
-Log...
-{buf.getvalue().rstrip()}
-
-Exception...
-{e}
-"""
-                msmtp("--", "patrick@stwcx.xyz", _in=email)
-
-            failed = True
-        else:
-            if buf.getvalue():
-                print(buf.getvalue().rstrip())
     return 1 if failed else 0
 
 

@@ -1,4 +1,5 @@
 name: OpenBMC Workspace Sync
+limit: 12
 where: obmcsrc
 run:
   - fetch: all
