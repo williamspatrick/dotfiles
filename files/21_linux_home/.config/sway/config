@@ -18,7 +18,8 @@ set $xdg_data XDG_DATA_DIRS=${XDG_DATA_DIRS}:${HOME}/.local/share/flatpak/export
 exec $xdg_data ulauncher --hide-window
 set $menu ulauncher-toggle
 
-set $bg_img /usr/share/backgrounds/gnome/Leaf.jpg
+# https://www.pexels.com/photo/photo-of-a-leaf-3021635/
+set $bg_img ~/.config/sway/Leaf.jpg
 
 ### Output configuration
 #
