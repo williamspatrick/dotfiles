@@ -170,6 +170,8 @@ def main() -> int:
         job["name"] = os.path.splitext(os.path.basename(args.jobspec))[0]
 
     where = job["where"]
+    if isinstance(where, list):
+        where = "/".join([warp_path(where[0])] + where[1:])
     if not os.path.exists(where):
         where = warp_path(where)
     if not os.path.exists(where):
