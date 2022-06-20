@@ -1,0 +1,6 @@
+name: LF-OpenBMC Repo Sync
+where: lfopenbmc
+run:
+  - fetch: all
+  - rebase
+on-fail: email
