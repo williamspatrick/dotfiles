@@ -1,11 +1,12 @@
 #!/usr/bin/env -S python3 -B
 
 import argparse
+import io
 import os
 import sys
 import yaml
 from pathlib import Path
-from sh import bash, git, msmtp  # type: ignore
+from sh import zsh, git, msmtp  # type: ignore
 from typing import Dict, List, Optional, Union
 
 
@@ -51,7 +52,7 @@ blue = "\u001b[34m"
 normal = "\u001b[0m"
 
 
-def cmd_fetch(path: str, arg: Optional[str]) -> None:
+def cmd_fetch(buf: io.StringIO, path: str, arg: Optional[str]) -> None:
     if not arg:
         arg = "origin"
     if arg == "all":
@@ -59,7 +60,7 @@ def cmd_fetch(path: str, arg: Optional[str]) -> None:
     git.bake("-C", path).fetch(arg)
 
 
-def cmd_rebase(path: str, arg: Optional[str]) -> None:
+def cmd_rebase(buf: io.StringIO, path: str, arg: Optional[str]) -> None:
     gitc = git.bake("-C", path)
 
     dirty = False
@@ -76,24 +77,26 @@ def cmd_rebase(path: str, arg: Optional[str]) -> None:
     branch = gitc.branch("--show-current").rstrip()
 
     if not branch:
-        print(f"    Branch: {red}NONE{normal}")
+        print(f"    Branch: {red}NONE{normal}", file=buf)
     elif remote and not dirty and branch in ["main", "master", "develop"]:
         gitc.rebase("-q", f"{remote}/{branch}")
     elif not dirty:
-        print(f"    Branch: {branch}")
+        print(f"    Branch: {branch}", file=buf)
     else:
-        print(f"    Branch: {branch} {red}(dirty){normal}")
+        print(f"    Branch: {branch} {red}(dirty){normal}", file=buf)
 
 
-def cmd_shell(path: str, arg: Optional[str]) -> None:
+def cmd_shell(buf: io.StringIO, path: str, arg: Optional[str]) -> None:
     if not arg:
         raise Exception("Missing shell argument")
 
-    print(bash("-c", arg).rstrip())
+    print(zsh("-c", arg).rstrip(), file=buf)
     pass
 
 
-def runner(path: str, cmds: List[Union[str, Dict[str, str]]]) -> None:
+def runner(
+    buf: io.StringIO, path: str, cmds: List[Union[str, Dict[str, str]]]
+) -> None:
     for c in cmds:
         if isinstance(c, str):
             fn = c
@@ -106,7 +109,7 @@ def runner(path: str, cmds: List[Union[str, Dict[str, str]]]) -> None:
         if fn not in globals():
             raise Exception(f"Cannot find command handler for {fn}.")
 
-        new_path = globals()[fn](path, arg)
+        new_path = globals()[fn](buf, path, arg)
         if new_path:
             path = new_path
 
@@ -142,19 +145,35 @@ def main() -> int:
     failed = False
     for d in directories:
         d_short = os.path.basename(d)
+        buf = io.StringIO()
         try:
-            print(d_short)
-            runner(d, job["run"])
+            print(d_short, file=buf)
+            runner(buf, d, job["run"])
         except Exception as e:
             onfail = job.get("on-fail", "print")
 
             if onfail == "print":
+                if buf.getvalue():
+                    print(buf.getvalue().rstrip())
                 print(f"Exception: {e}")
             elif onfail == "email":
-                email = f'Subject: Job failed: {job["name"]}\n{d_short}\n{e}'
+                email = f"""
+Subject: Job failed: {job["name"]}
+
+{d_short}
+
+Log...
+{buf.getvalue().rstrip()}
+
+Exception...
+{e}
+"""
                 msmtp("--", "patrick@stwcx.xyz", _in=email)
 
             failed = True
+        else:
+            if buf.getvalue():
+                print(buf.getvalue().rstrip())
     return 1 if failed else 0
 
 
