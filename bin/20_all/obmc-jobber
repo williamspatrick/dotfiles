@@ -156,6 +156,9 @@ def main() -> int:
 
     args = parser.parse_args()
 
+    if not os.path.exists(args.jobspec):
+        args.jobspec = replace_tilde(f"~/.config/obmc-jobber/{args.jobspec}")
+
     with open(args.jobspec, "r") as jobspec:
         job = yaml.safe_load(jobspec)
     if "name" not in job:
