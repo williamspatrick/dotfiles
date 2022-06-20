@@ -144,7 +144,12 @@ Exception:
         if not arg:
             raise Exception("Missing shell argument")
 
-        print(zsh("-c", arg).rstrip(), file=self.buf)
+        print(
+            zsh(
+                "-c", f"cd {self.path} && {arg}", _out=self.buf, _tty_out=False
+            ).rstrip(),
+            file=self.buf,
+        )
         pass
 
 
