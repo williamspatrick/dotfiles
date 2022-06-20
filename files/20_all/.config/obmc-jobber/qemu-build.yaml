@@ -1,0 +1,9 @@
+name: QEMU builder
+where:
+  - obmcsrc
+  - qemu
+run:
+  - shell: |-
+      cd build &&
+      make -j32
+on-fail: email
