@@ -152,6 +152,12 @@ Exception:
         )
         pass
 
+    def cmd_cd(self, arg: Optional[str]) -> None:
+        if not arg:
+            raise Exception("Missing directory argument")
+
+        self.path = os.path.normpath(os.path.join(self.path, arg))
+
 
 def main() -> int:
     parser = argparse.ArgumentParser()

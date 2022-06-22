@@ -3,7 +3,8 @@ where:
   - obmcsrc
   - openbmc-build-scripts
 run:
+  - cd: scripts
   - shell: |-
-      ./scripts/build-unit-test-docker &&
-      ./scripts/clean-unit-test-docker
+      ./build-unit-test-docker &&
+      ./clean-unit-test-docker
 on-fail: email
