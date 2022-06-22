@@ -171,7 +171,9 @@ def main() -> int:
 
     where = job["where"]
     if isinstance(where, list):
-        where = "/".join([warp_path(where[0])] + where[1:])
+        first = warp_path(where[0])
+        if first:
+            where = "/".join([first] + where[1:])
     if not os.path.exists(where):
         where = warp_path(where)
     if not os.path.exists(where):
