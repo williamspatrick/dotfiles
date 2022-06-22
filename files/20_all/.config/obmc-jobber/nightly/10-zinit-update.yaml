@@ -1,0 +1,9 @@
+name: zinit update
+where:
+  - dotfiles
+run:
+  - shell: |-
+      source ~/.zshrc &&
+      zinit self-update &&
+      zinit update
+on-fail: email
