@@ -62,6 +62,9 @@ class Job(threading.Thread):
         self.path = path
         self.jobspec = jobspec
         self.buf = io.StringIO()
+        self.failed = False
+
+        self.start()
 
     def run(self) -> None:
         self.sem.acquire()
@@ -87,7 +90,7 @@ Exception:
 """
                 msmtp("--", "patrick@stwcx.xyz", _in=email)
 
-            failed = True
+            self.failed = True
 
         self.sem.release()
 
@@ -170,10 +173,30 @@ def main() -> int:
     if not os.path.exists(args.jobspec):
         args.jobspec = replace_tilde(f"~/.config/obmc-jobber/{args.jobspec}")
 
-    with open(args.jobspec, "r") as jobspec:
+    if os.path.isdir(args.jobspec):
+        args.jobspec = sorted(
+            [
+                os.path.join(args.jobspec, f.name)
+                for f in os.scandir(args.jobspec)
+                if f.is_file() and os.path.splitext(f.name)[1] == ".yaml"
+            ]
+        )
+    else:
+        args.jobspec = [args.jobspec]
+
+    failed = False
+    for j in args.jobspec:
+        if not run_jobspec(j):
+            failed = True
+
+    return 1 if failed else 0
+
+
+def run_jobspec(jsfile: str) -> bool:
+    with open(jsfile, "r") as jobspec:
         job = yaml.safe_load(jobspec)
     if "name" not in job:
-        job["name"] = os.path.splitext(os.path.basename(args.jobspec))[0]
+        job["name"] = os.path.splitext(os.path.basename(jsfile))[0]
 
     where = job["where"]
     if isinstance(where, list):
@@ -184,7 +207,7 @@ def main() -> int:
         where = warp_path(where)
     if not os.path.exists(where):
         print("Cannot find job location:", where)
-        return 1
+        return False
 
     directories = [where]
     if not has_git(where):
@@ -192,7 +215,7 @@ def main() -> int:
 
     if "run" not in job:
         print("No job 'run' directive.")
-        return 1
+        return False
 
     sem = threading.Semaphore(job.get("limit", 10))
 
@@ -202,13 +225,11 @@ def main() -> int:
         jobs.append(Job(sem, job, d))
 
     for j in jobs:
-        j.start()
-
-    for j in jobs:
         j.join()
+        failed = failed | j.failed
         print(j.buf.getvalue().rstrip())
 
-    return 1 if failed else 0
+    return not failed
 
 
 if __name__ == "__main__":
