@@ -1,4 +1,4 @@
 #!/usr/bin/env zsh
 
-obmc-jobber -s 10-workspace-sync.yaml
-obmc-jobber -s 10-lfobmc-sync.yaml
+obmc-jobber -s nightly/10-workspace-sync.yaml
+obmc-jobber -s nightly/10-lfobmc-sync.yaml
