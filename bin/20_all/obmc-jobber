@@ -8,6 +8,7 @@ import threading
 import yaml
 from pathlib import Path
 from sh import zsh, git, msmtp  # type: ignore
+from tempfile import TemporaryDirectory
 from typing import Any, Dict, List, Optional, Union
 
 
@@ -63,6 +64,7 @@ class Job(threading.Thread):
         self.jobspec = jobspec
         self.buf = io.StringIO()
         self.failed = False
+        self.clone_repo: Optional[TemporaryDirectory[str]] = None
 
         self.start()
 
@@ -72,7 +74,8 @@ class Job(threading.Thread):
         path_short = os.path.basename(self.path)
         print(path_short, file=self.buf)
         try:
-            self.steps()
+            if self.requires():
+                self.steps()
         except Exception as e:
             onfail = self.jobspec.get("on-fail", "print")
 
@@ -93,6 +96,28 @@ Exception:
             self.failed = True
 
         self.sem.release()
+
+    def requires(self) -> bool:
+        for r in self.jobspec["requires"]:
+            if isinstance(r, str):
+                fn = r
+                arg = None
+            else:
+                fn, arg = list(r.items())[0]
+
+            fnn = "require_" + fn
+            if fnn not in Job.__dict__:
+                fnn = "cmd_" + fn
+            if fnn not in Job.__dict__:
+                raise Exception(f"Cannot find command handler for {fn}.")
+
+            try:
+                new_path = Job.__dict__[fnn](self, arg)
+                if new_path:
+                    self.path = new_path
+            except:
+                return False
+        return True
 
     def steps(self) -> None:
         for c in self.jobspec["run"]:
@@ -153,13 +178,50 @@ Exception:
             ).rstrip(),
             file=self.buf,
         )
-        pass
 
     def cmd_cd(self, arg: Optional[str]) -> None:
         if not arg:
             raise Exception("Missing directory argument")
 
         self.path = os.path.normpath(os.path.join(self.path, arg))
+
+    def cmd_clone(self, arg: Optional[str]) -> str:
+        if self.clone_repo:
+            raise Exception("Can only clone once.")
+
+        if not arg:
+            arg = "origin"
+
+        self.clone_repo = TemporaryDirectory()
+
+        url = None
+        for l in git.bake("-C", self.path).remote("-v").splitlines():
+            if l.startswith(arg) and "(fetch)" in l:
+                url = l.split()[1]
+        if not url:
+            raise Exception(f"Cannot find remote: {arg}")
+
+        git.clone("--reference", self.path, url, self.clone_repo.name)
+        return self.clone_repo.name
+
+    def cmd_write_file(self, arg: Optional[str]) -> None:
+        if not arg:
+            raise Exception("Missing arguments")
+
+        args = arg.splitlines()
+        file = args[0]
+        text = "\n".join(args[1:])
+
+        with open(os.path.join(self.path, file), "w") as fp:
+            fp.write(text)
+
+    def require_remote(self, arg: Optional[str]) -> None:
+        if not arg:
+            raise Exception("Missing remote argument")
+
+        gitc = git.bake("-C", self.path)
+        if arg not in gitc.remote("-v"):
+            raise Exception("Remote not found")
 
 
 def main() -> int:
