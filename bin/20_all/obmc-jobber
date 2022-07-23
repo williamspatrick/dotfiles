@@ -98,7 +98,7 @@ Exception:
         self.sem.release()
 
     def requires(self) -> bool:
-        for r in self.jobspec["requires"]:
+        for r in self.jobspec.get("requires", []):
             if isinstance(r, str):
                 fn = r
                 arg = None
