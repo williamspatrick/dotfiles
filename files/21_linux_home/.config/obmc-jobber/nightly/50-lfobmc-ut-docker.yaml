@@ -5,6 +5,6 @@ where:
 run:
   - cd: scripts
   - shell: |-
-      ./build-unit-test-docker &&
+      ./build-unit-test-docker
       ./clean-unit-test-docker
 on-fail: email

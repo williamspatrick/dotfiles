@@ -3,7 +3,7 @@ where:
   - dotfiles
 run:
   - shell: |-
-      source ~/.zshrc &&
-      zinit self-update &&
+      source ~/.zshrc
+      zinit self-update
       zinit update
 on-fail: email

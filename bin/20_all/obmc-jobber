@@ -8,7 +8,7 @@ import threading
 import yaml
 from pathlib import Path
 from sh import zsh, git, msmtp  # type: ignore
-from tempfile import TemporaryDirectory
+from tempfile import NamedTemporaryFile, TemporaryDirectory
 from typing import Any, Dict, List, Optional, Union
 
 
@@ -172,12 +172,16 @@ Exception:
         if not arg:
             raise Exception("Missing shell argument")
 
-        print(
-            zsh(
-                "-c", f"cd {self.path} && {arg}", _out=self.buf, _tty_out=False
-            ).rstrip(),
-            file=self.buf,
-        )
+        with NamedTemporaryFile(mode="w+") as fp:
+            print("#!/bin/zsh -e", file=fp)
+            print(f"cd {self.path}", file=fp)
+            print(arg, file=fp)
+            fp.flush()
+
+            print(
+                zsh(fp.name, _out=self.buf, _tty_out=False).rstrip(),
+                file=self.buf,
+            )
 
     def cmd_cd(self, arg: Optional[str]) -> None:
         if not arg:

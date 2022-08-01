@@ -4,6 +4,6 @@ where:
   - qemu
 run:
   - shell: |-
-      cd build &&
+      cd build
       make -j32
 on-fail: email
