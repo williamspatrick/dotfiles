@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 function gerrit-hook() {
-    scp openbmc.gerrit:hooks/commit-msg \
+    scp -O openbmc.gerrit:hooks/commit-msg \
         $(git rev-parse --show-toplevel)/.git/hooks/
 }
 function gerrit-origin() {
@@ -9,7 +9,8 @@ function gerrit-origin() {
     git config remote.origin.url ssh://openbmc.gerrit/openbmc/$REPONAME
 }
 function gerrit-maint() {
-    $(wd path obmcsrc)/openbmc-tools/maintainers/obmc-gerrit reviewers $*
+    $(wd path obmcsrc)/openbmc-build-scripts/tools/owners \
+        reviewers --push-args $*
 }
 
 function lf-obmc-apply() {
