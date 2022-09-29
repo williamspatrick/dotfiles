@@ -15,7 +15,7 @@ set envelope_from=yes
 
 macro generic "<esc>1" ":set from=patrick@stwcx.xyz"
 macro generic "<esc>2" ":set from=williamspatrick@gmail.com"
-macro generic "<esc>3" ":set from=patrickw3@fb.com"
+macro generic "<esc>3" ":set from=patrickw3@meta.com"
 macro generic S "<shell-escape>offlineimap\r"
 
 set sort="threads"
