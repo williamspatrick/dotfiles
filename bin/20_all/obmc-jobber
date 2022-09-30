@@ -226,6 +226,24 @@ Exception:
         with open(os.path.join(self.path, file), "w") as fp:
             fp.write(text)
 
+    def cmd_git_add(self, arg: Optional[str]) -> None:
+        if not arg:
+            arg = "-u"
+
+        gitc = git.bake("-C", self.path)
+        gitc.add(arg.split(" "))
+
+    def cmd_git_commit(self, arg: Optional[str]) -> None:
+        if not arg:
+            raise Exception("Missing arguments")
+
+        with open(os.path.join(self.path, "COMMIT_MSG"), "w") as fp:
+            fp.write(arg)
+
+        gitc = git.bake("-C", self.path)
+        gitc.commit("-s", "-F", "COMMIT_MSG")
+
+
     def require_remote(self, arg: Optional[str]) -> None:
         if not arg:
             raise Exception("Missing remote argument")
