@@ -41,7 +41,7 @@ function lf-obmc-qemu() {
     MTD_OPTION="-drive if=mtd,format=raw,file="
     NIC_OPTION="-net nic -net user,hostfwd=:127.0.0.1:2222-:22,hostfwd=:127.0.0.1:2080-:80,hostfwd=:127.0.0.1:2443-:443,hostname=qemu"
     MISC_OPTION="-nographic"
-    SD_OPTION="-drive if=sd,format=raw,file="
+    SD_OPTION="-drive if=sd,index=2,format=raw,file="
 
     IMGPATH="$HOME/local/builds/lf-build-$LF_MACHINE/tmp/deploy/images/$LF_MACHINE"
 
