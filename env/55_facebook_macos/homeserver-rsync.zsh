@@ -1,13 +1,5 @@
 #!/usr/bin/env zsh
 
-function home-server-hostname() {
-    if ifconfig -X en | grep "inet 192.168.1.132" > /dev/null ; then
-        echo "192.168.1.32"
-    else
-        echo "home-server"
-    fi
-}
-
 function fbobmc-to-home() {
     wd fbopenbmc
     rsync --delete --delete-after -avr \
