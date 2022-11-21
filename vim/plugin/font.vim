@@ -1,4 +1,4 @@
-if has("gui_running")
+if has("gui_running") || exists("g:neovide")
     if has('mac') || has('macunix') || has('gui_macvim')
         set gfn=Menlo\ Regular:h12
     else
