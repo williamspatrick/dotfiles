@@ -72,6 +72,7 @@ if &diff
 else
     set columns=80
 endif
+set cc=81
 set lines=60
 
 " Set ,cf to code-format options.

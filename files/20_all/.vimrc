@@ -53,6 +53,9 @@ autocmd FileType markdown set spell
 autocmd FileType python set foldmethod=indent
 autocmd BufNewFile,BufRead Jenkinsfile setf groovy
 
+" Set sizes.
+set cc=81
+
 " Set ,cf to code-format options.
 autocmd FileType c,cpp nnoremap <Leader>cf :%!clang-format --assume-filename=%<CR>
 autocmd FileType python nnoremap <Leader>cf :%!black -q -l79 -<CR>
