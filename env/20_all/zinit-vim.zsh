@@ -17,3 +17,9 @@ zinit ice \
     atclone"mkdir -p ~/.vim/bundle && ln -sf ~/.zinit/plugins/ruanyl---vim-gh-line ~/.vim/bundle/vim-gh-line" atpull"%atclone" \
     pick"/dev/null" nocompile:!
 zinit light ruanyl/vim-gh-line
+
+
+if [ ! -e ~/.vim/bundle/vim-williamspatrick ];
+then
+    ln -sf ~/.zinit/plugins/williamspatrick---dotfiles/vim ~/.vim/bundle/vim-williamspatrick
+fi
