@@ -1,6 +1,7 @@
 [user]
     name = Patrick Williams
     email = patrick@stwcx.xyz
+    signingkey = 0460FD8A2E0B13D70D6EA241AB0347CC2D00C119
 [color]
     ui = auto
 [diff]
@@ -15,3 +16,5 @@
     default = current
 [advice]
     skippedCherryPicks = false
+[init]
+    defaultBranch = main
