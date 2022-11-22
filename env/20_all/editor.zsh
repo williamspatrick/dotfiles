@@ -1,3 +1,7 @@
 #!/usr/bin/env zsh
 
-export EDITOR="/usr/bin/vim"
+if [ -e /usr/bin/nvim ]; then
+    export EDITOR="/usr/bin/nvim"
+else
+    export EDITOR="/usr/bin/vim"
+fi
