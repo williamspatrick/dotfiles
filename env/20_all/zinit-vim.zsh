@@ -25,6 +25,11 @@ zinit ice \
     atclone"ln -sf ~/.zinit/plugins/lifepillar---vim-solarized8 $VIM_PACK_DIR" \
     atpull "%atclone" pick"/dev/null" nocompile:!
 zinit light lifepillar/vim-solarized8
+# packer.nvim
+zinit ice \
+    atclone"ln -sf ~/.zinit/plugins/wbthomason---packer.nvim $VIM_PACK_DIR" \
+    atpull "%atclone" pick"/dev/null" nocompile:!
+zinit light wbthomason/packer.nvim
 
 if [ ! -e $VIM_PACK_DIR/vim-williamspatrick ];
 then
