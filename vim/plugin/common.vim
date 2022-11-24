@@ -23,3 +23,10 @@ set foldmethod=syntax
 
 " Put line/column into the footer.
 set ruler
+
+" Turn on line number, relative number, and keep the sign column.
+set number
+set relativenumber
+set signcolumn=yes
+
+set completeopt=menu,menuone,noselect
