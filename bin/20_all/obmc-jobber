@@ -9,7 +9,7 @@ import yaml
 from pathlib import Path
 from sh import git, msmtp, scp, zsh  # type: ignore
 from tempfile import NamedTemporaryFile, TemporaryDirectory
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List, Optional
 
 
 def replace_tilde(path: str) -> str:
@@ -115,7 +115,7 @@ Exception:
                 new_path = Job.__dict__[fnn](self, arg)
                 if new_path:
                     self.path = new_path
-            except:
+            except Exception:
                 return False
         return True
 
@@ -199,9 +199,9 @@ Exception:
         self.clone_repo = TemporaryDirectory()
 
         url = None
-        for l in git.bake("-C", self.path).remote("-v").splitlines():
-            if l.startswith(arg) and "(fetch)" in l:
-                url = l.split()[1]
+        for line in git.bake("-C", self.path).remote("-v").splitlines():
+            if line.startswith(arg) and "(fetch)" in line:
+                url = line.split()[1]
         if not url:
             raise Exception(f"Cannot find remote: {arg}")
 
