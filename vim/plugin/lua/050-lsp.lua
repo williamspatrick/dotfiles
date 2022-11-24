@@ -26,6 +26,7 @@ null_ls.setup({
             extra_args = { "--strict" },
         }),
         null_ls.builtins.diagnostics.shellcheck,
+        null_ls.builtins.diagnostics.zsh,
 
         null_ls.builtins.code_actions.shellcheck,
     },
@@ -34,6 +35,6 @@ null_ls.setup({
 vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
 vim.keymap.set("n", "gr", vim.lsp.buf.references, {})
 vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
-vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, {})
+vim.keymap.set("n", "<leader>cr", vim.lsp.buf.rename, {})
 vim.keymap.set("n", "<leader>cf", vim.lsp.buf.format, {})
 vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
