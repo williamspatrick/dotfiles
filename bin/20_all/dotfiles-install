@@ -70,7 +70,7 @@ do
         if cmp -s $TEMP_FILE ~/$dest ; then
             echo "$dest unchanged."
         else
-            vimdiff ~/$dest $TEMP_FILE
+            $EDITOR -d ~/$dest $TEMP_FILE
         fi
     fi
 
