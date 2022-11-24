@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-if [ -e /usr/bin/nvim ]; then
+if which nvim > /dev/null; then
     export EDITOR="/usr/bin/nvim"
 else
     export EDITOR="/usr/bin/vim"
