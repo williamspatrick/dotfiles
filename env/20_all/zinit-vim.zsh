@@ -31,9 +31,9 @@ zinit ice \
     atpull "%atclone" pick"/dev/null" nocompile:!
 zinit light wbthomason/packer.nvim
 
-if [ ! -e $VIM_PACK_DIR/vim-williamspatrick ];
+if [ ! -e $VIM_PACK_DIR/00-vim-williamspatrick ];
 then
-    ln -sf ~/.zinit/plugins/williamspatrick---dotfiles/vim $VIM_PACK_DIR/vim-williamspatrick
+    ln -sf ~/.zinit/plugins/williamspatrick---dotfiles/vim $VIM_PACK_DIR/00-vim-williamspatrick
 fi
 
 unset VIM_PACK_DIR
