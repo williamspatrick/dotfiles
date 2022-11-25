@@ -22,12 +22,14 @@ return require("packer").startup(function(use)
     use("nvim-lualine/lualine.nvim")
     use("akinsho/bufferline.nvim")
     use("lukas-reineke/indent-blankline.nvim")
+    use("rcarriga/nvim-notify")
+    use("stevearc/dressing.nvim")
+    use("folke/trouble.nvim")
 
     use("neovim/nvim-lspconfig")
     use("onsails/lspkind.nvim")
     use("williamboman/mason.nvim")
     use("williamboman/mason-lspconfig.nvim")
-
     use("jose-elias-alvarez/null-ls.nvim")
 
     use("hrsh7th/nvim-cmp")
@@ -44,18 +46,17 @@ return require("packer").startup(function(use)
     use({ "honza/vim-snippets", after = "LuaSnip" })
     use({ "rafamadriz/friendly-snippets", after = "LuaSnip" })
 
-    use("rcarriga/nvim-notify")
-    use("klen/nvim-test")
-    use("tpope/vim-commentary")
-
     use({
         "nvim-telescope/telescope.nvim",
         requires = { { "nvim-lua/plenary.nvim" } },
     })
     use("AckslD/nvim-neoclip.lua")
     use("benfowler/telescope-luasnip.nvim")
-    use("ojroques/nvim-bufdel")
-    use("folke/trouble.nvim")
-    use("tpope/vim-dispatch")
+    use("axieax/urlview.nvim")
+
+    use("klen/nvim-test")
     use("numToStr/FTerm.nvim")
+    use("ojroques/nvim-bufdel")
+    use("tpope/vim-commentary")
+    use("tpope/vim-dispatch")
 end)
