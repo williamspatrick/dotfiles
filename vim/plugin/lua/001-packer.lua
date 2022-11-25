@@ -7,7 +7,8 @@ return require("packer").startup(function(use)
     use({
         "nvim-treesitter/nvim-treesitter",
         run = function()
-            local ts_update = require("nvim-treesitter.install").update({ with_sync = true })
+            local ts_update =
+            require("nvim-treesitter.install").update({ with_sync = true })
             ts_update()
         end,
         config = function()
@@ -31,6 +32,7 @@ return require("packer").startup(function(use)
 
     use("hrsh7th/nvim-cmp")
     use({ "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp" })
+    use({ "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp" })
     use({ "hrsh7th/cmp-buffer", after = "nvim-cmp" })
     use({ "hrsh7th/cmp-path", after = "nvim-cmp" })
     use({ "hrsh7th/cmp-cmdline", after = "nvim-cmp" })
@@ -54,4 +56,5 @@ return require("packer").startup(function(use)
     use("benfowler/telescope-luasnip.nvim")
     use("ojroques/nvim-bufdel")
     use("folke/trouble.nvim")
+    use("tpope/vim-dispatch")
 end)
