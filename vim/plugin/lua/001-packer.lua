@@ -53,6 +53,7 @@ return require("packer").startup(function(use)
     use("AckslD/nvim-neoclip.lua")
     use("benfowler/telescope-luasnip.nvim")
     use("axieax/urlview.nvim")
+    use("ziontee113/icon-picker.nvim")
 
     use("klen/nvim-test")
     use("numToStr/FTerm.nvim")
