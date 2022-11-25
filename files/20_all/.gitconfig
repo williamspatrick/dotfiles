@@ -18,3 +18,5 @@
     skippedCherryPicks = false
 [init]
     defaultBranch = main
+[core]
+    excludesFile = ~/.gitignore
