@@ -20,7 +20,7 @@ return require("packer").startup(function(use)
 
     use("nvim-tree/nvim-web-devicons")
     use("nvim-lualine/lualine.nvim")
-    use("romgrk/barbar.nvim")
+    use("akinsho/bufferline.nvim")
     use("lukas-reineke/indent-blankline.nvim")
 
     use("neovim/nvim-lspconfig")
