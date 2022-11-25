@@ -25,6 +25,7 @@ return require("packer").startup(function(use)
     use("rcarriga/nvim-notify")
     use("stevearc/dressing.nvim")
     use("folke/trouble.nvim")
+    use("nvim-tree/nvim-tree.lua")
 
     use("neovim/nvim-lspconfig")
     use("onsails/lspkind.nvim")
