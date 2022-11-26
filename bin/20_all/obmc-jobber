@@ -2,6 +2,7 @@
 
 import argparse
 import io
+import json
 import os
 import sys
 import threading
@@ -10,7 +11,7 @@ from tempfile import NamedTemporaryFile, TemporaryDirectory
 from typing import Any, Dict, List, Optional
 
 import yaml
-from sh import git, msmtp, scp, zsh  # type: ignore
+from sh import git, msmtp, scp, ssh, zsh  # type: ignore
 
 
 def replace_tilde(path: str) -> str:
@@ -59,6 +60,76 @@ class EarlyCompletion(Exception):
     pass
 
 
+class Config:
+    def __init__(self) -> None:
+        self.config: Dict[str, Any] = {}
+        self.mutex = threading.Lock()
+
+        self.path = os.path.join(
+            os.path.expanduser("~"), ".config", "obmc-jobber", "config"
+        )
+        if os.path.exists(self.path):
+            with open(self.path, "r") as fp:
+                self.config = json.load(fp)
+
+        if "commits" in self.config:
+            commits = self.config["commits"]
+            for job in list(commits.keys()):
+                for path in list(commits[job].keys()):
+                    status = json.loads(
+                        ssh(
+                            "openbmc.gerrit",
+                            "gerrit",
+                            "query",
+                            "--format=json",
+                            commits[job][path],
+                            _tty_out=False,
+                        ).splitlines()[0]
+                    )
+                    if "open" in status and status["open"]:
+                        continue
+                    del commits[job][path]
+                if not len(commits[job]):
+                    del commits[job]
+
+        self.__save()
+
+    def commit_get(self, jobname: str, jobpath: str) -> Optional[str]:
+        if "commits" not in self.config:
+            return None
+        commits = self.config["commits"]
+
+        if jobname not in commits:
+            return None
+
+        job = commits[jobname]
+
+        if jobpath not in job:
+            return None
+
+        return str(job[jobpath])
+
+    def commit_set(self, jobname: str, jobpath: str, commit: str) -> None:
+        with self.mutex:
+            if "commits" not in self.config:
+                self.config["commits"] = {}
+            commits = self.config["commits"]
+
+            if jobname not in commits:
+                commits[jobname] = {}
+
+            commits[jobname][jobpath] = commit
+
+            self.__save()
+
+    def __save(self) -> None:
+        with open(self.path, "w") as fp:
+            json.dump(self.config, fp, indent=4)
+
+
+config = Config()
+
+
 class Job(threading.Thread):
     def __init__(
         self, sem: threading.Semaphore, jobspec: Dict[str, Any], path: str
@@ -66,10 +137,12 @@ class Job(threading.Thread):
         super(Job, self).__init__()
         self.sem = sem
         self.path = path
+        self.orig_path = path
         self.jobspec = jobspec
         self.buf = io.StringIO()
         self.failed = False
         self.clone_repo: Optional[TemporaryDirectory[str]] = None
+        self.is_gerrit = False
 
         self.start()
 
@@ -217,6 +290,7 @@ Exception:
         git.clone("--reference", self.path, url, self.clone_repo.name)
 
         if "openbmc.gerrit" in url:
+            self.is_gerrit = True
             scp(
                 "-O",
                 "openbmc.gerrit:hooks/commit-msg",
@@ -251,10 +325,25 @@ Exception:
         if not gitc.status("--untracked-files=no", "--porcelain"):
             raise EarlyCompletion("No changes to commit.")
 
+        if self.is_gerrit:
+            change = config.commit_get(self.jobspec["name"], self.orig_path)
+            if change:
+                arg += f"\n\nChange-Id: {change}\n"
+
         with open(os.path.join(self.path, "COMMIT_MSG"), "w") as fp:
             fp.write(arg)
 
         gitc.commit("-s", "-F", "COMMIT_MSG")
+
+        if self.is_gerrit:
+            for line in gitc.log(
+                "-n1", "--no-color", "--pretty=tformat:%b", _tty_out=False
+            ).splitlines():
+                if "Change-Id:" not in line:
+                    continue
+                config.commit_set(
+                    self.jobspec["name"], self.orig_path, line[11:]
+                )
 
     def require_remote(self, arg: Optional[str]) -> None:
         if not arg:
