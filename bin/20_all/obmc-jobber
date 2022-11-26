@@ -5,11 +5,12 @@ import io
 import os
 import sys
 import threading
-import yaml
 from pathlib import Path
-from sh import git, msmtp, scp, zsh  # type: ignore
 from tempfile import NamedTemporaryFile, TemporaryDirectory
 from typing import Any, Dict, List, Optional
+
+import yaml
+from sh import git, msmtp, scp, zsh  # type: ignore
 
 
 def replace_tilde(path: str) -> str:
@@ -52,6 +53,10 @@ red = "\u001b[31m"
 yellow = "\u001b[33m"
 blue = "\u001b[34m"
 normal = "\u001b[0m"
+
+
+class EarlyCompletion(Exception):
+    pass
 
 
 class Job(threading.Thread):
@@ -132,9 +137,13 @@ Exception:
             if fn not in Job.__dict__:
                 raise Exception(f"Cannot find command handler for {fn}.")
 
-            new_path = Job.__dict__[fn](self, arg)
-            if new_path:
-                self.path = new_path
+            try:
+                new_path = Job.__dict__[fn](self, arg)
+                if new_path:
+                    self.path = new_path
+            except EarlyCompletion as e:
+                print(f"    Early exit: {e}")
+                break
 
     def cmd_fetch(self, arg: Optional[str]) -> None:
         if not arg:
@@ -208,7 +217,8 @@ Exception:
         git.clone("--reference", self.path, url, self.clone_repo.name)
 
         if "openbmc.gerrit" in url:
-            scp("-O",
+            scp(
+                "-O",
                 "openbmc.gerrit:hooks/commit-msg",
                 f"{self.clone_repo.name}/.git/hooks/",
             )
@@ -237,12 +247,14 @@ Exception:
         if not arg:
             raise Exception("Missing arguments")
 
+        gitc = git.bake("-C", self.path)
+        if not gitc.status("--untracked-files=no", "--porcelain"):
+            raise EarlyCompletion("No changes to commit.")
+
         with open(os.path.join(self.path, "COMMIT_MSG"), "w") as fp:
             fp.write(arg)
 
-        gitc = git.bake("-C", self.path)
         gitc.commit("-s", "-F", "COMMIT_MSG")
-
 
     def require_remote(self, arg: Optional[str]) -> None:
         if not arg:
