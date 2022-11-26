@@ -1,0 +1,49 @@
+name: OpenBMC remove duplicative sdbusplus keywords
+limit: 12
+where: obmcsrc
+requires:
+  - remote: openbmc.gerrit
+  - shell: |-
+      git grep \
+        -e "message::message" -e "bus::bus" \
+        -e "match::match" -e "exception::exception" \
+        -e "manager::manager" -e "object::object" -e "slot::slot" \
+      > /dev/null
+  - shell: |-
+      pwd | grep -v sdbusplus
+run:
+  - clone
+  - shell: |-
+      git grep -l \
+        -e "message::message" -e "bus::bus" \
+        -e "match::match" -e "exception::exception" \
+        -e "manager::manager" -e "object::object" -e "slot::slot" |
+      xargs -I{} bash -c \
+        'sed -i s/message::message/message_t/g {} ;
+         sed -i s/bus::bus/bus_t/g {} ;
+         sed -i s/match::match/match_t/g {} ;
+         sed -i s/exception::exception/exception_t/g {} ;
+         sed -i s/manager::manager/manager_t/g {} ;
+         sed -i s/object::object/object_t/g {} ;
+         sed -i s/slot::slot/slot_t/g {} ;
+         clang-format -i {}'
+      if git remote -v | grep "openpower-pnor-code-mgmt" > /dev/null; then
+        git checkout HEAD -- functions.hpp
+      fi
+  - git_add
+  - git_commit: |-
+      sdbusplus: use shorter type aliases
+
+      The sdbusplus headers provide shortened aliases for many types.
+      Switch to using them to provide better code clarity and shorter
+      lines.  Possible replacements are for:
+        * bus_t
+        * exception_t
+        * manager_t
+        * match_t
+        * message_t
+        * object_t
+        * slot_t
+  - gerrit_push:
+      sdbusplus-aliases
+on-fail: email
