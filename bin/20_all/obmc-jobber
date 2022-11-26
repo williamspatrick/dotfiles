@@ -345,6 +345,44 @@ Exception:
                     self.jobspec["name"], self.orig_path, line[11:]
                 )
 
+    def cmd_gerrit_push(self, arg: Optional[str]) -> None:
+        if not self.is_gerrit:
+            raise Exception("Attempting to gerrit-push to non-gerrit repo")
+
+        gitc = git.bake("-C", self.path)
+        branch = gitc.branch("--show-current", _tty_out=False).splitlines()[0]
+        change = config.commit_get(self.jobspec["name"], self.orig_path)
+
+        status = json.loads(
+            ssh(
+                "openbmc.gerrit",
+                "gerrit",
+                "query",
+                "--current-patch-set",
+                "--format=json",
+                change,
+                _tty_out=False,
+            ).splitlines()[0]
+        )
+        if "currentPatchSet" in status:
+            last_patch = status["currentPatchSet"]["revision"]
+            gitc.fetch("origin", last_patch)
+            if not gitc.diff(
+                "--name-status", "HEAD", "FETCH_HEAD", _tty_out=False
+            ):
+                print(
+                    f"    {self.orig_path} {blue}No Differences with gerrit{normal}",
+                    file=self.buf,
+                )
+                return
+
+        if arg:
+            arg = f"%topic={arg}"
+        else:
+            arg = ""
+
+        gitc.push("origin", f"HEAD:refs/for/{branch}{arg}")
+
     def require_remote(self, arg: Optional[str]) -> None:
         if not arg:
             raise Exception("Missing remote argument")
