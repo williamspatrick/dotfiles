@@ -22,7 +22,9 @@ null_ls.setup({
         }),
 
         null_ls.builtins.diagnostics.cppcheck,
-        null_ls.builtins.diagnostics.flake8,
+        null_ls.builtins.diagnostics.flake8.with({
+            extra_args = { "--ignore", "E501" }
+        }),
         null_ls.builtins.diagnostics.markdownlint,
         null_ls.builtins.diagnostics.mypy.with({
             extra_args = { "--strict" },
