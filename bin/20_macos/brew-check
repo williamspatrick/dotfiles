@@ -12,7 +12,9 @@ desired_brews=(\
     bat \
     beardedspice \
     clang-format \
+    colima \
     coreutils \
+    docker \
     dos2unix \
     findutils \
     font-meslo-lg-nerd-font \
@@ -21,10 +23,11 @@ desired_brews=(\
     gnu-sed \
     grep \
     hammerspoon \
-    homebrew/cask/macvim \
     llvm \
     msmtp \
     mutt \
+    neovide \
+    nvim \
     offlineimap \
     pandoc \
     rsync \
