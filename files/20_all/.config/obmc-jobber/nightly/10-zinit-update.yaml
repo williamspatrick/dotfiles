@@ -6,5 +6,5 @@ run:
       source ~/.zshrc
       zinit self-update
       zinit update
-      nvim --headless -c 'autcmd User PackerComplete quitall' -c 'PackerSync'
+      nvim-packer-sync
 on-fail: email
