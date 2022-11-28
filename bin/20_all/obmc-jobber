@@ -333,7 +333,9 @@ Exception:
         with open(os.path.join(self.path, "COMMIT_MSG"), "w") as fp:
             fp.write(arg)
 
-        gitc.commit("-s", "-F", "COMMIT_MSG")
+        gitc.commit("-F", "COMMIT_MSG")
+        # Ensure the S-O-B is added after the Gerrit Change-Id
+        gitc.commit("--amend", "-s", "--no-edit")
 
         if self.is_gerrit:
             for line in gitc.log(
