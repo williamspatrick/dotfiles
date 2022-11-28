@@ -15,7 +15,7 @@ desired_brews=(\
     coreutils \
     dos2unix \
     findutils \
-    font-menlo-for-powerline \
+    font-meslo-lg-nerd-font \
     gawk \
     gnu-getopt \
     gnu-sed \
