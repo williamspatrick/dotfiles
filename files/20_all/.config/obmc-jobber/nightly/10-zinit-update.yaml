@@ -4,7 +4,6 @@ where:
 run:
   - shell: |-
       source ~/.zshrc
-      zinit self-update
-      zinit update
+      (zinit self-update ; zinit update) || true
       nvim-packer-sync
 on-fail: email
