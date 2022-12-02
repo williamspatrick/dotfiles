@@ -10,6 +10,7 @@ for d in ${0:h}/detect/*.zsh
 do
     source $d
 done
+export DOTFILES_SYSTEM=${(j/:/)DOTFILES_CONFIG}
 
 for d in ${0:h}/env/*
 do
@@ -27,5 +28,3 @@ do
         path=("$d" "${path[@]}")
     fi
 done
-
-export DOTFILES_SYSTEM=${(j/:/)DOTFILES_CONFIG}
