@@ -11,9 +11,11 @@ local null_ls = require("null-ls")
 
 null_ls.setup({
     sources = {
-        null_ls.builtins.formatting.beautysh,
+        null_ls.builtins.formatting.beautysh.with({
+            extra_args = { "--force-function-style", "fnpar" },
+        }),
         null_ls.builtins.formatting.black.with({
-            extra_args = { "-l", "79" },
+            extra_args = { "-l", "79", "--preview" },
         }),
         null_ls.builtins.formatting.clang_format,
         null_ls.builtins.formatting.isort,
@@ -24,7 +26,7 @@ null_ls.setup({
 
         null_ls.builtins.diagnostics.cppcheck,
         null_ls.builtins.diagnostics.flake8.with({
-            extra_args = { "--ignore", "E501" }
+            extra_args = { "--ignore", "E501" },
         }),
         null_ls.builtins.diagnostics.markdownlint,
         null_ls.builtins.diagnostics.mypy.with({
