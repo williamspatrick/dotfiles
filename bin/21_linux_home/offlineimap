@@ -1,4 +1,7 @@
-#!/bin/sh
+#!/usr/bin/env bash
+set -e
 
-docker run --rm -v /home/apwillia:/workdir --user $(id -u):$(id -g) \
+DUSER="$(id -u)"
+DGROUP="$(id -g)"
+docker run --rm -v /home/apwillia:/workdir --user "${DUSER}:${DGROUP}" \
     offlineimap offlineimap
