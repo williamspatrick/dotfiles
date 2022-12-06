@@ -1,6 +1,6 @@
 name: Linux Repo Sync
 where: linux
 run:
-  - fetch: all
-  - rebase
+    - fetch: all
+    - rebase
 on-fail: email

@@ -2,6 +2,6 @@ name: OpenBMC Workspace Sync
 limit: 12
 where: obmcsrc
 run:
-  - fetch: all
-  - rebase
+    - fetch: all
+    - rebase
 on-fail: email

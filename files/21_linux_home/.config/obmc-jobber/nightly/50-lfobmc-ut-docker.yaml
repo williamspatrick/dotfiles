@@ -1,10 +1,10 @@
 name: Generate OpenBMC UT Docker Image
 where:
-  - obmcsrc
-  - openbmc-build-scripts
+    - obmcsrc
+    - openbmc-build-scripts
 run:
-  - cd: scripts
-  - shell: |-
-      ./build-unit-test-docker
-      ./clean-unit-test-docker
+    - cd: scripts
+    - shell: |-
+          ./build-unit-test-docker
+          ./clean-unit-test-docker
 on-fail: email

@@ -1,9 +1,9 @@
 name: zinit update
 where:
-  - dotfiles
+    - dotfiles
 run:
-  - shell: |-
-      source ~/.zshrc
-      (zinit self-update ; zinit update) || true
-      nvim-packer-sync
+    - shell: |-
+          source ~/.zshrc
+          (zinit self-update ; zinit update) || true
+          nvim-packer-sync
 on-fail: email
