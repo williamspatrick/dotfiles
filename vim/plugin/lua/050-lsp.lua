@@ -18,7 +18,9 @@ null_ls.setup({
             extra_args = { "-l", "79", "--preview" },
         }),
         null_ls.builtins.formatting.clang_format,
-        null_ls.builtins.formatting.isort,
+        null_ls.builtins.formatting.isort.with({
+            extra_args = { "--profile", "black" },
+        }),
         null_ls.builtins.formatting.prettier,
         null_ls.builtins.formatting.stylua.with({
             extra_args = { "--column-width", "80" },
