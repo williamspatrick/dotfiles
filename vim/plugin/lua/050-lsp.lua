@@ -30,7 +30,7 @@ null_ls.setup({
 
         null_ls.builtins.diagnostics.cppcheck,
         null_ls.builtins.diagnostics.flake8.with({
-            extra_args = { "--ignore", "E501" },
+            extra_args = { "--extend-ignore", "E203,E501" },
         }),
         null_ls.builtins.diagnostics.markdownlint.with({
             extra_args = { "--disable", "line-length", "--" },
