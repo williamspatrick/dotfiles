@@ -21,7 +21,9 @@ null_ls.setup({
         null_ls.builtins.formatting.isort.with({
             extra_args = { "--profile", "black" },
         }),
-        null_ls.builtins.formatting.prettier,
+        null_ls.builtins.formatting.prettier.with({
+            extra_args = { "--print-width=80", "--prose-wrap=always" },
+        }),
         null_ls.builtins.formatting.stylua.with({
             extra_args = { "--column-width", "80" },
         }),
@@ -30,7 +32,9 @@ null_ls.setup({
         null_ls.builtins.diagnostics.flake8.with({
             extra_args = { "--ignore", "E501" },
         }),
-        null_ls.builtins.diagnostics.markdownlint,
+        null_ls.builtins.diagnostics.markdownlint.with({
+            extra_args = { "--disable", "line-length", "--" },
+        }),
         null_ls.builtins.diagnostics.mypy.with({
             extra_args = { "--strict" },
         }),
