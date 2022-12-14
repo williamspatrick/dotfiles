@@ -50,7 +50,10 @@ function fb-obmc-qemu() {
     MTD_OPTION="-drive if=mtd,format=raw,file="
     NIC_OPTION="-net nic -net user,hostfwd=::2222-:22,hostfwd=::8080-:8080,hostname=qemu"
     MISC_OPTION="-nographic"
-    SD_OPTION="-drive if=sd,index=2,format=raw,file="
+
+    if [ -z QEMU_NO_EMMC ]; then
+        SD_OPTION="-drive if=sd,index=2,format=raw,file="
+    fi
 
     IMGPATH="$HOME/local/builds/build-$FB_MACHINE/tmp/deploy/images/$FB_MACHINE"
 
@@ -67,7 +70,9 @@ function fb-obmc-qemu() {
     fi
 
     ARGS="-M $QEMU_MACH $MTD_OPTION$IMGFILE"
-    ARGS="$ARGS $SD_OPTION$IMGFILE_EMMC"
+    if [ -z QEMU_NO_EMMC ]; then
+        ARGS="$ARGS $SD_OPTION$IMGFILE_EMMC"
+    fi
     ARGS="$ARGS $NIC_OPTION $MISC_OPTION"
 
     $QEMU_EXE ${=ARGS}
