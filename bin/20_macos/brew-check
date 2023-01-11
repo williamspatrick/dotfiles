@@ -23,6 +23,7 @@ desired_brews=(\
     gnu-sed \
     grep \
     hammerspoon \
+    jq \
     llvm \
     msmtp \
     mutt \
