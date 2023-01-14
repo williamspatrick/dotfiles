@@ -54,8 +54,8 @@ set $lock swaylock -f -e -i $bg_img
 bindsym $mod+Escape exec $lock
 exec swayidle -w \
     timeout 600 '$lock' \
-    timeout 900 'swaymsg output * dpms off' \
-    resume 'swaymsg output * dpms on' \
+    timeout 900 'swaymsg "output * dpms off"' \
+    resume 'swaymsg "output * dpms on"' \
     before-sleep '$lock' \
 
 ### Input configuration
