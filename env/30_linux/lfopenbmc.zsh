@@ -65,7 +65,9 @@ function lf-obmc-qemu() {
     fi
 
     ARGS="-M $QEMU_MACH $MTD_OPTION$IMGFILE"
-    ARGS="$ARGS $SD_OPTION$IMGFILE_EMMC"
+    if [[ $QEMU_MACH == *bletchley* ]]; then
+        ARGS="$ARGS $SD_OPTION$IMGFILE_EMMC"
+    fi
     ARGS="$ARGS $NIC_OPTION $MISC_OPTION"
 
     $QEMU_EXE ${=ARGS}
