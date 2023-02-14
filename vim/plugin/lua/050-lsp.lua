@@ -3,7 +3,7 @@ require("mason-lspconfig").setup({
     ensure_installed = {
         "jedi_language_server",
         "jsonls",
-        "lua-language-server",
+        "lua_ls",
     },
 })
 
