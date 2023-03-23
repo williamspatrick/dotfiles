@@ -1,6 +1,7 @@
 require("mason").setup()
 require("mason-lspconfig").setup({
     ensure_installed = {
+        "gopls",
         "jedi_language_server",
         "jsonls",
         "lua_ls",
@@ -18,6 +19,7 @@ null_ls.setup({
             extra_args = { "-l", "79", "--preview" },
         }),
         null_ls.builtins.formatting.clang_format,
+        null_ls.builtins.formatting.gofmt,
         null_ls.builtins.formatting.isort.with({
             extra_args = { "--profile", "black" },
         }),

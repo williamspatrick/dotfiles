@@ -14,3 +14,4 @@ autocmd BufWritePre *.md :%s/\s\+$//e
 autocmd BufWritePre *.mako :%s/\s\+$//e
 autocmd BufWritePre *.yaml :%s/\s\+$//e
 autocmd FileType c,cpp,python,perl,markdown,dot,groovy,yaml,sh,conf,dts,cmake,make,meson autocmd BufWritePre <buffer> :%s/\s\+$//e
+autocmd FileType go setlocal noexpandtab
