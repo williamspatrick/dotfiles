@@ -5,7 +5,7 @@ function home-server-hostname() {
         echo "192.168.1.32"
     elif /Applications/Tailscale.app/Contents/MacOS/Tailscale status --json --self=true --peers=false \
         | grep "Online" | grep "true" > /dev/null ; then
-        echo "heinlein.taila677.ts.net"
+        echo "heinlein.vulture-banana.ts.net"
     else
         echo "home-server"
     fi
