@@ -56,7 +56,7 @@ function lf-obmc-qemu() {
         echo "Unable to find a supported flash image for $LF_MACHINE."
         return
     fi
-    truncate -s 128M $IMGFILE
+    truncate -s ${QEMU_IMG_SIZE:-128M} $IMGFILE
 
     truncate -s 1G $IMGFILE_EMMC
 
