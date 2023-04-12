@@ -38,7 +38,8 @@ function fb-obmc-docker() {
         echo "Missing machine." && return
     fi
 
-    docker run --rm -it -v $HOME:/workdir crops/poky --workdir=/workdir \
+    docker run --rm -it -v $HOME:/workdir crops/poky:ubuntu-16.04 \
+        --workdir=/workdir \
         /workdir/.zinit/plugins/williamspatrick---dotfiles/files/poky_docker/launch.bash $1
 }
 
