@@ -1,39 +1,53 @@
 #!/usr/bin/env zsh
 
-function lf-obmc() {
+function "lf-obmc"() {
+    if [ -n "$LF_MACHINE" ]; then
+        echo "LF_MACHINE already defined as: $LF_MACHINE" && return
+    fi
     if [ -z $1 ]; then
         echo "Missing machine." && return
     fi
-    LF_MACHINE=$1
-
-    wd lfopenbmc &&
-    source ./setup $LF_MACHINE \
-        ~/local/builds/lf-build-$LF_MACHINE &&
-
-    # Set up SSTATE_DIR
-    if ! grep -q "^SSTATE_DIR" conf/local.conf ; then
-        echo "SSTATE_DIR ?= \"$HOME/local/builds/sstate-cache\"" >> \
-            conf/local.conf
-        echo "INHERIT += \"uninative\"" >> conf/local.conf
-    fi &&
-
-    # Set up DL_DIR
-    if ! grep -q "^DL_DIR" conf/local.conf ; then
-        echo "DL_DIR ?= \"$HOME/local/builds/downloads\"" >> \
-            conf/local.conf
-    fi &&
-
-    # Enable devtool link to sources directory, so existing checkouts are
-    # reused.
-    if [ ! -e workspace/sources ]; then
-        devtool create-workspace
-        ln -sf $(wd path obmcsrc) workspace/sources
-    fi &&
-
-    alias bitbake-build="nice bitbake obmc-phosphor-image"
+    systemd-run --user --slice=bitbake \
+        --pty --same-dir --wait --collect --service-type=exec \
+        -E LF_MACHINE=$1 \
+        -E BITBAKE_SOURCE_DIR=$(wd path lfopenbmc) \
+        -E OPENBMC_WORKSPACE=$(wd path obmcsrc) \
+        zsh -i -c '_lf-obmc && zsh && bitbake -m'
 }
 
-function lf-obmc-qemu() {
+if [ -n "$LF_MACHINE" ]; then
+    function "_lf-obmc"()
+    {
+        cd "$BITBAKE_SOURCE_DIR" &&
+        source ./setup $LF_MACHINE \
+            ~/local/builds/lf-build-$LF_MACHINE &&
+
+        # Set up SSTATE_DIR
+        if ! grep -q "^SSTATE_DIR" conf/local.conf ; then
+            echo "SSTATE_DIR ?= \"$HOME/local/builds/sstate-cache\"" >> \
+                conf/local.conf
+            echo "INHERIT += \"uninative\"" >> conf/local.conf
+        fi &&
+
+        # Set up DL_DIR
+        if ! grep -q "^DL_DIR" conf/local.conf ; then
+            echo "DL_DIR ?= \"$HOME/local/builds/downloads\"" >> \
+                conf/local.conf
+        fi &&
+
+        # Enable devtool link to sources directory, so existing checkouts are
+        # reused.
+        if [ ! -e workspace/sources ]; then
+            devtool create-workspace
+            ln -sf "$OPENBMC_WORKSPACE" workspace/sources
+        fi
+
+    }
+
+    alias bitbake-build="nice bitbake obmc-phosphor-image"
+fi
+
+function "lf-obmc-qemu"() {
     QEMU_EXE=$(eval echo \
         "$(wd path obmcsrc)/qemu/build/arm-softmmu/qemu-system-arm")
     QEMU_MACH=${QEMU_MACHINE:-${LF_MACHINE}}
@@ -75,7 +89,7 @@ function lf-obmc-qemu() {
     rm $IMGFILE $IMGFILE_EMMC
 }
 
-function lf-ut() {
+function "lf-ut"() {
     REPO="$(git rev-parse --show-toplevel)"
     UT_PATH="$(wd path obmcsrc)/openbmc-build-scripts"
 

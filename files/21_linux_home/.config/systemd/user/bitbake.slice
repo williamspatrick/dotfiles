@@ -1,0 +1,7 @@
+[Unit]
+Description=Slice for running Bitbake
+
+[Slice]
+MemoryHigh=32G
+MemoryMax=40G
+MemorySwapMax=0
