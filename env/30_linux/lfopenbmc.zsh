@@ -12,6 +12,7 @@ function "lf-obmc"() {
         -E LF_MACHINE=$1 \
         -E BITBAKE_SOURCE_DIR=$(wd path lfopenbmc) \
         -E OPENBMC_WORKSPACE=$(wd path obmcsrc) \
+        -E GDMSESSION="$GDMSESSION" \
         zsh -i -c '_lf-obmc && zsh && bitbake -m'
 }
 
