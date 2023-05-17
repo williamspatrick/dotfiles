@@ -12,7 +12,7 @@ function wd() {
     cd "${DIR}" || exit
 }
 
-# shellcheck source=/dev/null
+# shellcheck source=env/30_linux/fbopenbmc.zsh
 source /workdir/.zinit/plugins/williamspatrick---dotfiles/env/30_linux/fbopenbmc.zsh
 
 fb-obmc "$1"
