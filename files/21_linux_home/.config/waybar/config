@@ -8,7 +8,7 @@
         "clock"
     ],
     "modules-right": [
-        "pulseaudio",
+        "wireplumber",
         "cpu",
         "memory",
         "disk",
@@ -20,7 +20,7 @@
         "interval": "5",
         "format": "{:%a %b %d, %Y 🕑 %I:%M %p}"
     },
-    "pulseaudio": {
+    "wireplumber": {
         "format": "{volume}% {icon}",
         "format-muted": "",
         "format-icons": {
