@@ -1,44 +1,61 @@
 #!/usr/bin/env zsh
 
 function fb-obmc() {
+    if [ -n "$FB_MACHINE" ]; then
+        echo "FB_MACHINE already defined as: $FB_MACHINE" && return
+    fi
     if [ -z $1 ]; then
         echo "Missing machine." && return
     fi
-    FB_MACHINE=$1
+    systemd-run --user --slice=bitbake \
+        --pty --same-dir --wait --collect --service-type=exec \
+        -E FB_MACHINE=$1 \
+        -E BITBAKE_SOURCE_DIR=$(wd path fbopenbmc) \
+        -E GDMSESSION="$GDMSESSION" \
+        zsh -i -c '_fb-obmc && zsh && bitbake -m'
+}
 
-    wd fbopenbmc &&
-    source openbmc-init-build-env $FB_MACHINE \
-        ~/local/builds/build-$FB_MACHINE &&
+if [ -n "$FB_MACHINE" ]; then
+    function _fb-obmc()
+    {
+        cd "$BITBAKE_SOURCE_DIR" &&
+        source openbmc-init-build-env $FB_MACHINE \
+            ~/local/builds/build-$FB_MACHINE &&
 
-    # Set up SSTATE_DIR
-    if ! grep -q "^SSTATE_DIR" conf/local.conf ; then
-        echo "SSTATE_DIR ?= \"$HOME/local/builds/sstate-cache\"" >> \
-            conf/local.conf
-    fi &&
-
-    # Set up DL_DIR
-    if ! grep -q "^DL_DIR" conf/local.conf ; then
-        echo "DL_DIR ?= \"$HOME/local/builds/downloads\"" >> \
-            conf/local.conf
-    fi &&
-
-    # Remove 'fb-only-network' on non-Facebook systems.
-    if [[ $DOTFILES_SYSTEM != *facebook* ]]; then
-        if ! grep -q "^INHERIT:remove" conf/local.conf ; then
-            echo "INHERIT:remove = \"fb-source-mirror fb-only-network\"" >> \
+        # Set up SSTATE_DIR
+        if ! grep -q "^SSTATE_DIR" conf/local.conf ; then
+            echo "SSTATE_DIR ?= \"$HOME/local/builds/sstate-cache\"" >> \
                 conf/local.conf
+        fi &&
+
+        # Set up DL_DIR
+        if ! grep -q "^DL_DIR" conf/local.conf ; then
+            echo "DL_DIR ?= \"$HOME/local/builds/downloads\"" >> \
+                conf/local.conf
+        fi &&
+
+        # Remove 'fb-only-network' on non-Facebook systems.
+        if [[ $DOTFILES_SYSTEM != *facebook* ]]; then
+            if ! grep -q "^INHERIT:remove" conf/local.conf ; then
+                echo "INHERIT:remove = \"fb-source-mirror fb-only-network\"" >> \
+                    conf/local.conf
+            fi
         fi
-    fi &&
+
+    }
 
     alias bitbake-build="nice bitbake $FB_MACHINE-image"
-}
+fi
 
 function fb-obmc-docker() {
     if [ -z $1 ]; then
         echo "Missing machine." && return
     fi
 
-    docker run --rm -it -v $HOME:/workdir crops/poky:ubuntu-16.04 \
+    docker run --rm -it -v $HOME:/workdir \
+        --env FB_MACHINE=$1 \
+        --env BITBAKE_SOURCE_DIR=$(wd path fbopenbmc | sed "s#$HOME#/workdir#") \
+        crops/poky:ubuntu-16.04 \
         --workdir=/workdir \
         /workdir/.zinit/plugins/williamspatrick---dotfiles/files/poky_docker/launch.bash $1
 }
