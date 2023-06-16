@@ -57,7 +57,7 @@ function fb-obmc-docker() {
         --env BITBAKE_SOURCE_DIR=$(wd path fbopenbmc | sed "s#$HOME#/workdir#") \
         crops/poky:ubuntu-16.04 \
         --workdir=/workdir \
-        /workdir/.zinit/plugins/williamspatrick---dotfiles/files/poky_docker/launch.bash $1
+        /workdir/.zinit/plugins/williamspatrick---dotfiles/files/obmc-helpers/fb-poky-docker-launch $1
 }
 
 function fb-obmc-qemu() {
