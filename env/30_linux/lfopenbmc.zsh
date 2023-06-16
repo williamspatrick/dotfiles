@@ -13,38 +13,10 @@ function "lf-obmc"() {
         -E BITBAKE_SOURCE_DIR=$(wd path lfopenbmc) \
         -E OPENBMC_WORKSPACE=$(wd path obmcsrc) \
         -E GDMSESSION="$GDMSESSION" \
-        zsh -i -c '_lf-obmc && zsh && bitbake -m'
+        zsh -i -c "$(wd path dotfiles)/files/obmc-helpers/lf-obmc-setup"
 }
 
 if [ -n "$LF_MACHINE" ]; then
-    function "_lf-obmc"()
-    {
-        cd "$BITBAKE_SOURCE_DIR" &&
-        source ./setup $LF_MACHINE \
-            ~/local/builds/lf-build-$LF_MACHINE &&
-
-        # Set up SSTATE_DIR
-        if ! grep -q "^SSTATE_DIR" conf/local.conf ; then
-            echo "SSTATE_DIR ?= \"$HOME/local/builds/sstate-cache\"" >> \
-                conf/local.conf
-            echo "INHERIT += \"uninative\"" >> conf/local.conf
-        fi &&
-
-        # Set up DL_DIR
-        if ! grep -q "^DL_DIR" conf/local.conf ; then
-            echo "DL_DIR ?= \"$HOME/local/builds/downloads\"" >> \
-                conf/local.conf
-        fi &&
-
-        # Enable devtool link to sources directory, so existing checkouts are
-        # reused.
-        if [ ! -e workspace/sources ]; then
-            devtool create-workspace
-            ln -sf "$OPENBMC_WORKSPACE" workspace/sources
-        fi
-
-    }
-
     alias bitbake-build="nice bitbake obmc-phosphor-image"
 fi
 

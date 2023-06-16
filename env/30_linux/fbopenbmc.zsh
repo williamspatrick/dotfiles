@@ -12,38 +12,10 @@ function fb-obmc() {
         -E FB_MACHINE=$1 \
         -E BITBAKE_SOURCE_DIR=$(wd path fbopenbmc) \
         -E GDMSESSION="$GDMSESSION" \
-        zsh -i -c '_fb-obmc && zsh && bitbake -m'
+        zsh -i -c "$(wd path dotfiles)/files/obmc-helpers/fb-obmc-setup"
 }
 
 if [ -n "$FB_MACHINE" ]; then
-    function _fb-obmc()
-    {
-        cd "$BITBAKE_SOURCE_DIR" &&
-        source openbmc-init-build-env $FB_MACHINE \
-            ~/local/builds/build-$FB_MACHINE &&
-
-        # Set up SSTATE_DIR
-        if ! grep -q "^SSTATE_DIR" conf/local.conf ; then
-            echo "SSTATE_DIR ?= \"$HOME/local/builds/sstate-cache\"" >> \
-                conf/local.conf
-        fi &&
-
-        # Set up DL_DIR
-        if ! grep -q "^DL_DIR" conf/local.conf ; then
-            echo "DL_DIR ?= \"$HOME/local/builds/downloads\"" >> \
-                conf/local.conf
-        fi &&
-
-        # Remove 'fb-only-network' on non-Facebook systems.
-        if [[ $DOTFILES_SYSTEM != *facebook* ]]; then
-            if ! grep -q "^INHERIT:remove" conf/local.conf ; then
-                echo "INHERIT:remove = \"fb-source-mirror fb-only-network\"" >> \
-                    conf/local.conf
-            fi
-        fi
-
-    }
-
     alias bitbake-build="nice bitbake $FB_MACHINE-image"
 fi
 
