@@ -1,3 +1,5 @@
 #!/usr/bin/env zsh
 
-export PATH=/usr/local/bin:$PATH
+if ! [[ $PATH == */usr/local/bin* ]] ; then
+    export PATH=/usr/local/bin:$PATH
+fi
