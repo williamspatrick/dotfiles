@@ -5,6 +5,7 @@ require("mason-lspconfig").setup({
         "jedi_language_server",
         "jsonls",
         "lua_ls",
+        "rust_analyzer",
     },
 })
 
@@ -26,6 +27,7 @@ null_ls.setup({
         null_ls.builtins.formatting.prettier.with({
             extra_args = { "--print-width=80", "--prose-wrap=always" },
         }),
+        null_ls.builtins.formatting.rustfmt,
         null_ls.builtins.formatting.stylua.with({
             extra_args = { "--column-width", "80" },
         }),
@@ -66,8 +68,8 @@ vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
     border = "rounded",
 })
 vim.lsp.handlers["textDocument/signatureHelp"] =
-vim.lsp.with(vim.lsp.handlers.signature_help, {
-    border = "rounded",
-})
+    vim.lsp.with(vim.lsp.handlers.signature_help, {
+        border = "rounded",
+    })
 
 vim.cmd([[highlight! link FloatBorder Comment]])
