@@ -1,3 +1,5 @@
-require("indent_blankline").setup()
+require("ibl").setup({
+    indent = { char = "┆", highlight = "Comment" },
+    scope = { highlight = "Comment" },
+})
 
-vim.cmd([[highlight IndentBlanklineChar guifg=#21505C gui=nocombine]])
