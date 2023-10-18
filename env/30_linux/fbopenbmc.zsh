@@ -41,7 +41,7 @@ function fb-obmc-qemu() {
     NIC_OPTION="-net nic -net user,hostfwd=::2222-:22,hostfwd=::8080-:8080,hostname=qemu"
     MISC_OPTION="-nographic"
 
-    if [ -z QEMU_WITH_EMMC ]; then
+    if [ -n $QEMU_WITH_EMMC ]; then
         SD_OPTION="-drive if=sd,index=2,format=raw,file="
     fi
 
@@ -60,7 +60,7 @@ function fb-obmc-qemu() {
     fi
 
     ARGS="-M $QEMU_MACH $MTD_OPTION$IMGFILE"
-    if [ -z QEMU_WITH_EMMC ]; then
+    if [ -n $QEMU_WITH_EMMC ]; then
         ARGS="$ARGS $SD_OPTION$IMGFILE_EMMC"
     fi
     ARGS="$ARGS $NIC_OPTION $MISC_OPTION"
