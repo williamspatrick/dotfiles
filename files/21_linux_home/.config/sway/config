@@ -21,6 +21,9 @@ set $menu ulauncher-toggle
 # https://www.pexels.com/photo/photo-of-a-leaf-3021635/
 set $bg_img ~/.config/sway/Leaf.jpg
 
+# Enable systemd graphical-session.target
+exec_always systemctl --user start sway-session.target
+
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
