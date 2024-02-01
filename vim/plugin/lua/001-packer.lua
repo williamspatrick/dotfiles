@@ -8,7 +8,7 @@ return require("packer").startup(function(use)
         "nvim-treesitter/nvim-treesitter",
         run = function()
             local ts_update =
-            require("nvim-treesitter.install").update({ with_sync = true })
+                require("nvim-treesitter.install").update({ with_sync = true })
             ts_update()
         end,
         config = function()
@@ -61,4 +61,5 @@ return require("packer").startup(function(use)
     use("ojroques/nvim-bufdel")
     use("tpope/vim-commentary")
     use("tpope/vim-dispatch")
+    use("huggingface/llm.nvim")
 end)
