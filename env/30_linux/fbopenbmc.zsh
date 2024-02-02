@@ -65,7 +65,7 @@ function fb-obmc-qemu() {
     fi
     ARGS="$ARGS $NIC_OPTION $MISC_OPTION"
 
-    $QEMU_EXE ${=ARGS}
+    $QEMU_EXE ${=ARGS} $*
 
     rm $IMGFILE $IMGFILE_EMMC
 }
