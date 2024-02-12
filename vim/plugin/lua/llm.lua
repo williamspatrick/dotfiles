@@ -7,10 +7,10 @@ if string.find(os.getenv("DOTFILES_SYSTEM") or "", "home") ~= nil then
             middle = " <MID>",
             suffix = " <SUF>",
         },
-        model = "codellama/CodeLlama-13b-hf",
+        model = "codellama/CodeLlama-7b-hf",
         context_window = 4096,
         tokenizer = {
-            repository = "codellama/CodeLlama-13b-hf",
+            repository = "codellama/CodeLlama-7b-hf",
         },
         lsp = {
             bin_path = vim.api.nvim_call_function("stdpath", { "data" })
