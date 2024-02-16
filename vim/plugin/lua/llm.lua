@@ -16,7 +16,7 @@ if string.find(os.getenv("DOTFILES_SYSTEM") or "", "home") ~= nil then
             bin_path = vim.api.nvim_call_function("stdpath", { "data" })
                 .. "/mason/bin/llm-ls",
         },
-        accept_keymap = "<S-CR>",
-        dismiss_keymap = "<C-CR>",
+        accept_keymap = "<C-CR>",
+        dismiss_keymap = "<C-Esc>",
     })
 end
