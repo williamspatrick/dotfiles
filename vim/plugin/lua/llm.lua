@@ -8,6 +8,14 @@ if string.find(os.getenv("DOTFILES_SYSTEM") or "", "home") ~= nil then
             suffix = " <SUF>",
         },
         model = "codellama/CodeLlama-7b-hf",
+        -- backend = "ollama",
+        -- url = "http://patrickw3-mbp.vulture-banana.ts.net:11434/api/generate",
+        -- model = "codellama:7b-code",
+        -- request_body = {
+        --     options = {
+        --         num_predict = 40,
+        --     }
+        -- },
         context_window = 4096,
         tokenizer = {
             repository = "codellama/CodeLlama-7b-hf",
