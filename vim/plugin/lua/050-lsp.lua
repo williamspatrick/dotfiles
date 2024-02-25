@@ -14,9 +14,6 @@ local null_ls = require("null-ls")
 
 null_ls.setup({
     sources = {
-        null_ls.builtins.formatting.beautysh.with({
-            extra_args = { "--force-function-style", "fnpar" },
-        }),
         null_ls.builtins.formatting.black.with({
             extra_args = { "-l", "79", "--preview" },
         }),
@@ -31,6 +28,7 @@ null_ls.setup({
         null_ls.builtins.formatting.stylua.with({
             extra_args = { "--column-width", "80" },
         }),
+        null_ls.builtins.formatting.shfmt,
 
         null_ls.builtins.diagnostics.cppcheck,
         null_ls.builtins.diagnostics.markdownlint.with({
