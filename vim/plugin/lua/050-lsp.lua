@@ -5,6 +5,7 @@ require("mason-lspconfig").setup({
         "jedi_language_server",
         "jsonls",
         "lua_ls",
+        "ruff_lsp",
         "rust_analyzer",
     },
 })
@@ -32,9 +33,6 @@ null_ls.setup({
         }),
 
         null_ls.builtins.diagnostics.cppcheck,
-        null_ls.builtins.diagnostics.flake8.with({
-            extra_args = { "--extend-ignore", "E203,E501" },
-        }),
         null_ls.builtins.diagnostics.markdownlint.with({
             extra_args = { "--disable", "line-length", "--" },
         }),
