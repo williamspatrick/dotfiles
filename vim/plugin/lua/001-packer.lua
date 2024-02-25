@@ -31,7 +31,10 @@ return require("packer").startup(function(use)
     use("onsails/lspkind.nvim")
     use("williamboman/mason.nvim")
     use("williamboman/mason-lspconfig.nvim")
-    use("nvimtools/none-ls.nvim")
+    use({
+        "nvimtools/none-ls.nvim",
+        requires = { { "gbprod/none-ls-shellcheck.nvim" } },
+    })
 
     use("hrsh7th/nvim-cmp")
     use({ "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp" })

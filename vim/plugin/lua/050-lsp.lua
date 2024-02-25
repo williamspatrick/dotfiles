@@ -42,10 +42,10 @@ null_ls.setup({
         null_ls.builtins.diagnostics.mypy.with({
             extra_args = { "--strict" },
         }),
-        null_ls.builtins.diagnostics.shellcheck,
+        require("none-ls-shellcheck.diagnostics"),
         null_ls.builtins.diagnostics.zsh,
 
-        null_ls.builtins.code_actions.shellcheck,
+        require("none-ls-shellcheck.code_actions"),
     },
 })
 
