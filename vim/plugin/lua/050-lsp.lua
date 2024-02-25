@@ -27,7 +27,6 @@ null_ls.setup({
         null_ls.builtins.formatting.prettier.with({
             extra_args = { "--print-width=80", "--prose-wrap=always" },
         }),
-        null_ls.builtins.formatting.rustfmt,
         null_ls.builtins.formatting.stylua.with({
             extra_args = { "--column-width", "80" },
         }),
