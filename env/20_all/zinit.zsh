@@ -1,6 +1,8 @@
 #!/usr/bin/env zsh
 
 # oh-my-zsh plugins
+zinit snippet OMZ::lib/history.zsh
+zinit snippet OMZ::lib/git.zsh
 zinit snippet OMZP::sudo
 
 # Powerlevel9k/10K
