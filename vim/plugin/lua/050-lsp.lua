@@ -28,7 +28,9 @@ null_ls.setup({
         null_ls.builtins.formatting.stylua.with({
             extra_args = { "--column-width", "80" },
         }),
-        null_ls.builtins.formatting.shfmt,
+        null_ls.builtins.formatting.shfmt.with({
+            extra_args = { "-i", "4", "-sr", "-ci" },
+        }),
 
         null_ls.builtins.diagnostics.cppcheck,
         null_ls.builtins.diagnostics.markdownlint.with({
