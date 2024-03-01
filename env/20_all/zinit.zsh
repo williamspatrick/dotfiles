@@ -1,9 +1,7 @@
 #!/usr/bin/env zsh
 
 # oh-my-zsh plugins
-zinit ice svn pick"completion.zsh" multisrc"{history,git}.zsh"
-zinit snippet OMZ::lib
-zinit snippet OMZ::plugins/sudo/sudo.plugin.zsh
+zinit snippet OMZP::sudo
 
 # Powerlevel9k/10K
 zinit light romkatv/powerlevel10k
