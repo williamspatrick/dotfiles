@@ -27,7 +27,7 @@ function fb-obmc-docker() {
     docker run --rm -it -v $HOME:/workdir \
         --env FB_MACHINE=$1 \
         --env BITBAKE_SOURCE_DIR=$(wd path fbopenbmc | sed "s#$HOME#/workdir#") \
-        crops/poky:ubuntu-16.04 \
+        crops/poky:alma-9 \
         --workdir=/workdir \
         /workdir/.zinit/plugins/williamspatrick---dotfiles/files/obmc-helpers/fb-poky-docker-launch $1
 }
