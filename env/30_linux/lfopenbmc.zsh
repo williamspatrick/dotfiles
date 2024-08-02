@@ -17,7 +17,16 @@ function "lf-obmc"() {
 }
 
 if [ -n "$LF_MACHINE" ]; then
-    alias bitbake-build="nice bitbake obmc-phosphor-image"
+    function bitbake-build()
+    {
+        if nice bitbake obmc-phosphor-image $*; then
+            local STATUS="DONE"
+        else
+            local STATUS="FAILED"
+        fi
+        notify-send -i $(wd path obmcsrc)/docs/logo/OpenBMC-Logo.svg \
+            -a Bitbake "Bitbake" "$LF_MACHINE: $STATUS"
+    }
 fi
 
 function "lf-obmc-qemu"() {

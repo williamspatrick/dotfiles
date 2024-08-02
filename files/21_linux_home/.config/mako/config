@@ -11,3 +11,6 @@ border-color=#268bd2
 
 [app-name="Spotify"]
 default-timeout=3000
+
+[app-name="Bitbake"]
+default-timeout=3000

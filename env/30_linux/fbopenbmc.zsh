@@ -16,7 +16,16 @@ function fb-obmc() {
 }
 
 if [ -n "$FB_MACHINE" ]; then
-    alias bitbake-build="nice bitbake $FB_MACHINE-image"
+    function bitbake-build()
+    {
+        if nice bitbake $FB_MACHINE-image $*; then
+            local STATUS="DONE"
+        else
+            local STATUS="FAILED"
+        fi
+        notify-send -i $(wd path obmcsrc)/docs/logo/OpenBMC-Logo.svg \
+            -a Bitbake "Bitbake" "$FB_MACHINE: $STATUS"
+    }
 fi
 
 function fb-obmc-docker() {
