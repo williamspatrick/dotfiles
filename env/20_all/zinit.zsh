@@ -5,6 +5,9 @@ zinit snippet OMZ::lib/history.zsh
 zinit snippet OMZ::lib/git.zsh
 zinit snippet OMZP::sudo
 
+# zinit bgm
+zinit light zdharma-continuum/zinit-annex-bin-gem-node
+
 # Powerlevel9k/10K
 zinit light romkatv/powerlevel10k
 
@@ -41,4 +44,3 @@ zinit light laggardkernel/git-ignore
 # cd-gitroot
 zinit ice wait lucid
 zinit light mollifier/cd-gitroot
-
