@@ -18,6 +18,7 @@ desired_brews=(\
     dos2unix \
     findutils \
     font-meslo-lg-nerd-font \
+    fzf \
     gawk \
     gnu-getopt \
     gnu-sed \
