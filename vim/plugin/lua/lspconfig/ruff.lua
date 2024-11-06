@@ -1,4 +1,4 @@
-require("lspconfig").ruff_lsp.setup({
+require("lspconfig").ruff.setup({
     init_options = {
         settings = {
             format = {

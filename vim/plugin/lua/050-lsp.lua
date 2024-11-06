@@ -5,7 +5,7 @@ require("mason-lspconfig").setup({
         "jedi_language_server",
         "jsonls",
         "lua_ls",
-        "ruff_lsp",
+        "ruff",
         "rust_analyzer",
     },
 })
