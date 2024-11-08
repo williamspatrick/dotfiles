@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+wl-paste | gh gist create -
