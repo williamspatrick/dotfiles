@@ -9,6 +9,6 @@ map <C-B> <C-Left>
 map! <C-B> <C-Left>
 
 " 'normal' copy/paste keys.
-vmap <C-C> y
-vmap <C-X> d
-map <C-V> p
+vmap <C-C> "+y
+vmap <C-X> "+d
+map <C-V> "+p
