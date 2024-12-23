@@ -1,6 +1,9 @@
 if which fzf > /dev/null; then
 
-    if which rg > /dev/null; then
+    if which fd > /dev/null; then
+        FZF_DEFAULT_COMMAND='fd --type file --follow --hidden --exclude .git'
+        FZF_CTRL_T_COMMAND="${FZF_DEFAULT_COMMAND}"
+    elif which rg > /dev/null; then
         FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git/*"'
         FZF_CTRL_T_COMMAND="${FZF_DEFAULT_COMMAND}"
     fi
