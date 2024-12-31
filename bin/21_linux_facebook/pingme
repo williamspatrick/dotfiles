@@ -1,0 +1,21 @@
+#! /bin/bash
+
+# Send yourself a workchat message.
+# Usage: pingme 'message to yourself'
+pingme() {
+  case $# in 0|1) ;;
+    *) echo "pingme: too many arguments; got $#, required: 0 or 1" 1>&2; return 1;;
+  esac
+  # Read from stdin if $1 is empty or missing.
+  local msg=${1:-$(</dev/stdin)}
+  # If $msg is empty, set it to "ping".
+  test -z "$msg" && msg=ping
+
+  # Escape each backslash, newline and double quote in $msg.
+  msg=$(perl -pe 's{\\}{\\\\}g; s{"}{\\"}g; s{\n}{\\n}g' <<< "$msg")
+  jf graphql \
+    --query 'query($m: String!) { pingme(message: $m) }' \
+    --variables '{"m": "'"$msg"'"}'
+}
+
+pingme $*
