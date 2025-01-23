@@ -23,3 +23,5 @@
 [sendemail.linux]
     tocmd ="`pwd`/scripts/get_maintainer.pl --nogit --nogit-fallback --norolestats --nol"
     cccmd ="`pwd`/scripts/get_maintainer.pl --nogit --nogit-fallback --norolestats --nom"
+[alias]
+    fixes ="log -n1 --format='%h (\"%s\")' --abbrev=12"
