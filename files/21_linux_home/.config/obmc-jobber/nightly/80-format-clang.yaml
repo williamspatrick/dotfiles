@@ -1,0 +1,27 @@
+name: OpenBMC - rerun clang-format
+limit: 2
+where: obmcsrc
+requires:
+  - remote: openbmc.gerrit
+  - shell: ls .clang-format
+run:
+  - clone
+  - shell: |-
+      if git remote -v | grep -e "phosphor-webui" -e "openbmc-build-scripts" -e "openbmc-tools" > /dev/null; then
+          exit 0
+      fi
+      # C repositories
+      if git remote -v | grep -e "pam-ipmi" -e "libmctp" -e "libpldm" -e "obmc-console" -e "libcper" > /dev/null; then
+          cp ~/local/sync/openbmc-sources/docs/style/c/.clang-format .
+      else
+          cp ~/local/sync/openbmc-sources/docs/style/cpp/.clang-format .
+      fi
+      ~/local/sync/openbmc-sources/openbmc-build-scripts/scripts/format-code.sh --enable clang_format --no-diff
+  - git_add
+  - git_commit: |-
+      clang-format: update latest spec and reformat
+
+      Copy the latest format file from the docs repository and apply.
+
+#  - shell: git show
+  - gerrit_push: reformat-clang-format-nightly
