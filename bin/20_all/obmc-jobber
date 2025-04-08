@@ -425,6 +425,7 @@ def main() -> int:
 
 
 def run_jobspec(jsfile: str) -> bool:
+    print(f"Starting to run: {jsfile}")
     with open(jsfile, "r") as jobspec:
         job = yaml.safe_load(jobspec)
     if "name" not in job:
