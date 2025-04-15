@@ -1,1 +1,1 @@
-require("impatient")
+vim.loader.enable()
