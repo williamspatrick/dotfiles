@@ -1,3 +1,0 @@
-#!/usr/bin/env zsh
-
-nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'

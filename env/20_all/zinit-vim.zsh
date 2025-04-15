@@ -30,6 +30,11 @@ zinit ice \
     atclone"ln -sf ~/.zinit/plugins/wbthomason---packer.nvim $VIM_PACK_DIR" \
     atpull "%atclone" pick"/dev/null" nocompile:!
 zinit light wbthomason/packer.nvim
+# lazy.nvim
+zinit ice \
+    atclone"ln -sf ~/.zinit/plugins/folke---lazy.nvim $VIM_PACK_DIR" \
+    atpull "%atclone" pick"/dev/null" nocompile:!
+zinit light folke/lazy.nvim
 
 if [ ! -e $VIM_PACK_DIR/00-vim-williamspatrick ];
 then
