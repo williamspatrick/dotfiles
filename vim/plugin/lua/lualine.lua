@@ -7,4 +7,12 @@ require("lualine").setup({
     options = {
         theme = custom_solarized,
     },
+    sections = {
+        lualine_x = {
+            require("minuet.lualine"),
+            "encoding",
+            "fileformat",
+            "filetype",
+        },
+    },
 })

@@ -60,7 +60,7 @@ require("lazy").setup({
         { "ojroques/nvim-bufdel" },
         { "tpope/vim-commentary" },
         { "tpope/vim-dispatch" },
-        { "huggingface/llm.nvim" },
+        { "milanglacier/minuet-ai.nvim" },
     },
     checker = { enabled = true },
 })
