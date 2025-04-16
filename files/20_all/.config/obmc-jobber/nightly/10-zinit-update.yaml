@@ -5,5 +5,5 @@ run:
     - shell: |-
           source ~/.zshrc
           (zinit self-update ; zinit update) || true
-          nvim-packer-sync
+          nvim-lazy-sync
 on-fail: email
