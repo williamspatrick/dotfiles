@@ -1,0 +1,5 @@
+## There are a lot of dotfiles here, so we want to be able to search the 
+## whole thing except the .git tree.
+
+!*
+.git
