@@ -5,8 +5,8 @@ if string.find(os.getenv("DOTFILES_SYSTEM") or "", "home") ~= nil then
             keymap = {
                 accept = "<C-CR>",
                 dismiss = "<C-Esc>",
-                next = "<C-N>",
-                prev = "<C-P>",
+                next = "<A-Right>",
+                prev = "<A-Left>",
             },
         },
         provider = "openai_compatible",

@@ -1,5 +1,8 @@
 require("lazy").setup({
+    import = "williamspatrick-plugins",
     spec = {
+        { "folke/snacks.nvim",    priority = 1000 },
+
         { "nvim-lua/plenary.nvim" },
         {
             "nvim-treesitter/nvim-treesitter",
@@ -14,9 +17,7 @@ require("lazy").setup({
             dependencies = { "nvim-tree/nvim-web-devicons" },
         },
         { "akinsho/bufferline.nvim" },
-        { "lukas-reineke/indent-blankline.nvim" },
         { "rcarriga/nvim-notify" },
-        { "stevearc/dressing.nvim" },  ---# Should switch to snacks.nvim
         { "folke/trouble.nvim" },
         { "nvim-tree/nvim-tree.lua" },
 
@@ -58,7 +59,6 @@ require("lazy").setup({
         { "klen/nvim-test" },
         { "numToStr/FTerm.nvim" },
         { "ojroques/nvim-bufdel" },
-        { "tpope/vim-commentary" },
         { "tpope/vim-dispatch" },
         { "milanglacier/minuet-ai.nvim" },
     },
