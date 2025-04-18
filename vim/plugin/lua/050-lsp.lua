@@ -46,19 +46,34 @@ null_ls.setup({
     },
 })
 
-vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
-vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, {})
-vim.keymap.set("n", "gr", vim.lsp.buf.references, {})
-vim.keymap.set({ "n", "i" }, "<c-k>", vim.lsp.buf.signature_help, {})
-vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
-vim.keymap.set("n", "<leader>cr", vim.lsp.buf.rename, {})
-vim.keymap.set("n", "<leader>cf", vim.lsp.buf.format, {})
-vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
-vim.keymap.set("n", "<leader>ce", function()
-    vim.diagnostic.open_float({ border = "rounded" })
-end, {})
+require("which-key").add({
 
-vim.keymap.set("n", "<leader>cm", "<cmd>Make<cr>", {})
+    { "<leader>gd", vim.lsp.buf.definition, desc = "Goto Definition" },
+    {
+        "<leader>gt",
+        vim.lsp.buf.type_definition,
+        desc = "Goto Type Definition",
+    },
+    { "<leader>gr", vim.lsp.buf.references, desc = "LSP References" },
+    {
+        "<c-k>",
+        vim.lsp.buf.signature_help,
+        desc = "Signature",
+        mode = "in",
+    },
+    { "K",          vim.lsp.buf.hover,       desc = "LSP Hover" },
+    { "<leader>cr", vim.lsp.buf.rename,      desc = "Symbol Rename" },
+    { "<leader>cf", vim.lsp.buf.format,      desc = "Code Format" },
+    { "<leader>ca", vim.lsp.buf.code_action, desc = "Code Action" },
+    {
+        "<leader>ce",
+        function()
+            vim.diagnostic.open_float({ border = "rounded" })
+        end,
+        desc = "LSP Diagnostics",
+    },
+    { "<leader>cm", "<cmd>Make<cr>", desc = "Build" },
+})
 
 -- Change style of LSP borders.
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {

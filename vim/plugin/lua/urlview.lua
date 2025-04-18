@@ -1,4 +1,6 @@
 local urlview = require("urlview")
 urlview.setup()
 
-vim.keymap.set("n", "<leader>fu", urlview.search, {})
+require("which-key").add({
+    { "<leader>fu", urlview.search, desc = "URLView" },
+})

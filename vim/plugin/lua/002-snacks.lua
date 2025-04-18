@@ -7,6 +7,7 @@ require("snacks").setup({
         scope = { char = "┆", hl = "Statement" },
     },
     input = {},
+    picker = {},
 })
 
 -- TODO: Add hotkeys for gitbrowse as a replacement for `gh_line`.

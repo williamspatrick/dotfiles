@@ -3,9 +3,9 @@ set expandtab
 set shiftwidth=4
 set tabstop=4
 set softtabstop=4
-nnoremap <Leader>nm :set tabstop=4 softtabstop=4 shiftwidth=4 expandtab<CR>
-nnoremap <Leader>km :set tabstop=8 softtabstop=8 shiftwidth=8 noexpandtab<CR>
-nnoremap <Leader>fm :set tabstop=2 softtabstop=2 shiftwidth=2 expandtab<CR>
+nnoremap <Leader>mn :set tabstop=4 softtabstop=4 shiftwidth=4 expandtab<CR>
+nnoremap <Leader>mk :set tabstop=8 softtabstop=8 shiftwidth=8 noexpandtab<CR>
+nnoremap <Leader>mf :set tabstop=2 softtabstop=2 shiftwidth=2 expandtab<CR>
 autocmd BufWritePre *.[CHchS] :%s/\s\+$//e
 autocmd BufWritePre *.p[lmy] :%s/\s\+$//e
 autocmd BufWritePre *.[ch]pp :%s/\s\+$//e

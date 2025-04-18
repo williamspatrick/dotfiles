@@ -1,13 +1,16 @@
 require("telescope").setup({
     defaults = {
-        layout_strategy= "flex",
-    }
+        layout_strategy = "flex",
+    },
 })
 local builtin = require("telescope.builtin")
 
-vim.keymap.set("n", "<leader>ff", builtin.git_files, {})
-vim.keymap.set("n", "<leader>fv", builtin.find_files, {})
-vim.keymap.set("n", "<leader>fs", builtin.treesitter, {})
-vim.keymap.set("n", "<leader>fg", builtin.live_grep, {})
-vim.keymap.set("n", "<leader>fd", builtin.lsp_definitions, {})
-vim.keymap.set("n", "<leader>fr", builtin.lsp_references, {})
+require("which-key").add({
+    { "<leader>ff", builtin.git_files,       desc = "Find Files (via git)" },
+    { "<leader>fv", builtin.find_files,      desc = "Find Files (all)" },
+
+    { "<leader>fs", builtin.treesitter,      desc = "Treesitter" },
+    { "<leader>fg", builtin.live_grep,       desc = "Grep Files" },
+    { "<leader>fd", builtin.lsp_definitions, desc = "LSP Definitions" },
+    { "<leader>fr", builtin.lsp_references,  desc = "LSP References" },
+})

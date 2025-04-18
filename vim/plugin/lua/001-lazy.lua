@@ -2,6 +2,7 @@ require("lazy").setup({
     import = "williamspatrick-plugins",
     spec = {
         { "folke/snacks.nvim",    priority = 1000 },
+        { "folke/which-key.nvim" },
 
         { "nvim-lua/plenary.nvim" },
         {

@@ -1,2 +1,9 @@
 require("nvim-tree").setup()
-vim.keymap.set("n", "<leader>ft", require("nvim-tree.api").tree.toggle, {})
+
+require("which-key").add({
+    {
+        "<leader>ft",
+        require("nvim-tree.api").tree.toggle,
+        desc = "Tree Toggle",
+    },
+})

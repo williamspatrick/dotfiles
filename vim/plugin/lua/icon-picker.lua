@@ -1,5 +1,7 @@
-require('icon-picker').setup({
-    disable_legacy_commands = true
+require("icon-picker").setup({
+    disable_legacy_commands = true,
 })
 
-vim.keymap.set("n", "<leader>fi", "<cmd>IconPickerNormal<cr>", {})
+require("which-key").add({
+    { "<leader>fi", "<cmd>IconPickerNormal<cr>", desc = "Icon Picker" },
+})

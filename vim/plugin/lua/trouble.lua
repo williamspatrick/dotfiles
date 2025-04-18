@@ -1,3 +1,5 @@
 require("trouble").setup()
 
-vim.keymap.set({ "i", "n", "v" }, "<C-`>", "<cmd>Trouble diagnostics toggle<cr>", {})
+require("which-key").add({
+    { "<C-`>", "<cmd>Trouble diagnostics toggle<cr>", desc="Toggle Trouble", mode = "inv" }
+})

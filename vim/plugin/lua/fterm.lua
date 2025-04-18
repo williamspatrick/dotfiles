@@ -1,1 +1,3 @@
-vim.keymap.set({ "i", "t", "n", "v" }, "<A-`>", require("FTerm").toggle, {})
+require("which-key").add({
+    { "<A-`>", require("FTerm").toggle, desc = "Toggle FTerm", mode = "itnv" }
+})
