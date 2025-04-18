@@ -15,11 +15,6 @@ zinit ice \
     atpull"%atclone" \
     pick"/dev/null" nocompile:!
 zinit light ruanyl/vim-gh-line
-# mesonic
-zinit ice \
-    atclone"ln -sf ~/.zinit/plugins/igankevich---mesonic $VIM_PACK_DIR" \
-    atpull"%atclone" pick"/dev/null" nocompile:!
-zinit light igankevich/mesonic
 # solarized8
 zinit ice \
     atclone"ln -sf ~/.zinit/plugins/lifepillar---vim-solarized8 $VIM_PACK_DIR" \
