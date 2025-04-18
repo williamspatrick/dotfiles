@@ -17,6 +17,7 @@ zinit ice \
 zinit light ruanyl/vim-gh-line
 # solarized8
 zinit ice \
+    ver"neovim" \
     atclone"ln -sf ~/.zinit/plugins/lifepillar---vim-solarized8 $VIM_PACK_DIR" \
     atpull "%atclone" pick"/dev/null" nocompile:!
 zinit light lifepillar/vim-solarized8
