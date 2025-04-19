@@ -11,6 +11,8 @@ require("mason-lspconfig").setup({
 })
 
 local null_ls = require("null-ls")
+local null_ls_helpers = require("null-ls.helpers")
+local null_ls_methods = require("null-ls.methods")
 
 null_ls.setup({
     sources = {
@@ -43,6 +45,22 @@ null_ls.setup({
         null_ls.builtins.diagnostics.zsh,
 
         require("none-ls-shellcheck.code_actions"),
+
+        null_ls_helpers.make_builtin({
+            name = "meson",
+            meta = {
+                url = "https://github.com/mesonbuild/meson",
+                description = "Builtin formatter for Meson",
+            },
+            method = null_ls_methods.internal.FORMATTING,
+            filetypes = { "meson" },
+            generator_opts = {
+                command = "meson",
+                args = { "format", "-" },
+                to_stdin = true,
+            },
+            factory = null_ls_helpers.formatter_factory,
+        }),
     },
 })
 
