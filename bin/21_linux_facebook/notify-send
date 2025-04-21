@@ -18,6 +18,7 @@ done
 # Remove the processed options from the arguments list
 shift $((OPTIND-1))
 
-# Forward remaining arguments to pingme
-pingme "$@"
+# Concatenate all remaining arguments into a single string and forward to pingme
+message="${@}"
+pingme "$message"
 
