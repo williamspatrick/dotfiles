@@ -18,4 +18,9 @@ pingme() {
     --variables '{"m": "'"$msg"'"}'
 }
 
-pingme $*
+# Call the function with proper argument handling
+if [ $# -eq 0 ]; then
+  pingme
+else
+  pingme "$*"
+fi
