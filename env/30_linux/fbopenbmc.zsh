@@ -23,7 +23,7 @@ if [ -n "$FB_MACHINE" ]; then
         else
             local STATUS="FAILED"
         fi
-        notify-send -i $(wd path obmcsrc)/docs/logo/OpenBMC-Logo.svg \
+        notify-send -i "$(wd path obmcsrc)/docs/logo/OpenBMC-Logo.svg" \
             -a Bitbake "Bitbake" "$FB_MACHINE: $STATUS"
     }
 fi
