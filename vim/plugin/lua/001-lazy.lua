@@ -24,8 +24,8 @@ require("lazy").setup({
 
         { "neovim/nvim-lspconfig" },
         { "onsails/lspkind.nvim" },
-        { "williamboman/mason.nvim" },
-        { "williamboman/mason-lspconfig.nvim" },
+        { "williamboman/mason.nvim",           version = "1.11.0" },
+        { "williamboman/mason-lspconfig.nvim", version = "1.32.0" },
         {
             "nvimtools/none-ls.nvim",
             dependencies = {
