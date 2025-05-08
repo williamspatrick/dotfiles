@@ -19,9 +19,12 @@ run:
       ~/local/sync/openbmc-sources/openbmc-build-scripts/scripts/format-code.sh --enable clang_format --no-diff
   - git_add
   - git_commit: |-
-      clang-format: update latest spec and reformat
+      clang-format: update latest spec and reformat with clang-20
 
-      Copy the latest format file from the docs repository and apply.
+      Copy the latest format file from the docs repository and apply using
+      clang-format-20.
+
+      See I1818407fdd8ab2ca11a939ffebd5f3e5445403c3 for clang-20 enablement.
 
 #  - shell: git show
   - gerrit_push: reformat-clang-format-nightly
