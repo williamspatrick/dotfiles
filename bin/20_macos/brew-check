@@ -17,6 +17,7 @@ desired_brews=(\
     docker \
     dos2unix \
     findutils \
+    font-fira-code-nerd-font \
     font-meslo-lg-nerd-font \
     fzf \
     gawk \
