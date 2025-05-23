@@ -1,0 +1,31 @@
+#!/usr/bin/env zsh
+
+set -e
+setopt NULL_GLOB
+setopt EXTENDED_GLOB
+setopt DOTGLOB
+
+source ${0:h}/../../dotfiles.lib.zsh
+
+cargopkg_path=$(realpath ${0:h}/../../packages)
+
+typeset -A cargopackages
+
+for d in $cargopkg_path/<0-9>##_*
+do
+    if [ ! -d $d ];
+    then
+        continue
+    fi
+
+    if [ ! -e $d/cargo ];
+    then
+        continue
+    fi
+
+    source $d/cargo
+done
+
+for pkg install_args in "${(@kv)cargopackages}"; do
+    cargo install ${pkg} ${(z)install_args}
+done
