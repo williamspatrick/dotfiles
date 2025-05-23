@@ -1,0 +1,3 @@
+uvpackages[aider-chat]="--with audioop-lts"
+uvpackages[oterm]=""
+uvpackages[platformio]=""

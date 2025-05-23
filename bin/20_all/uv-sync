@@ -1,0 +1,31 @@
+#!/usr/bin/env zsh
+
+set -e
+setopt NULL_GLOB
+setopt EXTENDED_GLOB
+setopt DOTGLOB
+
+source ${0:h}/../../dotfiles.lib.zsh
+
+uvpkg_path=$(realpath ${0:h}/../../packages)
+
+typeset -A uvpackages
+
+for d in $uvpkg_path/<0-9>##_*
+do
+    if [ ! -d $d ];
+    then
+        continue
+    fi
+
+    if [ ! -e $d/uv ];
+    then
+        continue
+    fi
+
+    source $d/uv
+done
+
+for pkg install_args in "${(@kv)uvpackages}"; do
+    uv tool install ${pkg} ${(z)install_args} && uv tool update ${pkg} || true
+done
