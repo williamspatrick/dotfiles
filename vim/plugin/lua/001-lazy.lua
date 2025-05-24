@@ -7,9 +7,9 @@ require("lazy").setup({
         { "nvim-lua/plenary.nvim" },
         {
             "nvim-treesitter/nvim-treesitter",
-            build = function()
-                require("nvim-treesitter.install").update({ with_sync = true })()
-            end,
+            lazy = false,
+            branch = "main",
+            build = ":TSUpdate",
         },
 
         { "nvim-tree/nvim-web-devicons" },
