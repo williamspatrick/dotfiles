@@ -57,7 +57,6 @@ require("lazy").setup({
         { "axieax/urlview.nvim" },
         { "ziontee113/icon-picker.nvim" },
 
-        { "klen/nvim-test" },
         { "numToStr/FTerm.nvim" },
         { "ojroques/nvim-bufdel" },
         { "tpope/vim-dispatch" },
