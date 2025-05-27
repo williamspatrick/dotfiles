@@ -43,7 +43,7 @@ function fb-obmc-docker() {
 
 function fb-obmc-qemu() {
     QEMU_EXE=$(eval echo \
-        "$(wd path obmcsrc)/qemu/build/arm-softmmu/qemu-system-arm")
+        "$(wd path obmcsrc)/qemu/build/qemu-system-aarch64")
     QEMU_MACH=${QEMU_MACHINE:-${FB_MACHINE}}
 
     MTD_OPTION="-drive if=mtd,format=raw,file="
