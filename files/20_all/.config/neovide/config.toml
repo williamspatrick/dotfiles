@@ -1,0 +1,7 @@
+[font]
+normal = ["Fira Code"]
+size = 12.0
+edging = "subpixelantialias"
+
+[font.features]
+"Fira Code" = ["+ss03", "+ss05"]
