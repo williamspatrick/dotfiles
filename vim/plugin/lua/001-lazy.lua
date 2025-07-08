@@ -17,7 +17,6 @@ require("lazy").setup({
             "nvim-lualine/lualine.nvim",
             dependencies = { "nvim-tree/nvim-web-devicons" },
         },
-        { "akinsho/bufferline.nvim" },
         { "rcarriga/nvim-notify" },
         { "folke/trouble.nvim" },
         { "nvim-tree/nvim-tree.lua" },

@@ -15,4 +15,24 @@ require("lualine").setup({
             "filetype",
         },
     },
+    tabline = {
+        lualine_a = {
+            {
+                "buffers",
+                mode = 2,
+                buffers_color = {
+                    active = custom_solarized.normal.a,
+                    inactive = custom_solarized.inactive.b,
+                },
+                symbols = {
+                    alternate_file = "",
+                },
+            },
+        },
+        lualine_b = {},
+        lualine_c = {},
+        lualine_x = {},
+        lualine_y = {},
+        lualine_z = {},
+    },
 })
