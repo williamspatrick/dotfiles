@@ -1,0 +1,21 @@
+#!/usr/bin/zsh
+set -e
+# Script to find OWNERS files in OpenBMC repositories and check for ownership
+
+# Default user to search for
+DEFAULT_USER="patrick@stwcx.xyz"
+SEARCH_USER="${1:-$DEFAULT_USER}"
+
+# Go to the root of the cloned openbmc repositories
+obmcsrc=$(grep "^obmcsrc:" ~/.warprc | sed 's/^obmcsrc://' | sed "s#~#$HOME#")
+cd $obmcsrc
+
+# Find all OWNERS files and check for the specified user
+for owners_file in $(fd "^OWNERS" -t file); do
+    if python3 -c \
+        'import sys, yaml; y=yaml.safe_load(sys.stdin.read()); print(y["owners"]) if "owners" in y else False' \
+        < $owners_file \
+    | grep -q "'${SEARCH_USER}'"; then
+        echo $(dirname ${owners_file})
+    fi
+done
