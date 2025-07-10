@@ -20,6 +20,7 @@ require("lualine").setup({
             {
                 "buffers",
                 mode = 2,
+                max_length = vim.o.columns,
                 buffers_color = {
                     active = custom_solarized.normal.a,
                     inactive = custom_solarized.inactive.b,
