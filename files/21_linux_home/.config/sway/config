@@ -259,11 +259,8 @@ focus_follows_mouse no
 gaps inner 4
 gaps outer 0
 
-for_window [class="Gvim"] opacity .85
-for_window [class="^discord$"] move container to workspace 2
+for_window [app_id="^discord$"] move container to workspace 2
 for_window [title="^Spotify.*$"] move container to workspace 2
-for_window [app_id="^org.remmina.Remmina$"] move container to output DP-3
-for_window [app_id="^ulauncher$"] border none
 
 # Start mako notification daemon.
 exec --no-startup-id mako
