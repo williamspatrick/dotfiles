@@ -1,4 +1,5 @@
 uvpackages[beautysh]="--with setuptools"
+uvpackages[black]=""
 uvpackages[flake8]=""
 uvpackages[gitlint-core]=""
 uvpackages[httpie]=""
