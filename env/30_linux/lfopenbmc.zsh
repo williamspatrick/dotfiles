@@ -78,3 +78,10 @@ function "lf-ut"() {
     UNIT_TEST_PKG="$(basename $REPO)" WORKSPACE="$(dirname $REPO)" \
         "$UT_PATH/run-unit-test-docker.sh"
 }
+
+function "lf-format"() {
+    FORMAT_PATH="$(wd path obmcsrc)/openbmc-build-scripts"
+
+    "$FORMAT_PATH/scripts/format-code.sh"
+}
+
