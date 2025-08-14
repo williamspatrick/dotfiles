@@ -1,0 +1,107 @@
+"$schema" = "https://starship.rs/config-schmea.json"
+
+palette = "solarized"
+add_newline = false
+
+format = """
+[ $username@$hostname ](bg:base03 fg:yellow)\
+[ ](bg:blue fg:base03)$directory[](bg:base03 fg:blue)\
+$fill\
+([](bg:prev_bg fg:red)$status(bg:red))\
+([](bg:prev_bg fg:base01)$jobs[ ](bg:base01))\
+([](bg:prev_bg fg:blue)$python[ ](bg:blue))\
+([](bg:prev_bg fg:green)$git_branch$git_commit$git_state$git_status$hg_branch[ ](bg:green fg:base03))
+[\\$ ]()
+"""
+
+[directory]
+truncation_symbol = "../"
+style = "bg:blue fg:base03"
+format = "[$path ]($style)"
+
+[fill]
+symbol = " "
+
+[jobs]
+symbol = "⚙"
+style = "bg:base01 fg:yellow"
+format = "[ $symbol$number]($style)"
+
+[git_branch]
+symbol = ""
+style = "bg:green fg:base03"
+format = "[ $symbol $branch]($style)"
+only_attached = true
+
+[git_commit]
+style = "bg:green fg:base03"
+format = "[ $hash]($style)"
+only_detached = true
+
+[git_state]
+style = "bg:green fg:red"
+format = "[ | $state $progress_current/$progress_total]($style)"
+rebase = "rebase"
+merge = "merge"
+revert = "revert"
+cherry_pick = "cherry-pick"
+bisect = "bisect"
+am = "am"
+am_or_rebase = "am/rebase"
+
+[git_status]
+style = "bg:green fg:base03"
+ahead = "⇡$count"
+behind = "⇣$count"
+diverged = "⇡$ahead_count ⇣$behind_count"
+stashed = "⍟$count"
+format = "([( $conflicted$deleted$renamed$modified$typechanged$staged$untracked)( $ahead_behind)( $stashed)]($style))"
+
+[hg_branch]
+style = "bg:green fg:base03"
+format = "([ $symbol$branch(:$topic)]($style))"
+disabled = false
+
+[hostname]
+ssh_only = false
+style = "bg:base03 fg:yellow"
+format = "[$hostname]($style)"
+
+[python]
+symbol = " "
+style = "bg:blue fg:base03"
+detect_files = []
+detect_extensions = []
+format = "([ $symbol$version \\($virtualenv\\)]($style))"
+
+[status]
+disabled = false
+style = "bold fg:base2 bg:red"
+map_symbol = true
+pipestatus = true
+format = "[ $common_meaning$signal_name\\($int\\) ]($style)"
+pipestatus_format = "[ $pipestatus=> $common_meaning$signal_name\\($int\\) ]($style)"
+
+[username]
+show_always = true
+style_user = "bg:base03 fg:yellow"
+style_root = "bg:base03 fg:yellow"
+format = "[$user]($style)"
+
+[palettes.solarized]
+base03 = "#002b36"
+base02 = "#073642"
+base01 = "#586e75"
+base00 = "#657b83"
+base0 = "#839496"
+base1 = "#93a1a1"
+base2 = "#eee8d5"
+base3 = "#fdf6e3"
+yellow = "#b58900"
+orange = "#cb4b16"
+red = "#dc322f"
+magenta = "#d33682"
+violet = "#6c71c4"
+blue = "#268bd2"
+cyan = "#2aa198"
+green = "#859900"

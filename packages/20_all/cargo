@@ -1,1 +1,2 @@
 cargopackages[stylua]=""
+cargopackages[starship]="--no-default-features"

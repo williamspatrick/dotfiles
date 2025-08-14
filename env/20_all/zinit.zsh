@@ -8,8 +8,12 @@ zinit snippet OMZP::sudo
 # zinit bgm
 zinit light zdharma-continuum/zinit-annex-bin-gem-node
 
-# Powerlevel9k/10K
-zinit light romkatv/powerlevel10k
+# starship or powerlevel10k
+if type starship > /dev/null; then
+    eval "$(starship init zsh)"
+else
+    zinit light romkatv/powerlevel10k
+fi
 
 # Window titles
 zstyle ':prezto:module:terminal' auto-title 'yes'
