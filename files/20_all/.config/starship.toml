@@ -4,8 +4,8 @@ palette = "solarized"
 add_newline = false
 
 format = """
-[ $username@$hostname ](bg:base03 fg:yellow)\
-[ ](bg:blue fg:base03)$directory[](bg:base03 fg:blue)\
+([ $username@$hostname ](bg:base03 fg:yellow)[](bg:blue fg:base03))\
+$directory[](bg:base03 fg:blue)\
 $fill\
 ([](bg:prev_bg fg:red)$status(bg:red))\
 ([](bg:prev_bg fg:base01)$jobs[ ](bg:base01))\
@@ -17,7 +17,7 @@ $fill\
 [directory]
 truncation_symbol = "../"
 style = "bg:blue fg:base03"
-format = "[$path ]($style)"
+format = "[ $path ]($style)"
 
 [fill]
 symbol = " "
@@ -66,6 +66,7 @@ disabled = false
 ssh_only = false
 style = "bg:base03 fg:yellow"
 format = "[$hostname]($style)"
+aliases = { "patrickw3-mbp" = "" }
 
 [python]
 symbol = " "
@@ -87,6 +88,7 @@ show_always = true
 style_user = "bg:base03 fg:yellow"
 style_root = "bg:base03 fg:yellow"
 format = "[$user]($style)"
+aliases = { "patrickw3" = "" }
 
 [palettes.solarized]
 base03 = "#002b36"
