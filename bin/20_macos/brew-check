@@ -35,6 +35,7 @@ desired_brews=(\
     pandoc \
     rg \
     rsync \
+    starship \
     svn \
     tree \
     unison \
