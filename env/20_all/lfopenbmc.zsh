@@ -8,6 +8,9 @@ function gerrit-origin() {
     local REPONAME=$(git rev-parse --show-toplevel | xargs basename)
     git config remote.origin.url ssh://openbmc.gerrit/openbmc/$REPONAME
 }
+function gerrit-main() {
+    git symbolic-ref refs/remotes/origin/HEAD | cut -d '/' -f4
+}
 
 function lf-obmc-apply() {
     local REPONAME=$(git remote get-url origin | sed "s#.*://[^/]*/##")
