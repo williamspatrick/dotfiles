@@ -1,2 +1,3 @@
-cargopackages[stylua]=""
+cargopackages[cargo-edit]=""
 cargopackages[starship]="--no-default-features"
+cargopackages[stylua]=""
