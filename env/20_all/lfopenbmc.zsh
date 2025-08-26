@@ -8,10 +8,6 @@ function gerrit-origin() {
     local REPONAME=$(git rev-parse --show-toplevel | xargs basename)
     git config remote.origin.url ssh://openbmc.gerrit/openbmc/$REPONAME
 }
-function gerrit-maint() {
-    $(wd path obmcsrc)/openbmc-build-scripts/tools/owners \
-        reviewers --push-args $*
-}
 
 function lf-obmc-apply() {
     local REPONAME=$(git remote get-url origin | sed "s#.*://[^/]*/##")
