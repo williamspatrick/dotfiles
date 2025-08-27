@@ -82,6 +82,6 @@ function "lf-ut"() {
 function "lf-format"() {
     FORMAT_PATH="$(wd path obmcsrc)/openbmc-build-scripts"
 
-    "$FORMAT_PATH/scripts/format-code.sh"
+    "$FORMAT_PATH/scripts/format-code.sh" $*
 }
 
