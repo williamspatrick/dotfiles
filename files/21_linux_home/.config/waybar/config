@@ -14,6 +14,7 @@
         "disk",
         "network",
         "cpu#2",
+        "temperature",
         "idle_inhibitor"
     ],
     "clock": {
@@ -43,6 +44,10 @@
     "cpu#2": {
         "interval": "10",
         "format": " {avg_frequency:0.1f}/{max_frequency:0.1f}"
+    },
+    "temperature": {
+        "hwmon-path": "/sys/bus/pci/devices/0000:00:18.3/hwmon/hwmon1/temp1_input",
+        "format": " {temperatureC}°C"
     },
     "memory": {
         "format": " {avail:0.1f}/{total:0.1f}GiB"
