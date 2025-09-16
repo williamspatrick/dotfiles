@@ -2,6 +2,6 @@
 Description=Slice for running Bitbake
 
 [Slice]
-MemoryHigh=48G
-MemoryMax=52G
+MemoryHigh=208G
+MemoryMax=224G
 MemorySwapMax=0
