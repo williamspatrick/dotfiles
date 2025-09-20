@@ -1,0 +1,31 @@
+#!/usr/bin/env zsh
+
+set -e
+setopt NULL_GLOB
+setopt EXTENDED_GLOB
+setopt DOTGLOB
+
+source ${0:h}/../../dotfiles.lib.zsh
+
+npmpkg_path=$(realpath ${0:h}/../../packages)
+
+typeset -A npmpackages
+
+for d in $npmpkg_path/<0-9>##_*
+do
+    if [ ! -d $d ];
+    then
+        continue
+    fi
+
+    if [ ! -e $d/npm ];
+    then
+        continue
+    fi
+
+    source $d/npm
+done
+
+for pkg install_args in "${(@kv)npmpackages}"; do
+    npm install ${pkg} ${(z)install_args}
+done

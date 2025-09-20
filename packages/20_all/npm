@@ -1,0 +1,6 @@
+npmpackages[eslint@8]=""
+npmpackages[markdownlint-cli]=""
+npmpackages[prettier]=""
+npmpackages[tree-sitter-cli]=""
+npmpackages[typescript]=""
+npmpackages[vscode-langservers-extracted]=""
