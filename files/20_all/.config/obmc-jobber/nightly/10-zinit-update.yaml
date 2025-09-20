@@ -5,5 +5,8 @@ run:
     - shell: |-
           source ~/.zshrc
           (zinit self-update ; zinit update) || true
+          cargo-sync
+          npm-sync
           nvim-lazy-sync
+          uv-sync
 on-fail: email
