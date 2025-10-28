@@ -1,4 +1,4 @@
-require("lspconfig").lua_ls.setup({
+vim.lsp.config("lua_ls", {
     settings = {
         Lua = {
             runtime = {
@@ -14,5 +14,4 @@ require("lspconfig").lua_ls.setup({
             },
         },
     },
-    capabilities = require("cmp_nvim_lsp").default_capabilities(),
 })

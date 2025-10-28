@@ -1,4 +1,4 @@
-require("lspconfig").ruff.setup({
+vim.lsp.config("ruff", {
     init_options = {
         settings = {
             format = {

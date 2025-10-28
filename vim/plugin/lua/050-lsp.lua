@@ -7,6 +7,7 @@ require("mason-lspconfig").setup({
         "lua_ls",
         "ruff",
         "rust_analyzer",
+        "taplo",
     },
 })
 
@@ -77,9 +78,9 @@ require("which-key").add({
         desc = "Signature",
         mode = "in",
     },
-    { "K",          vim.lsp.buf.hover,       desc = "LSP Hover" },
-    { "<leader>cr", vim.lsp.buf.rename,      desc = "Symbol Rename" },
-    { "<leader>cf", vim.lsp.buf.format,      desc = "Code Format" },
+    { "K", vim.lsp.buf.hover, desc = "LSP Hover" },
+    { "<leader>cr", vim.lsp.buf.rename, desc = "Symbol Rename" },
+    { "<leader>cf", vim.lsp.buf.format, desc = "Code Format" },
     { "<leader>ca", vim.lsp.buf.code_action, desc = "Code Action" },
     {
         "<leader>ce",

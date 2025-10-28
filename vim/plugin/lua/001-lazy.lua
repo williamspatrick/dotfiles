@@ -1,7 +1,7 @@
 require("lazy").setup({
     import = "williamspatrick-plugins",
     spec = {
-        { "folke/snacks.nvim",    priority = 1000 },
+        { "folke/snacks.nvim", priority = 1000 },
         { "folke/which-key.nvim" },
 
         { "nvim-lua/plenary.nvim" },
@@ -23,8 +23,8 @@ require("lazy").setup({
 
         { "neovim/nvim-lspconfig" },
         { "onsails/lspkind.nvim" },
-        { "williamboman/mason.nvim",           version = "1.11.0" },
-        { "williamboman/mason-lspconfig.nvim", version = "1.32.0" },
+        { "williamboman/mason.nvim" },
+        { "williamboman/mason-lspconfig.nvim" },
         {
             "nvimtools/none-ls.nvim",
             dependencies = {

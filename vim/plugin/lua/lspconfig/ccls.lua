@@ -1,9 +1,8 @@
-require("lspconfig").ccls.setup({
+vim.lsp.config("ccls", {
     init_options = {
         compilationDatabaseDirectory = vim.g.meson_build_dir,
         clang = {
             extraArgs = { "-std=c++23" },
         },
     },
-    capabilities = require("cmp_nvim_lsp").default_capabilities(),
 })
