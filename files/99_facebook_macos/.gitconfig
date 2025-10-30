@@ -1,0 +1,6 @@
+[http "https://git.c2p.facebook.net"]
+  sslCert = /var/facebook/credentials/patrickw3/x509/patrickw3.pem
+  sslKey = /var/facebook/credentials/patrickw3/x509/patrickw3.pem
+[http "https://mononoke-git-lfs.c2p.facebook.net"]
+  sslCert = /var/facebook/credentials/patrickw3/x509/patrickw3.pem
+  sslKey = /var/facebook/credentials/patrickw3/x509/patrickw3.pem
