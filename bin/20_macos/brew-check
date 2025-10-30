@@ -24,6 +24,7 @@ desired_brews=(\
     starship \
     watch \
     wget \
+    nikitabobko/tap/aerospace \
 )
 
 installed_taps="$(brew tap)"
