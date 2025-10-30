@@ -13,7 +13,7 @@
     <string>homebrew.mxcl.offlineimap</string>
     <key>ProgramArguments</key>
     <array>
-      <string>/Users/patrickw3/homebrew/bin/offlineimap</string>
+      <string>/opt/homebrew/bin/offlineimap</string>
       <string>-q</string>
       <string>-u</string>
       <string>basic</string>

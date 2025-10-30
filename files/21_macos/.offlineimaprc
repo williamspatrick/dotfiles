@@ -1,1 +1,1 @@
-sslcacertfile = ~/homebrew/etc/openssl@3/cert.pem
+sslcacertfile = /opt/homebrew/etc/openssl@3/cert.pem

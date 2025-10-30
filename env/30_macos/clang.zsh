@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 clang-env() {
-    export PATH="$HOME/homebrew/opt/llvm/bin:$PATH"
-    export CC="$HOME/homebrew/opt/llvm/bin/clang"
+    export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+    export CC="/opt/homebrew/opt/llvm/bin/clang"
     export CXX=${CC}++
 }

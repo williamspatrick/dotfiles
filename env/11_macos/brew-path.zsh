@@ -1,3 +1,5 @@
 #!/usr/bin/env zsh
 
-export PATH="$HOME/homebrew/bin:$HOME/homebrew/sbin:$PATH"
+if type brew > /dev/null; then
+    eval "$(brew shellenv)"
+fi
