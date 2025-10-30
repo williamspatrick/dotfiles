@@ -7,6 +7,7 @@ desired_brews=(\
     bat \
     coreutils \
     dos2unix \
+    fd \
     findutils \
     font-fira-code-nerd-font \
     font-meslo-lg-nerd-font \
