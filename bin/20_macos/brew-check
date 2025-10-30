@@ -18,8 +18,8 @@ desired_brews=(\
     grep \
     jq \
     neovide \
-    nvim \
-    rg \
+    neovim \
+    ripgrep \
     rsync \
     starship \
     watch \
