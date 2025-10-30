@@ -66,7 +66,7 @@ disabled = false
 ssh_only = false
 style = "bg:base03 fg:yellow"
 format = "[$hostname]($style)"
-aliases = { "patrickw3-mbp" = "" }
+aliases = { "patrickw3-mbp" = "", "patrickw3-mac" = "" }
 
 [python]
 symbol = " "
