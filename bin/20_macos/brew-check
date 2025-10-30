@@ -1,20 +1,11 @@
 #!/usr/bin/env zsh
 
 desired_taps=(
-    homebrew/cask-fonts
 )
 
 desired_brews=(\
-    MisterTea/et/et \
-    abook \
-    autopep8 \
-    autozimu/homebrew-formulas/unison-fsmonitor \
     bat \
-    beardedspice \
-    clang-format \
-    colima \
     coreutils \
-    docker \
     dos2unix \
     findutils \
     font-fira-code-nerd-font \
@@ -24,22 +15,12 @@ desired_brews=(\
     gnu-getopt \
     gnu-sed \
     grep \
-    hammerspoon \
     jq \
-    llvm \
-    msmtp \
-    mutt \
     neovide \
     nvim \
-    offlineimap \
-    pandoc \
     rg \
     rsync \
     starship \
-    svn \
-    tree \
-    unison \
-    w3m \
     watch \
     wget \
 )
