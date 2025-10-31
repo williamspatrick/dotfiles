@@ -1,4 +1,6 @@
-after-startup-command = []
+after-startup-command = [
+    'exec-and-forget borders active_color=0xfffdf6e3 inactive_color=0x00000000 width=5.0'
+]
 
 start-at-login = true
 
@@ -19,12 +21,12 @@ automatically-unhide-macos-hidden-apps = true
     preset = 'qwerty'
 
 [gaps]
-    inner.horizontal = 4
-    inner.vertical =   4
-    outer.left =       0
-    outer.bottom =     0
-    outer.top =        0
-    outer.right =      0
+    inner.horizontal = 6
+    inner.vertical =   6
+    outer.left =       1
+    outer.bottom =     1
+    outer.top =        1
+    outer.right =      1
 
 [mode.main.binding]
     alt-slash = 'layout tiles horizontal vertical'

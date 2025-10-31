@@ -1,10 +1,12 @@
 #!/usr/bin/env zsh
 
 desired_taps=(
+    felixkratz/formulae
 )
 
 desired_brews=(\
     bat \
+    borders \
     coreutils \
     dos2unix \
     fd \
