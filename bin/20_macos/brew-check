@@ -24,6 +24,7 @@ desired_brews=(\
     ripgrep \
     rsync \
     starship \
+    tailscale-app \
     watch \
     wget \
     nikitabobko/tap/aerospace \
