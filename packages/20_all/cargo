@@ -1,3 +1,4 @@
+cargopackages[ast-grep]=""
 cargopackages[cargo-edit]=""
 cargopackages[starship]="--no-default-features"
 cargopackages[stylua]=""
