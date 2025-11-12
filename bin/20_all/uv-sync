@@ -27,5 +27,9 @@ do
 done
 
 for pkg install_args in "${(@kv)uvpackages}"; do
-    uv tool install ${pkg} ${(z)install_args} && uv tool update ${pkg} || true
+    if [[ ${pkg} == *@* ]]; then
+        uv tool install ${pkg} ${(z)install_args} || true
+    else
+        uv tool install ${pkg} ${(z)install_args} && uv tool update ${pkg} || true
+    fi
 done
