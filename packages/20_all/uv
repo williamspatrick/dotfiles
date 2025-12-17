@@ -1,3 +1,4 @@
+uvpackages[b4]=""
 uvpackages[beautysh@6.2.1]="--with setuptools"
 uvpackages[black]=""
 uvpackages[flake8]=""
