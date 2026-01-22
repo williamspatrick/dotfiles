@@ -1,4 +1,4 @@
-npmpackages[eslint@8]=""
+npmpackages[eslint]=""
 npmpackages[markdownlint-cli]=""
 npmpackages[prettier]=""
 npmpackages[prettier-plugin-astro]=""
