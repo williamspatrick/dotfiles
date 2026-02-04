@@ -27,5 +27,8 @@ do
 done
 
 for pkg install_args in "${(@kv)npmpackages}"; do
+    if [[ ! "$pkg" =~ '@[^/]+$' ]]; then
+        pkg="${pkg}@latest"
+    fi
     npm install ${pkg} ${(z)install_args}
 done
