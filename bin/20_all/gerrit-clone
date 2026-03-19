@@ -1,0 +1,83 @@
+#!/usr/bin/zsh
+
+if [[ -z "$1" ]]; then
+    echo "Usage: $0 <gerrit-change-number|project-name>"
+    exit 1
+fi
+
+INPUT=$1
+WORKSPACE_ROOT=$(grep "^obmcsrc:" ~/.warprc | sed 's/^obmcsrc://' | sed "s#~#$HOME#")
+
+# Check if it's a project first
+# Check for project with openbmc/ prefix
+PROJECT_CHECK=$(ssh openbmc.gerrit gerrit ls-projects -p "openbmc/$INPUT")
+
+if [[ "$PROJECT_CHECK" == "openbmc/$INPUT" ]]; then
+    # It's a project name
+    PROJECT="openbmc/$INPUT"
+    IS_CHANGE=false
+else
+    # Try to see if it's a change number
+    GERRIT_DATA=$(ssh openbmc.gerrit gerrit query "$INPUT" --format JSON --current-patch-set | head -n 1)
+
+    if [[ -n "$GERRIT_DATA" && $(echo "$GERRIT_DATA" | jq -r '.project') != "null" ]]; then
+        # It's a change ID
+        CHANGE_NUM=$INPUT
+        PROJECT=$(echo "$GERRIT_DATA" | jq -r '.project')
+        REVISION=$(echo "$GERRIT_DATA" | jq -r '.currentPatchSet.revision')
+        FETCH_REF=$(echo "$GERRIT_DATA" | jq -r '.currentPatchSet.ref')
+        IS_CHANGE=true
+    else
+        echo "ERROR: '$INPUT' is neither a valid project nor a change ID."
+        exit 1
+    fi
+fi
+
+# The last segment of the project name is expected to match a local directory
+REPO_NAME="${PROJECT##*/}"
+REF_REPO="$WORKSPACE_ROOT/$REPO_NAME"
+UPSTREAM_URL="ssh://openbmc.gerrit/$PROJECT"
+TMP_DIR=$(mktemp -d -t gerrit-clone-"${INPUT//\//_}"-XXXXXX)
+
+echo "----------------------------------------------------------"
+echo "Project: $PROJECT"
+[[ "$IS_CHANGE" == "true" ]] && echo "Revision: $REVISION"
+echo "Temp Directory: $TMP_DIR"
+echo "----------------------------------------------------------"
+
+# Cleanup function
+cleanup() {
+    echo "\nCleaning up $TMP_DIR..."
+    rm -rf "$TMP_DIR"
+}
+trap cleanup EXIT
+
+# Clone using reference if it exists
+GIT_OPTS=()
+if [[ -d "$REF_REPO" ]]; then
+    GIT_OPTS+=(--reference "$REF_REPO")
+else
+    echo "WARNING: Reference repo $REF_REPO not found. Doing a full clone."
+fi
+
+if ! git clone "${GIT_OPTS[@]}" "$UPSTREAM_URL" "$TMP_DIR"; then
+    echo "ERROR: Git clone failed. Check if project '$PROJECT' exists."
+    exit 1
+fi
+
+cd "$TMP_DIR" || exit 1
+
+if [[ "$IS_CHANGE" == "true" ]]; then
+    if ! git fetch origin "$FETCH_REF"; then
+        echo "ERROR: Git fetch failed."
+        exit 1
+    fi
+
+    if ! (git rebase FETCH_HEAD && git fetch && git rebase); then
+        echo "ERROR: Rebase failed. Starting shell anyway for manual resolution."
+    fi
+fi
+
+echo "Starting shell in $TMP_DIR. Exit the shell to finish and delete the clone."
+# Add a custom indicator to the prompt
+STARSHIP_PREFIX="(gerrit-${INPUT//\//_})" zsh -i

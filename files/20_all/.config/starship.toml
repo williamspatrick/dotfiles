@@ -4,6 +4,7 @@ palette = "solarized"
 add_newline = false
 
 format = """
+$custom\
 ([ $username@$hostname ](bg:base03 fg:yellow)[](bg:blue fg:base03))\
 $directory[](bg:base03 fg:blue)\
 $fill\
@@ -13,6 +14,12 @@ $fill\
 ([](bg:prev_bg fg:green)$git_branch$git_commit$git_state$git_status$hg_branch[ ](bg:green fg:base03))
 [\\$ ]()
 """
+
+[custom.prefix]
+command = "echo $STARSHIP_PREFIX"
+when = "test -n \"$STARSHIP_PREFIX\""
+style = "bold blue"
+format = "[$output]($style) "
 
 [directory]
 truncation_symbol = "../"
