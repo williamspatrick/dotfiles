@@ -25,3 +25,8 @@
     cccmd ="`pwd`/scripts/get_maintainer.pl --nogit --nogit-fallback --norolestats --nom"
 [alias]
     fixes ="log -n1 --format='%h (\"%s\")' --abbrev=12"
+    delta = !sh -c \"PAGER=delta git diff $@\"
+[delta]
+    navigate = true
+    side-by-side = true
+    syntax-theme = Solarized (dark)
