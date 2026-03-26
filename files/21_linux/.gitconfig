@@ -1,0 +1,2 @@
+[sendemail]
+    smtpServer = /usr/bin/msmtp
