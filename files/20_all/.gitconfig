@@ -26,6 +26,7 @@
 [alias]
     fixes ="log -n1 --format='%h (\"%s\")' --abbrev=12"
     delta = !sh -c \"PAGER=delta git diff $@\"
+    dshow = !sh -c \"PAGER=delta git show $@\"
 [delta]
     navigate = true
     side-by-side = true
