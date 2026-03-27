@@ -1,5 +1,5 @@
 cargopackages[ast-grep]=""
 cargopackages[cargo-edit]=""
-cargopackages[delta]=""
+cargopackages[git-delta]=""
 cargopackages[starship]="--no-default-features"
 cargopackages[stylua]=""
