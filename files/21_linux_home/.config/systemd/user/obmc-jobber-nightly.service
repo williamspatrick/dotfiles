@@ -1,7 +1,0 @@
-[Unit]
-Description=obmc-jobber Nightly
-
-[Service]
-Type=oneshot
-Environment=SSH_AUTH_SOCK=/run/user/%U/gcr/ssh
-ExecStart=/home/apwillia/.zinit/plugins/williamspatrick---dotfiles/bin/20_all/obmc-jobber -s nightly
