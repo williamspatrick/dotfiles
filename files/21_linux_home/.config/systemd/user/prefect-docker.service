@@ -1,0 +1,15 @@
+[Unit]
+Description=Prefect Docker Compose Service
+
+[Service]
+Type=simple
+WorkingDirectory=/home/apwillia/private/dev/prefect-automation/prefect-compose
+ExecStart=/usr/bin/docker compose up --remove-orphans
+ExecStop=/usr/bin/docker compose down
+Restart=always
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=prefect-docker
+
+[Install]
+WantedBy=default.target
