@@ -7,15 +7,19 @@ DEFAULT_USER="patrick@stwcx.xyz"
 SEARCH_USER="${1:-$DEFAULT_USER}"
 
 # Go to the root of the cloned openbmc repositories
-obmcsrc=$(grep "^obmcsrc:" ~/.warprc | sed 's/^obmcsrc://' | sed "s#~#$HOME#")
-cd $obmcsrc
+obmcsrc=$(grep "^obmcsrc:" ~/.warprc | sed "s/^obmcsrc://" | sed "s#~#$HOME#")
+cd "$obmcsrc"
 
-# Find all OWNERS files and check for the specified user
-for owners_file in $(fd "^OWNERS" -t file); do
-    if python3 -c \
-        'import sys, yaml; y=yaml.safe_load(sys.stdin.read()); print(y["owners"]) if "owners" in y else False' \
-        < $owners_file \
-    | grep -q "'${SEARCH_USER}'"; then
-        echo $(dirname ${owners_file})
-    fi
-done
+# Use ripgrep's built-in globbing to find candidate files, then verify with a single Python process
+rg -l --max-depth 2 -g "OWNERS" "${SEARCH_USER}" . | xargs python3 -c '
+import sys, yaml, os
+search_user = "'"${SEARCH_USER}"'"
+for path in sys.argv[1:]:
+    try:
+        with open(path, "r") as f:
+            y = yaml.safe_load(f)
+            if y and "owners" in y and any(search_user in str(o) for o in y["owners"]):
+                print(os.path.normpath(os.path.dirname(path)))
+    except Exception:
+        pass
+'
