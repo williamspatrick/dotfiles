@@ -1,5 +1,3 @@
-.aider*
 .ccls-cache/
-.crush/
 .mypy_cache/
 .rgignore
