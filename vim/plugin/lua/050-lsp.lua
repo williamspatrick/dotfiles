@@ -92,13 +92,18 @@ require("which-key").add({
     { "<leader>cm", "<cmd>Make<cr>", desc = "Build" },
 })
 
--- Change style of LSP borders.
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-    border = "rounded",
-})
-vim.lsp.handlers["textDocument/signatureHelp"] =
-    vim.lsp.with(vim.lsp.handlers.signature_help, {
-        border = "rounded",
-    })
+-- Change style of LSP borders
+local hover_handler = vim.lsp.handlers["textDocument/hover"]
+local signature_handler = vim.lsp.handlers["textDocument/signatureHelp"]
+
+vim.lsp.handlers["textDocument/hover"] = function(err, result, ctx, config)
+    config = vim.tbl_deep_extend("force", config or {}, { border = "rounded" })
+    return hover_handler(err, result, ctx, config)
+end
+
+vim.lsp.handlers["textDocument/signatureHelp"] = function(err, result, ctx, config)
+    config = vim.tbl_deep_extend("force", config or {}, { border = "rounded" })
+    return signature_handler(err, result, ctx, config)
+end
 
 vim.cmd([[highlight! link FloatBorder Comment]])
