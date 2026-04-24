@@ -1,0 +1,94 @@
+#!/usr/bin/env zsh
+
+# Initial ondemand setup script for williamspatrick
+
+set -e
+
+echo "=== Starting initial ondemand setup for williamspatrick ==="
+
+# Function to update git remote from https to ssh
+update_git_remote() {
+    local repo_path=$1
+    echo "Updating git remote for $repo_path..."
+    
+    if [[ ! -d "$repo_path" ]]; then
+        echo "Warning: Directory $repo_path does not exist, skipping..."
+        return
+    fi
+    
+    cd "$repo_path"
+    
+    # Get current remote URL
+    local remote_url=$(git config --get remote.origin.url 2>/dev/null || echo "")
+    
+    if [[ -z "$remote_url" ]]; then
+        echo "Warning: No remote.origin.url found in $repo_path, skipping..."
+        return
+    fi
+    
+    # Replace https://github.com with ssh://git@github.com
+    local new_url=${remote_url/https:\/\/github.com/ssh:\/\/git@github.com}
+    
+    if [[ "$remote_url" != "$new_url" ]]; then
+        echo "Changing remote from $remote_url to $new_url"
+        git remote set-url origin "$new_url"
+    else
+        echo "Remote already uses SSH or doesn't match pattern: $remote_url"
+    fi
+}
+
+# Update git remotes
+update_git_remote "$HOME/.zinit/plugins/williamspatrick---dotfiles"
+update_git_remote "$HOME/.zinit/plugins/williamspatrick---openbmc-subproject-container"
+
+# Create ~/local directory if it doesn't exist
+cd "$HOME/local"
+
+# List of repositories to clone
+repos=(
+    "sdbusplus"
+    "phosphor-dbus-interfaces"
+    "entity-manager"
+    "bmcweb"
+)
+
+# Clone repositories
+for repo in "${repos[@]}"; do
+    if [[ -d "$repo" ]]; then
+        echo "Repository $repo already exists, skipping clone..."
+    else
+        echo "Cloning $repo..."
+        git clone "ssh://openbmc.gerrit/openbmc/$repo"
+    fi
+done
+
+# Get gerrit hook in each repository
+for repo in "${repos[@]}"; do
+    if [[ -d "$repo" ]]; then
+        echo "Getting gerrit hook in $repo..."
+        (cd "$HOME/local/$repo" && \
+            scp -O openbmc.gerrit:hooks/commit-msg $(git rev-parse --show-toplevel)/.git/hooks/)
+    else
+        echo "Warning: Repository $repo not found, skipping gerrit hook..."
+    fi
+done
+
+# Wait for podman to exist
+echo "Waiting for /usr/bin/podman to exist..."
+while [[ ! -f "/usr/bin/podman" ]]; do
+    echo "Podman not found, waiting 10 seconds..."
+    sleep 10
+done
+echo "Podman found!"
+
+# Run obmc-launch build in sdbusplus
+if [[ -d "$HOME/local/sdbusplus" ]]; then
+    echo "Running obmc-launch build in sdbusplus..."
+    cd "$HOME/local/sdbusplus"
+    ~/.zinit/plugins/williamspatrick---openbmc-subproject-container/launch build
+else
+    echo "Error: sdbusplus repository not found!"
+    exit 1
+fi
+
+echo "=== Initial ondemand setup complete ==="
