@@ -1,1 +1,2 @@
 cargopackages[neovide]="--git https://github.com/neovide/neovide"
+cargopackages[forgejo-cli]=""
