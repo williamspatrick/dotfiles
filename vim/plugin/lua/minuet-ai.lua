@@ -17,7 +17,7 @@ if string.find(os.getenv("DOTFILES_SYSTEM") or "", "home") ~= nil then
             openai_compatible = {
                 api_key = "OPENROUTER_API_KEY",
                 end_point = "https://openrouter.ai/api/v1/chat/completions",
-                model = "qwen/qwen3-coder-30b-a3b-instruct",
+                model = "google/gemini-3.1-flash-lite",
                 name = "Openrouter",
                 optional = {
                     max_tokens = 128,
@@ -26,6 +26,7 @@ if string.find(os.getenv("DOTFILES_SYSTEM") or "", "home") ~= nil then
                         -- Prioritize throughput for faster completion
                         sort = "throughput",
                     },
+                    reasoning_effort = 'none'
                 },
             },
         },
