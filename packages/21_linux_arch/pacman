@@ -1,0 +1,6 @@
+pacmanpackages[git]=""
+pacmanpackages[kitty-terminfo]=""
+pacmanpackages[less]=""
+pacmanpackages[neovim]=""
+pacmanpackages[rust]=""
+pacmanpackages[zsh]=""
