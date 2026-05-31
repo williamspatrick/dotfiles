@@ -23,6 +23,10 @@ do
         continue
     fi
 
+    if ! dotfiles_check_machine $d; then
+        continue
+    fi
+
     source $d/cargo
 done
 
