@@ -8,6 +8,9 @@ if [[ $(uname) == 'Linux' ]]; then
             gentoo)
                 DOTFILES_CONFIG=("${DOTFILES_CONFIG[@]}" "gentoo")
                 ;;
+            arch)
+                DOTFILES_CONFIG=("${DOTFILES_CONFIG[@]}" "arch")
+                ;;
 
             *)
                 ;;
