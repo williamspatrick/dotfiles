@@ -30,6 +30,7 @@ do
     source $d/pacman
 done
 
+sudo pacman -Syu --noconfirm
 for pkg install_args in "${(@kv)pacmanpackages}"; do
     if ! pacman -Qe $pkg >/dev/null 2>&1; then
         sudo pacman -S --noconfirm ${pkg} ${(z)install_args}
