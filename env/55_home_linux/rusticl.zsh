@@ -1,0 +1,1 @@
+export RUSTICL_ENABLE=radeonsi
