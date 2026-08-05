@@ -31,7 +31,7 @@ if string.find(os.getenv("DOTFILES_SYSTEM") or "", "home") ~= nil then
         provider = "openai_compatible",
         request_timeout = 2.5,
         throttle = 1500, -- Increase to reduce costs and avoid rate limits
-        debounce = 600,  -- Increase to reduce costs and avoid rate limits
+        debounce = 600, -- Increase to reduce costs and avoid rate limits
         provider_options = {
             openai_compatible = {
                 api_key = "OPENROUTER_API_KEY",
@@ -45,7 +45,18 @@ if string.find(os.getenv("DOTFILES_SYSTEM") or "", "home") ~= nil then
                         -- Prioritize throughput for faster completion
                         sort = "throughput",
                     },
-                    reasoning_effort = 'none'
+                    reasoning_effort = "none",
+                },
+                transform = {
+                    function(opts)
+                        opts.headers = opts.headers or {}
+                        opts.headers["HTTP-Referer"] =
+                            "https://github.com/milanglacier/minuet-ai.nvim"
+                        opts.headers["X-OpenRouter-Title"] = "Neovim Minuet AI"
+                        opts.headers["X-OpenRouter-Categories"] = "ide-extension"
+
+                        return opts
+                    end,
                 },
             },
         },
