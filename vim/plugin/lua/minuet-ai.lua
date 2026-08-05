@@ -1,4 +1,23 @@
 if string.find(os.getenv("DOTFILES_SYSTEM") or "", "home") ~= nil then
+    vim.api.nvim_create_autocmd("BufEnter", {
+        pattern = {
+            "*.sops.yaml",
+            "*.sops.yml",
+            "*.sops.json",
+            "*.sops.toml",
+            ".sops.yaml",
+            ".sops.yml",
+            "*.enc.yaml",
+            "*.enc.json",
+            "*.secrets.yaml",
+            "*.secrets.json",
+            "*/secrets/*", -- files directly under any 'secrets' dir
+            "*/secrets/**", -- any nested subdirectories
+        },
+        callback = function()
+            vim.b.minuet_virtual_text_auto_trigger = false
+        end,
+    })
     require("minuet").setup({
         virtualtext = {
             auto_trigger_ft = { "*" },
