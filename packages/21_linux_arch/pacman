@@ -1,4 +1,5 @@
 pacmanpackages[fd]=""
+pacmanpackages[fzf]=""
 pacmanpackages[git]=""
 pacmanpackages[kitty-terminfo]=""
 pacmanpackages[less]=""
