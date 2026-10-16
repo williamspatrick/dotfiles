@@ -89,6 +89,9 @@ input "type:mouse" {
     # Start a terminal
     bindsym $mod+Return exec $term
 
+    # Start Google Chrome
+    bindsym $mod+n exec google-chrome-stable --new-window
+
     # Kill focused window
     bindsym $mod+Shift+q kill
 
