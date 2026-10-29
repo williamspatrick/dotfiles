@@ -67,3 +67,23 @@ set pgp_list_secring_command="gpg --no-verbose --batch --quiet --with-colons --w
 set pgp_good_sign="^\\[GNUPG:\\] GOODSIG"
 set pgp_check_gpg_decrypt_status_fd
 
+# rootshell -CC ignores tmux %pane-mode-changed, so it sends normal-mode keys
+# (\e[A...) while mutt defaults expect app-mode (\eOA...) after smkx.
+# Verified with `cat -v`: ^[[A ^[[B ^[[D ^[[C ^[[H ^[[5~ ^[[6~ ^[[F.
+# Bind the missing normal-mode sequences; app-mode already works (iTerm2).
+bind index "\e[A" previous-entry
+bind index "\e[B" next-entry
+bind index "\e[D" previous-entry
+bind index "\e[C" next-entry
+bind index "\e[H" first-entry
+bind index "\e[F" last-entry
+bind index "\e[5~" previous-page
+bind index "\e[6~" next-page
+
+bind pager "\e[A" previous-line
+bind pager "\e[B" next-line
+bind pager "\e[H" top
+bind pager "\e[F" bottom
+bind pager "\e[5~" previous-page
+bind pager "\e[6~" next-page
+
