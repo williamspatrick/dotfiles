@@ -1,8 +1,10 @@
 #!/usr/bin/env zsh
 
-if type npm > /dev/null; then
-    if npm root > /dev/null; then
-        export PATH="$(cd ~ && npm root)/.bin:$PATH"
-        export NODE_PATH="$(cd ~ && npm root)"
+if [[ -d ~/node_modules/.bin ]]; then
+    if (( ${path[(I)$HOME/node_modules/.bin]} == 0 )); then
+        path=($HOME/node_modules/.bin $path)
     fi
+fi
+if [[ -d ~/node_modules && :$NODE_PATH: != *:$HOME/node_modules:* ]]; then
+    export NODE_PATH=$HOME/node_modules${NODE_PATH:+:$NODE_PATH}
 fi
