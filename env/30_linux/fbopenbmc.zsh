@@ -16,12 +16,22 @@ function fb-obmc() {
 }
 
 if [ -n "$FB_MACHINE" ]; then
+    function __bitbake_osc7501()
+    {
+        local _b64
+        _b64=$(printf '%s' "$2" | base64 | tr -d '\n')
+        printf '\033]7501;state=%s:app=bitbake:msg=%s\033\\' "$1" "$_b64" >&2
+    }
+
     function bitbake-build()
     {
+        __bitbake_osc7501 working "Building $FB_MACHINE-image"
         if nice bitbake $FB_MACHINE-image $*; then
             local STATUS="DONE"
+            __bitbake_osc7501 done "$FB_MACHINE-image: DONE"
         else
             local STATUS="FAILED"
+            __bitbake_osc7501 error "$FB_MACHINE-image: FAILED"
         fi
         notify-send -i "$(wd path obmcsrc)/docs/logo/OpenBMC-Logo.svg" \
             -a Bitbake "Bitbake" "$FB_MACHINE: $STATUS"
