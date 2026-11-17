@@ -11,16 +11,3 @@ function gerrit-origin() {
 function gerrit-main() {
     git symbolic-ref refs/remotes/origin/HEAD | cut -d '/' -f4
 }
-
-function lf-obmc-apply() {
-    local REPONAME=$(git remote get-url origin | sed "s#.*://[^/]*/##")
-    local COMMIT=$(git rev-parse HEAD)
-
-    local LFREPO=$(wd path lfopenbmc)
-    local FILES=$(git -C "$LFREPO" grep -lE "git://.*/$REPONAME(.git)?;")
-    for f in $FILES; do
-        echo "Applying to $LFREPO/$f"
-        sed -i "s/;branch=[^;]*/;nobranch=1/" "$LFREPO/$f"
-        sed -i "s/SRCREV = .*/SRCREV = \"$COMMIT\"/" "$LFREPO/$f"
-    done
-}
