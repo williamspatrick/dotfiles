@@ -12,7 +12,7 @@ zinit snippet OMZP::sudo
 zinit light zdharma-continuum/zinit-annex-bin-gem-node
 
 # starship or powerlevel10k
-if type starship > /dev/null; then
+if (( $+commands[starship] )); then
     eval "$(starship init zsh)"
 else
     zinit light romkatv/powerlevel10k

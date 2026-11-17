@@ -1,5 +1,5 @@
 #!/usr/bin/env zsh
 
-if type brew > /dev/null; then
+if (( $+commands[brew] )); then
     eval "$(brew shellenv)"
 fi

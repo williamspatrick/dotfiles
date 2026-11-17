@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
-if type nvim > /dev/null; then
-    export EDITOR="$(which nvim)"
+if (( $+commands[nvim] )); then
+    export EDITOR=$commands[nvim]
 else
-    export EDITOR="/usr/bin/vim"
+    export EDITOR=/usr/bin/vim
 fi

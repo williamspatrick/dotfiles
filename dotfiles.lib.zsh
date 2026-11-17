@@ -1,6 +1,7 @@
 function __dotfiles_check_machine() {
 
-    local dir_name=$(basename $1 $2)
+    local dir_name=${1:t}
+    [[ -n $2 ]] && dir_name=${dir_name%$2}
     local path_parts=(${(s/_/)dir_name})
 
     for p in $path_parts
@@ -19,7 +20,8 @@ function __dotfiles_check_machine() {
 
 function dotfiles_check_machine() {
 
-    local dir_name=$(basename $1 $2)
+    local dir_name=${1:t}
+    [[ -n $2 ]] && dir_name=${dir_name%$2}
     local path_parts=(${(s/_/)dir_name})
     local system_config=(${(s/:/)DOTFILES_SYSTEM})
 

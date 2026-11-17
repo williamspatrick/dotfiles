@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 VIM_PACK_DIR=~/.vim/pack/plugins/start
-mkdir -p $VIM_PACK_DIR
+[[ -d $VIM_PACK_DIR ]] || mkdir -p $VIM_PACK_DIR
 
 ## Enable modules
 # vim-bitbake

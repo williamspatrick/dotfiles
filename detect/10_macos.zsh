@@ -1,5 +1,5 @@
 #!/usr/bin/env zsh
 
-if [[ $(uname) == "Darwin" ]]; then
+if [[ $OSTYPE == darwin* ]]; then
     DOTFILES_CONFIG=("${DOTFILES_CONFIG[@]}" "macos")
 fi

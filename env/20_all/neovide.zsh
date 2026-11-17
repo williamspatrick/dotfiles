@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 alias nv="nvim"
-if type neovide > /dev/null; then
+if (( $+commands[neovide] )); then
     if [ -n "$GDMSESSION" ]; then
         alias nv="neovide"
     elif [[ $DOTFILES_SYSTEM == *macos* ]]; then
