@@ -1,8 +1,11 @@
 #!/usr/bin/env zsh
 
 # oh-my-zsh plugins
+zinit ice wait lucid
 zinit snippet OMZ::lib/history.zsh
+zinit ice wait lucid
 zinit snippet OMZ::lib/git.zsh
+zinit ice wait lucid
 zinit snippet OMZP::sudo
 
 # zinit bgm
@@ -17,6 +20,7 @@ fi
 
 # Window titles
 zstyle ':prezto:module:terminal' auto-title 'yes'
+zinit ice wait lucid
 zinit snippet PZT::modules/terminal
 
 # wd
@@ -27,7 +31,7 @@ zinit ice as"program" atload"wd() { source wd.sh }" \
 zinit light mfaerevaag/wd
 
 # Common completions
-zinit ice blockf atpull'zinit creinstall -q .'
+zinit ice wait lucid blockf atpull'zinit creinstall -q .'
 zinit light zsh-users/zsh-completions
 
 # Auto suggest

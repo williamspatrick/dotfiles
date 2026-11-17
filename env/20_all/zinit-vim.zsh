@@ -5,24 +5,24 @@ mkdir -p $VIM_PACK_DIR
 
 ## Enable modules
 # vim-bitbake
-zinit ice \
+zinit ice wait lucid \
     atclone"ln -sf ~/.zinit/plugins/kergoth---vim-bitbake $VIM_PACK_DIR" \
     atpull"%atclone" pick"/dev/null" nocompile:!
 zinit light kergoth/vim-bitbake
 # vim-gh-line
-zinit ice \
+zinit ice wait lucid \
     atclone"ln -sf ~/.zinit/plugins/ruanyl---vim-gh-line $VIM_PACK_DIR" \
     atpull"%atclone" \
     pick"/dev/null" nocompile:!
 zinit light ruanyl/vim-gh-line
 # solarized8
-zinit ice \
+zinit ice wait lucid \
     ver"neovim" \
     atclone"ln -sf ~/.zinit/plugins/lifepillar---vim-solarized8 $VIM_PACK_DIR" \
     atpull "%atclone" pick"/dev/null" nocompile:!
 zinit light lifepillar/vim-solarized8
 # lazy.nvim
-zinit ice \
+zinit ice wait lucid \
     atclone"ln -sf ~/.zinit/plugins/folke---lazy.nvim $VIM_PACK_DIR" \
     atpull "%atclone" pick"/dev/null" nocompile:!
 zinit light folke/lazy.nvim
