@@ -7,7 +7,7 @@ fi
 # Load zinit
 source "$HOME/.zinit/bin/zinit.zsh"
 
-zinit ice compile'{detect/*.zsh,*.env/*.zsh}'
+zinit ice compile'*.zsh;detect/*.zsh;env/*/*.zsh'
 zinit light williamspatrick/dotfiles
 
 # Load iterm2 imgcat (useful on remote Linux servers too)

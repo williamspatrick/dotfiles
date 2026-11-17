@@ -35,7 +35,7 @@ zinit ice wait lucid blockf atpull'zinit creinstall -q .'
 zinit light zsh-users/zsh-completions
 
 # Auto suggest
-zinit ice wait lucid compile'{src/*.zsh,src/strategies/*}' atload'_zsh_autosuggest_start'
+zinit ice wait lucid compile'src/*.zsh;src/strategies/*' atload'_zsh_autosuggest_start'
 zinit light zsh-users/zsh-autosuggestions
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=11"
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
