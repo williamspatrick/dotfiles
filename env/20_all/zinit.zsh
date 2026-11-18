@@ -8,9 +8,6 @@ zinit snippet OMZ::lib/git.zsh
 zinit ice wait lucid
 zinit snippet OMZP::sudo
 
-# zinit bgm
-zinit light zdharma-continuum/zinit-annex-bin-gem-node
-
 # starship or powerlevel10k
 if (( $+commands[starship] )); then
     eval "$(starship init zsh)"
@@ -48,7 +45,3 @@ zinit light ael-code/zsh-colored-man-pages
 # offline gitignore.io templates
 zinit ice wait lucid blockf
 zinit light laggardkernel/git-ignore
-
-# cd-gitroot
-zinit ice wait lucid
-zinit light mollifier/cd-gitroot
